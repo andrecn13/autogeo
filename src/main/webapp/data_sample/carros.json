@@ -1,0 +1,644 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2010,
+        "modelo": "Fiesta",
+        "marca": "Ford",
+        "km": 25000,
+        "cor": "prata",
+        "valor": 56000,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.227858662605286,
+          -30.032838809330116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2011,
+        "modelo": "Cruze",
+        "marca": "Chevrolet",
+        "km": 75000,
+        "cor": "branco",
+        "valor": 66500,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.22779697179794,
+          -30.032311693018073
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2002,
+        "modelo": "Corsa",
+        "marca": "Chevrolet",
+        "km": 65000,
+        "cor": "vermelho",
+        "valor": 18000,
+        "portas": 4,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.225342750549316,
+          -30.02968071373853
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2010,
+        "modelo": "Gol",
+        "marca": "Wolkswagen",
+        "km": 62000,
+        "cor": "azul",
+        "valor": 21000,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.23263835906982,
+          -30.030962541140706
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2014,
+        "modelo": "Civic",
+        "marca": "Honda",
+        "km": 0,
+        "cor": "preto",
+        "valor": 57600,
+        "portas": 4,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.22956991195679,
+          -30.03150127524609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2008,
+        "modelo": "Civic",
+        "marca": "Honda",
+        "km": 35000,
+        "cor": "branco",
+        "valor": 25000,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": false,
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.224025785923004,
+          -30.034422463500142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2010,
+        "modelo": "i30",
+        "marca": "Hyundai",
+        "km": 32000,
+        "cor": "vermelho",
+        "valor": 38000,
+        "portas": 4,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": false,
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.234934329986565,
+          -30.0338791011382
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2015,
+        "modelo": "Onix",
+        "marca": "Chevrolet",
+        "km": 0,
+        "cor": "cinza",
+        "valor": 33900,
+        "portas": 4,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.2325793504715,
+          -30.035836584911703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2014,
+        "modelo": "Fiesta",
+        "marca": "Ford",
+        "km": 0,
+        "cor": "azul",
+        "valor": 27000,
+        "portas": 4,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": false,
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.22251033782959,
+          -30.037924060590075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2010,
+        "modelo": "Cobalt",
+        "marca": "Chevrolet",
+        "km": 32000,
+        "cor": "roxo",
+        "valor": 34000,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": false,
+        "acessorios": [
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.199936866760254,
+          -30.01936047039347
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2008,
+        "modelo": "Fusion",
+        "marca": "Fiesta",
+        "km": 65000,
+        "cor": "preto",
+        "valor": 39600,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.20504379272461,
+          -30.03462216002981
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2015,
+        "modelo": "Corolla",
+        "marca": "Toyota",
+        "km": 0,
+        "cor": "prata",
+        "valor": 54300,
+        "portas": 2,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.223615407943726,
+          -30.04512655891128
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2012,
+        "modelo": "Corolla",
+        "marca": "Toyota",
+        "km": 25000,
+        "cor": "branco",
+        "valor": 62300,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.20876133441925,
+          -30.01421388105738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2015,
+        "modelo": "ix35",
+        "marca": "Hyundai",
+        "km": 36000,
+        "cor": "prata",
+        "valor": 98000,
+        "portas": 2,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": false,
+        "acessorios": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.21482849121094,
+          -30.02317843539057
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2014,
+        "modelo": "Golf",
+        "marca": "Wolkswagen",
+        "km": 0,
+        "cor": "verde",
+        "valor": 25000,
+        "portas": 2,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": []
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.19827926158905,
+          -30.01371685874006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2002,
+        "modelo": "Focus",
+        "marca": "Ford",
+        "km": 54000,
+        "cor": "preto",
+        "valor": 25000,
+        "portas": 4,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.195792853832245,
+          -30.026060390667755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 1998,
+        "modelo": "Golf",
+        "marca": "Wolkswagen",
+        "km": 80000,
+        "cor": "azul",
+        "valor": 25000,
+        "portas": 4,
+        "estado": 2,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.1907958984375,
+          -30.041012236500762
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ano": 2015,
+        "modelo": "Celta",
+        "marca": "Chevrolet",
+        "km": 0,
+        "cor": "vermelho",
+        "valor": 25000,
+        "portas": 4,
+        "estado": 1,
+        "contato": {
+          "nomeCompleto": "Nome Completo do Proprietário",
+          "telefone": "(51) 9999-9999",
+          "email": "email@email.com"
+        },
+        "fotos": [
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"},
+          {"nome": "build/img/car.jpg"}
+        ],
+        "acessorios": [
+          {"nome": "Ar-Condicionando"},
+          {"nome": "Direção Hidráulica"},
+          {"nome": "Vidros Elétricos"},
+          {"nome": "Travas Elétricas"},
+          {"nome": "Bancos em Couro"},
+          {"nome": "Multi Media"},
+          {"nome": "Automático"}
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -51.21084004640579,
+          -30.0408288061844
+        ]
+      }
+    }
+  ]
+}

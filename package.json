@@ -1,0 +1,27 @@
+{
+  "name": "autogeo",
+  "version": "1.0.0",
+  "description": "AutoGeo App",
+  "main": "index.html",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "bower": "^1.4.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrecn13/autogeo"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Andre Nunes",
+  "license": "ISC"
+}
