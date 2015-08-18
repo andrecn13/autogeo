@@ -1,6 +1,21 @@
-![Logo](https://github.com/AppAutoGeo/AutoGeo/blob/interface/build/img/rsz_autogeo.png "AutoGeo")
->Sistema para anúncio de automóveis e análise de dados geográficos
+<p align="center">
+<img src="https://github.com/AppAutoGeo/AutoGeo/blob/interface/build/img/rsz_autogeo.png" alt="AutoGeo">
+</p>
 
-O AutoGeo é um sistema na plataforma Web que permite anunciar à venda de automóveis 0km ou seminovos informando a localização do veículo sobre um mapa. O sistema auxilia os lojistas e empreendedores fornecendo informações estatísticas de mercado com base nos anúncios existentes. A aplicação possibilita ao usuário visualizar os anúncios através de uma camada de mapa onde os veículos serão apresentados em forma de pontos sobre o mapa, facilitando assim a visualização de sua localização e permitindo a filtragem destes pontos de forma rápida. Os dados estatísticos estão disponíveis através de camadas, podendo ser atividades e visualizadas a qualquer momento e trazem as principais informações estatísticas como a quantidade do carro pesquisado por município, o preço médio deste carro por regiões, a quantidade deste carro vendido nos últimos anos. Tudo isso para auxiliar os lojistas e empreendedores a tomar melhores decisões ao investir no mercado de automóveis.
+>Webapp para georeferenciamento de automóveis a venda e análise geomarketing
+
+O AutoGeo é um sistema na plataforma Web que permite anunciar a venda de automóveis zero km ou seminovos informando a localização do veículo sobre um mapa. O sistema auxilia os lojistas e empreendedores fornecendo informações estatísticas de mercado com base nos anúncios existentes. A aplicação possibilita ao usuário visualizar os anúncios através de uma camada de pontos geo-referenciados sobre o mapa, facilitando assim a visualização de sua localização e permitindo a filtragem destes anúncios de forma rápida. Os dados estatísticos também estão disponíveis através de camadas, podendo ser atividades e visualizadas a qualquer momento e trazem uma abordagem geo estatísticas dos anúncios para forncer informações sobre o mercado de automoveis. Tudo isso para auxiliar os lojistas e empreendedores a tomar melhores em seus negócios.
+
+
+
+## Tecnologias
+
+Algumas das tecnologias utilizadas são:
+- [Angularjs](https://angularjs.org/)
+- [Leaflet](http://leafletjs.com/)
+- [Spring](https://spring.io/)
+- [Hibernate Spatial](http://www.hibernatespatial.org/)
+- [Geoserver](http://geoserver.org/)
+
 
 > Projeto sendo desenvolvido como TCC(trabalho de conlusão de curso)
