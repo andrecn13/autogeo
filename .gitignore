@@ -1,6 +1,7 @@
 node_modules/
 bower_components/
 target/
+.sass-cache/
 .settings
 .classpath
 .project

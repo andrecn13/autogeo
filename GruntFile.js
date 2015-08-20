@@ -18,6 +18,7 @@ module.exports = function (grunt)
 					'bower_components/angularjs/angular.min.js',
 					'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js',
 					'bower_components/angular-resource/angular-resource.min.js',
+					'bower_components/angular-route/angular-route.min.js',
 					'bower_components/angular-input-masks/angular-input-masks.min.js',
 					'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
 					'bower_components/angular-i18n/angular-locale_pt-br.js'
@@ -26,11 +27,11 @@ module.exports = function (grunt)
 			},
 			css: {
 				src: [
-					'src/main/webapp/sources/css/**/*.css',
+					'bower_components/leaflet/dist/leaflet.css',
 					'bower_components/bootstrap/dist/css/bootstrap.min.css',
 					'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
 				],
-				dest: 'src/main/webapp/build/css/<%= pkg.name %>.css'
+				dest: 'src/main/webapp/build/css/<%= pkg.name %>-deps.css'
 			}
 		},
 		uglify: {
@@ -43,14 +44,22 @@ module.exports = function (grunt)
 				}
 			}
 		},
+		sass: {
+			dist: {
+				files: {
+					'src/main/webapp/build/css/<%= pkg.name %>.css' : 'src/main/webapp/sources/sass/main.scss'
+				}
+			}
+
+		},
 		watch: {
 			scripts: {
 				files: ['src/main/webapp/sources/js/**/*.js'],
 				tasks: ['concat:dist', 'uglify']
 			},
 			styles: {
-				files: ['src/main/webapp/sources/css/**/*.css'],
-				tasks: ['concat:css']
+				files: ['src/main/webapp/sources/css/**/*.css', 'src/main/webapp/sources/sass/**/*.scss'],
+				tasks: ['sass', 'concat:css']
 			}
 		}
 	});
@@ -58,8 +67,9 @@ module.exports = function (grunt)
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-sass');
 
 	//tasks
-	grunt.registerTask('default', ['concat', 'uglify']);
-	grunt.registerTask('build', ['concat', 'uglify']);
+	grunt.registerTask('default', ['sass', 'concat', 'uglify']);
+	grunt.registerTask('build', ['sass', 'concat', 'uglify']);
 }

@@ -30,5 +30,8 @@
     "angular-input-masks": "~1.4.2",
     "angular-i18n": "~1.4.0",
     "angular-bootstrap": "~0.13.0"
+  },
+  "devDependencies": {
+    "angular-route": "~1.4.4"
   }
 }
