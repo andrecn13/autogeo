@@ -1,0 +1,29 @@
+@import 'definitions';
+
+body {
+    padding: 0;
+    margin: 0;    
+}
+html, body{
+    height: 100%;
+}
+header{
+	position: relative;
+    z-index: 200;
+    height: 60px;
+    width: 100%;
+    top: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+#contentContainer{
+	position: relative;
+    width: 100%;
+    height: -webkit-calc(100% - 60px);
+    height: -moz-calc(100% - 60px);
+    height: calc(100% - 60px);
+    overflow: hidden;
+    background: #ffffff;
+}
+

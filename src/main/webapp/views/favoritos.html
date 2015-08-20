@@ -1,0 +1,1 @@
+<h1>favoritos</h1>

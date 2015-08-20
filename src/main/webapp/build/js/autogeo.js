@@ -1,36 +1,61 @@
-var app = angular.module('AutoGeoApp', ["leaflet-directive"]);
+var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute"]);
 
+app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) 
+{
 
-app.controller('MapaCtrl', ['$scope', '$http', '$rootScope', 'MapaService', function ($scope, $http, $rootScope, MapaService) {
-
-	$scope.anunciosMarkers = [];
-    $scope.anunciosMarkers2 = [];
-
-	var promiseAnuncios = MapaService.getAnuncios();
-    promiseAnuncios.then(function(data) {
-        $rootScope.anuncios = data.anuncios;
-        angular.forEach(data.anuncios, function(anuncio, i) {
-            $scope.anunciosMarkers.push({
-                lat: anuncio.geometry.coordinates[1], 
-                lng: anuncio.geometry.coordinates[0], 
-                message: "teste",
-                popupOptions: {minWidth: 100, maxWidth: 100},
-                props: anuncio.properties
-            });
+	$routeProvider
+        .when('/mapa',
+        {
+            templateUrl: "views/mapa.html",
+            controller: "MapaCtrl"
+        })    
+        .when('/favoritos',
+        {
+            templateUrl: "views/favoritos.html",
+            controller: "FavoritosCtrl"
+        })        
+        .otherwise(
+        {
+            template: '<h3><strong>404</strong> Página não encontrada</h3>'
         });
-        $scope.anunciosMarkers2 = $scope.anunciosMarkers;
-    });
 
-    angular.extend($scope, {
-        poa: {
-            lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
+}]);
+ 
+// app.run(function($http) { 
+// 	var user	=	'restclient';
+// 	var psw		=	'restclient';
+
+// 	$http.defaults.headers.common.Authorization = 'Basic '+Base64.encode(user+':'+psw)
+
+// });
+
+
+app.controller('MapaCtrl', ['$scope', 'MapaService', function ($scope, MapaService) {
+
+    $scope.title    =   "Mapa";
+
+	angular.extend($scope, {
         defaults: {
-            scrollWheelZoom: true
+            tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+            maxZoom: 14,
+            path: {
+                weight: 10,
+                color: '#800000',
+                opacity: 1
+            }
+        },
+        center: {
+            lat: 51.505,
+            lng: -0.09,
+            zoom: 8
         }
     });
+
+}]);
+
+app.controller('FavoritosCtrl', ['$scope', function($scope){
+    
+    $scope.title    =   "Meus Favoritos";
 
 }]);
 
