@@ -4,7 +4,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
 {
 
 	$routeProvider
-        .when('/mapa',
+        .when('/', 
         {
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl"
@@ -14,7 +14,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/favoritos.html",
             controller: "FavoritosCtrl"
         })        
-        .otherwise(
+        .otherwise( 
         {
             template: '<h3><strong>404</strong> Página não encontrada</h3>'
         });
@@ -30,24 +30,39 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
 // });
 
 
-app.controller('MapaCtrl', ['$scope', 'MapaService', function ($scope, MapaService) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', 'MapaService', function ($scope, $rootScope, MapaService) {
 
     $scope.title    =   "Mapa";
-
+    $scope.anunciosMarkers = [];
+    $scope.anunciosMarkers2 = [];
+    
+    var icon = {  
+        iconUrl:'build/img/marker-icon.png',
+        iconSize:[25, 41],
+        iconAnchor:[12, 0]  
+    }; 
+    
+    var promiseAnuncios = MapaService.getAnuncios();
+    promiseAnuncios.then(function(data) {
+        $rootScope.anuncios = data.anuncios;
+        angular.forEach(data.anuncios, function(anuncio, i) {
+            $scope.anunciosMarkers.push({
+                lat: anuncio.geometry.coordinates[1], 
+                lng: anuncio.geometry.coordinates[0], 
+                message: "teste",
+                popupOptions: {minWidth: 100, maxWidth: 100},
+                props: anuncio.properties
+            });
+        });
+        $scope.anunciosMarkers2 = $scope.anunciosMarkers;
+    });
+ 
 	angular.extend($scope, {
-        defaults: {
-            tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-            maxZoom: 14,
-            path: {
-                weight: 10,
-                color: '#800000',
-                opacity: 1
-            }
-        },
+        defaults: {},
         center: {
-            lat: 51.505,
-            lng: -0.09,
-            zoom: 8
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
         }
     });
 
@@ -64,7 +79,7 @@ app.factory('MapaService', function($http, $q) {
         getAnuncios: function() {
             
             var d = $q.defer();
-            var url = '/data_sample/carros.json';
+            var url = 'data_sample/carros.json';
             var saida = { anuncios: [] };
 
             $http.get(url)

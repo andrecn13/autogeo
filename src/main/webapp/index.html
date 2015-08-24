@@ -8,30 +8,38 @@
         
         <link rel="stylesheet" href="./build/css/autogeo-deps.css">
         <link rel="stylesheet" href="./build/css/autogeo.css">
+        
+        <script src="./build/js/autogeo-deps.js"></script>
+        <script src="./build/js/autogeo.min.js"></script>
     </head>
     <body>
             
         <header>
-            <div class="col-xs-12 col-sm-4 col-md-5 col-lg-5 pull-left">
-                <div id="logo">
-                    <img src="build/img/autogeo.png" alt="logo_autogeo" width="200" height="35">
-                </div>
+            <div id="logo" class="col-xs-12 col-sm-4 col-md-5 col-lg-3 pull-left">
+				<img src="build/img/autogeo.png" alt="logo_autogeo" width="200" height="35">
             </div>
-            <div class="hidden-xs col-sm-8 col-md-7 col-lg-7 pull-left">
+            <div class="hidden-xs hidden-sm hidden-md col-lg-7 pull-left">
                 <div id="menu">
-                    <a href="#/mapa" class="ativo"><span class="glyphicon glyphicon-globe"></span>Mapa</a>
+                    <a href="#/" class="ativo"><span class="glyphicon glyphicon-globe"></span>Mapa</a>
                     <a href="#/favoritos"><span class="glyphicon glyphicon-star"></span>Meus Favoritos</a>
                     <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Meus Likes</a>
                     <a href="#"><span class="glyphicon glyphicon-bullhorn"></span>Meus Anuncios</a>
                     <a href="#"><span class="glyphicon glyphicon-file"></span>Cadastre-se</a>
                 </div>
             </div>
+            <div id="barraTopo" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
+            	<div class="col-xs-5 col-sm-7 col-md-7 col-lg-7">
+	            	<span>Ative um ou mais filtros</span>
+            	</div>
+            	<div class="col-xs-7 col-sm-5 col-md-5 col-lg-5">
+					<span id="iconeBusca" class="glyphicon glyphicon-search"></span>
+					<input type="text" class="form-control" id="buscaTopo" placeHolder="Onix, Fiesta, etc..." ng-model="filtro.modelo">
+					<span id="tituloBusca">Busca rápida</span>
+				</div>
+            </div>
         </header>
-
+ 
         <div id="contentContainer" ng-view></div>
 
-        <script src="./build/js/autogeo-deps.js"></script>
-        <script src="./build/js/autogeo.min.js"></script>
-    
     </body>
 </html>

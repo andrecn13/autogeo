@@ -5,7 +5,7 @@
 	<groupId>br.autogeo</groupId>
 	<artifactId>autogeo</artifactId>
 
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AutoGeo WebApp</name>
@@ -32,12 +32,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.springframework.boot</groupId> -->
-<!-- 					<artifactId>spring-boot-starter-tomcat</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>

@@ -3,7 +3,7 @@ app.factory('MapaService', function($http, $q) {
         getAnuncios: function() {
             
             var d = $q.defer();
-            var url = '/data_sample/carros.json';
+            var url = 'data_sample/carros.json';
             var saida = { anuncios: [] };
 
             $http.get(url)

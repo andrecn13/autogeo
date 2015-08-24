@@ -4,7 +4,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
 {
 
 	$routeProvider
-        .when('/mapa',
+        .when('/', 
         {
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl"
@@ -14,7 +14,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/favoritos.html",
             controller: "FavoritosCtrl"
         })        
-        .otherwise(
+        .otherwise( 
         {
             template: '<h3><strong>404</strong> Página não encontrada</h3>'
         });

@@ -8,19 +8,111 @@ html, body {
 header {
   position: relative;
   z-index: 200;
-  height: 60px;
+  height: 120px;
   width: 100%;
   top: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none; }
+  header #logo {
+    float: left;
+    display: block;
+    height: 59px; }
+    header #logo img {
+      display: block;
+      margin-top: 10px; }
+  header #menu {
+    float: left; }
+    header #menu a {
+      float: left;
+      display: block;
+      height: 59px;
+      line-height: 59px;
+      font-size: 14px;
+      font-weight: normal;
+      margin-left: 20px;
+      color: #0065ae;
+      font-weight: bold;
+      padding-top: 3px;
+      text-decoration: none; }
+      header #menu a span {
+        float: left;
+        margin-right: 10px;
+        line-height: 55px;
+        height: 55px; }
+    header #menu a.ativo {
+      text-decoration: none;
+      border-top: 3px solid #0065ae;
+      color: #0065ae;
+      padding-top: 0; }
+    header #menu a:hover {
+      text-decoration: none;
+      border-top: 3px solid #0065ae;
+      color: #0065ae;
+      padding-top: 0; }
+  header #barraTopo {
+    background: #0065ae;
+    float: left;
+    height: 61px;
+    font-weight: bold;
+    line-height: 61px;
+    color: #FFF; }
+    header #barraTopo #buscaTopo {
+      margin: 12px auto;
+      width: 30%;
+      float: right;
+      color: #333333;
+      border: 1px solid #fff;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -moz-border-radius-topleft: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 0px;
+      -moz-border-radius-topright: 0px;
+      -moz-border-radius-bottomright: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      box-shadow: none;
+      color: #0065ae; }
+    header #barraTopo #tituloBusca {
+      float: right;
+      height: 59px;
+      font-weight: bold;
+      line-height: 59px;
+      color: #FFF;
+      margin-right: 10px; }
+    header #barraTopo #iconeBusca {
+      color: #0065ae;
+      float: right;
+      background-color: #FFF;
+      height: 34px;
+      margin-top: 11px;
+      line-height: 34px;
+      width: 20px;
+      -webkit-border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -moz-border-radius-topright: 3px;
+      -moz-border-radius-bottomright: 3px;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px; }
+    header #barraTopo ::-webkit-input-placeholder {
+      color: #0065ae; }
+    header #barraTopo :-moz-placeholder {
+      color: #0065ae; }
+    header #barraTopo ::-moz-placeholder {
+      color: #0065ae; }
+    header #barraTopo :-ms-input-placeholder {
+      color: #0065ae; }
 
 #contentContainer {
   position: relative;
   width: 100%;
-  height: -webkit-calc(100% - 60px);
-  height: -moz-calc(100% - 60px);
-  height: calc(100% - 60px);
+  height: -webkit-calc(100% - 120px);
+  height: -moz-calc(100% - 120px);
+  height: calc(100% - 120px);
   overflow: hidden;
   background: #ffffff; }
 
