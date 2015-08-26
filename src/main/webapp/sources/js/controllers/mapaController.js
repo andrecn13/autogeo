@@ -1,8 +1,46 @@
-app.controller('MapaCtrl', ['$scope', '$rootScope', 'MapaService', function ($scope, $rootScope, MapaService) {
-
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', function ($scope, $rootScope, $filter, MapaService) {
+	
     $scope.title    =   "Mapa";
+    
     $scope.anunciosMarkers = [];
     $scope.anunciosMarkers2 = [];
+    
+    $scope.enableMenu = false;
+    $scope.marcas   = [{nome: "Selecione uma marca"},{nome: "Chevrolet"},{nome: "Ford"},{nome: "Fiat"},{nome: "Wolkswagen"},{nome: "Renault"},{nome: "Pegeout"},{nome: "Toyota"}]
+    $scope.filtro = {
+        preco: {
+            minVal              :   "",
+            maxVal              :   "",
+            ativo               : false
+        },
+        km: {
+            minKm               :   "",
+            maxKm               :   "", 
+            ativo               : false
+        },
+        ano: {
+            minAno              :   "",
+            maxAno              :   "", 
+            ativo               : false
+        },
+        marca:{
+            marca               :   "",
+            ativo               : false
+        },
+        modelo              :   "",
+        portas: {
+            qtdPortas           :   0,
+            ativo               : false
+        },
+        estado: {
+            estadoAutomovel     :   0,
+            ativo               : false
+        },
+        fotos: {
+            fotos               :   0,
+            ativo               : false
+        }
+    };
     
     var icon = {  
         iconUrl:'build/img/marker-icon.png',
@@ -17,7 +55,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', 'MapaService', function ($sc
             $scope.anunciosMarkers.push({
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
-                message: "teste",
+                message: anuncio.properties.marca +' - '+anuncio.properties.modelo,
                 popupOptions: {minWidth: 100, maxWidth: 100},
                 props: anuncio.properties
             });
@@ -33,6 +71,57 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', 'MapaService', function ($sc
             zoom: 12
         }
     });
+	
+	//Filtro por modelo - busca rapida
+    $scope.$watch('filtro.modelo', function (newVal, oldVal) {
+    	console.log("Filtro");
+        $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2,  $scope.filtro);
+    });
+
+    //Filtro geral
+    $scope.filtrarAnuncio = function(){
+        $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro);
+    };
+
+    $scope.limparFiltro = function(type){
+        switch(type){
+            case "preco":
+                $scope.filtro.preco.minVal = "";
+                $scope.filtro.preco.maxVal = "";
+                $scope.filtro.preco.ativo = false;
+                break; 
+            case "km":
+                $scope.filtro.km.minKm = "";
+                $scope.filtro.km.maxKm = "";
+                $scope.filtro.km.ativo = false;
+                break;
+            case "ano":
+                $scope.filtro.ano.minAno = "";
+                $scope.filtro.ano.maxAno = "";
+                $scope.filtro.ano.ativo = false;
+                break;
+            case "marca":
+                $scope.filtro.marca.marca = $scope.marcas[0];
+                $scope.filtro.marca.ativo = false;
+                break;
+            case "portas":
+                $scope.filtro.portas.qtdPortas = 0;
+                $scope.filtro.portas.ativo = false;
+                break;
+            case "estado":
+                $scope.filtro.estado.estadoAutomovel = 0;
+                $scope.filtro.estado.ativo = false;
+                break;
+            case "fotos":
+                $scope.filtro.fotos.fotos = 0;
+                $scope.filtro.fotos.ativo = false;
+                break;
+            default:
+                $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro); 
+        }
+        $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro); 
+        
+    };
 
 }]);
 

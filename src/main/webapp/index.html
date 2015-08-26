@@ -1,10 +1,10 @@
 <!doctype html>
 <html ng-app="AutoGeoApp">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="description" content="autogeo">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>AutoGeo WebApp :: {{title}}</title>
+        <title>AutoGeo WebApp</title>
         
         <link rel="stylesheet" href="./build/css/autogeo-deps.css">
         <link rel="stylesheet" href="./build/css/autogeo.css">
@@ -20,23 +20,13 @@
             </div>
             <div class="hidden-xs hidden-sm hidden-md col-lg-7 pull-left">
                 <div id="menu">
-                    <a href="#/" class="ativo"><span class="glyphicon glyphicon-globe"></span>Mapa</a>
-                    <a href="#/favoritos"><span class="glyphicon glyphicon-star"></span>Meus Favoritos</a>
-                    <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>Meus Likes</a>
-                    <a href="#"><span class="glyphicon glyphicon-bullhorn"></span>Meus Anuncios</a>
-                    <a href="#"><span class="glyphicon glyphicon-file"></span>Cadastre-se</a>
+                    <a href="#/" active-link="ativo"><span class="glyphicon glyphicon-globe"></span>Mapa</a>
+                    <a href="#/favoritos" active-link="ativo"><span class="glyphicon glyphicon-star"></span>Meus Favoritos</a>
+                    <a href="#" ><span class="glyphicon glyphicon-thumbs-up"></span>Meus Likes</a>
+                    <a href="#" ><span class="glyphicon glyphicon-bullhorn"></span>Meus Anuncios</a>
+                    <a href="#" ><span class="glyphicon glyphicon-file"></span>Cadastre-se</a>
                 </div>
-            </div>
-            <div id="barraTopo" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-            	<div class="col-xs-5 col-sm-7 col-md-7 col-lg-7">
-	            	<span>Ative um ou mais filtros</span>
-            	</div>
-            	<div class="col-xs-7 col-sm-5 col-md-5 col-lg-5">
-					<span id="iconeBusca" class="glyphicon glyphicon-search"></span>
-					<input type="text" class="form-control" id="buscaTopo" placeHolder="Onix, Fiesta, etc..." ng-model="filtro.modelo">
-					<span id="tituloBusca">Busca rápida</span>
-				</div>
-            </div>
+            </div>            
         </header>
  
         <div id="contentContainer" ng-view></div>

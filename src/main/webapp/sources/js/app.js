@@ -1,4 +1,4 @@
-var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute"]);
+var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute", "ui.utils.masks", "ui.bootstrap"]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) 
 {
