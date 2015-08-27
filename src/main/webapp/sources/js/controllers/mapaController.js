@@ -1,4 +1,4 @@
-app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', function ($scope, $rootScope, $filter, MapaService) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
 	
     $scope.title    =   "Mapa";
     
@@ -46,7 +46,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
         iconUrl:'build/img/marker-icon.png',
         iconSize:[25, 41],
         iconAnchor:[12, 0]  
-    }; 
+    };  
     
     var promiseAnuncios = MapaService.getAnuncios();
     promiseAnuncios.then(function(data) {
@@ -55,8 +55,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
             $scope.anunciosMarkers.push({
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
-                message: anuncio.properties.marca +' - '+anuncio.properties.modelo,
-                popupOptions: {minWidth: 100, maxWidth: 100},
+                message: "<popup anuncio='anuncios[" + i + "]'></popup>",
+                popupOptions: {minWidth: 200, maxWidth: 200},
                 props: anuncio.properties
             });
         });
@@ -74,7 +74,6 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
 	
 	//Filtro por modelo - busca rapida
     $scope.$watch('filtro.modelo', function (newVal, oldVal) {
-    	console.log("Filtro");
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2,  $scope.filtro);
     });
 
@@ -122,7 +121,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro); 
         
     };
-
+    
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', function($scope){

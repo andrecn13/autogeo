@@ -17,6 +17,16 @@ app.directive('enableMenu', function(){
     }
 });
 
+app.directive('popup', [ function() {
+    return {
+        restrict: 'E',
+        scope: {
+            anuncio: "="
+        },
+        templateUrl: 'partials/popup.html',
+        controller: 'PopUpCtrl'
+    };
+}]);
 
 app.directive('activeLink', ['$location', function (location) {
   return {

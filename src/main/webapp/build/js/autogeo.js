@@ -30,7 +30,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
 // });
 
 
-app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', function ($scope, $rootScope, $filter, MapaService) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
 	
     $scope.title    =   "Mapa";
     
@@ -78,7 +78,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
         iconUrl:'build/img/marker-icon.png',
         iconSize:[25, 41],
         iconAnchor:[12, 0]  
-    }; 
+    };  
     
     var promiseAnuncios = MapaService.getAnuncios();
     promiseAnuncios.then(function(data) {
@@ -87,8 +87,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
             $scope.anunciosMarkers.push({
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
-                message: anuncio.properties.marca +' - '+anuncio.properties.modelo,
-                popupOptions: {minWidth: 100, maxWidth: 100},
+                message: "<popup anuncio='anuncios[" + i + "]'></popup>",
+                popupOptions: {minWidth: 200, maxWidth: 200},
                 props: anuncio.properties
             });
         });
@@ -106,7 +106,6 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
 	
 	//Filtro por modelo - busca rapida
     $scope.$watch('filtro.modelo', function (newVal, oldVal) {
-    	console.log("Filtro");
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2,  $scope.filtro);
     });
 
@@ -154,7 +153,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', 'MapaService', fu
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro); 
         
     };
-
+    
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', function($scope){
@@ -162,6 +161,34 @@ app.controller('FavoritosCtrl', ['$scope', function($scope){
     $scope.title    =   "Meus Favoritos";
 
 }]);
+
+app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
+
+	$scope.openDetail = function () {
+		var modalInstance = $modal.open({
+			animation: true,
+			templateUrl: 'partials/modal.html',
+			controller: 'ModalInstanceCtrl',
+			size: 'lg',
+			resolve: {
+			    anuncio: function () {
+			      return $scope.anuncio;
+			    }
+			}
+		});
+	}
+	
+}]);
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, anuncio) {
+	
+	$scope.anuncio = anuncio;
+
+	$scope.ok = function () {
+		$modalInstance.dismiss('cancel');
+	};
+
+});
 
 app.directive('enableMenu', function(){
     return{
@@ -182,6 +209,16 @@ app.directive('enableMenu', function(){
     }
 });
 
+app.directive('popup', [ function() {
+    return {
+        restrict: 'E',
+        scope: {
+            anuncio: "="
+        },
+        templateUrl: 'partials/popup.html',
+        controller: 'PopUpCtrl'
+    };
+}]);
 
 app.directive('activeLink', ['$location', function (location) {
   return {

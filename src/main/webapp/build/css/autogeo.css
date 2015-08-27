@@ -3,7 +3,11 @@ body {
   margin: 0; }
 
 html, body {
-  height: 100%; }
+  height: 100%;
+  font-family: "Roboto", Arial, sans-serif;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased; }
 
 header {
   position: relative;
@@ -28,11 +32,10 @@ header {
       display: block;
       height: 59px;
       line-height: 59px;
-      font-size: 14px;
-      font-weight: normal;
+      font-size: 1em;
+      font-weight: 300;
       margin-left: 20px;
       color: #0065ae;
-      font-weight: bold;
       padding-top: 3px;
       text-decoration: none;
       -webkit-user-select: none;
@@ -61,7 +64,6 @@ header {
   background: #0065ae;
   float: left;
   height: 61px;
-  font-weight: bold;
   line-height: 61px;
   color: #FFF;
   -webkit-user-select: none;
@@ -90,7 +92,6 @@ header {
   #barraTopo #tituloBusca {
     float: right;
     height: 59px;
-    font-weight: bold;
     line-height: 59px;
     color: #FFF;
     margin-right: 10px; }
@@ -165,7 +166,6 @@ header {
 #filtroTopo {
   float: left;
   height: 59px;
-  font-weight: bold;
   line-height: 59px;
   color: #FFF;
   z-index: 100000; }
@@ -250,7 +250,6 @@ header {
   line-height: 55px;
   text-transform: uppercase;
   color: #0065ae;
-  font-weight: bold;
   font-size: 12px;
   padding: 0px;
   margin: 0;
