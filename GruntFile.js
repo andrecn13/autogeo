@@ -15,6 +15,7 @@ module.exports = function (grunt)
 					'bower_components/jquery/dist/jquery.min.js',
 					'bower_components/bootstrap/dist/js/bootstrap.min.js',
 					'bower_components/leaflet/dist/leaflet.js',
+					'bower_components/leaflet.markercluster/dist/leaflet.markercluster.js',
 					'bower_components/angularjs/angular.min.js',
 					'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js',
 					'bower_components/angular-resource/angular-resource.min.js',
@@ -28,6 +29,8 @@ module.exports = function (grunt)
 			css: {
 				src: [
 					'bower_components/leaflet/dist/leaflet.css',
+					'bower_components/leaflet.markercluster/dist/MarkerCluster.css',
+					'bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css',
 					'bower_components/bootstrap/dist/css/bootstrap.min.css',
 					'bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css'
 				],

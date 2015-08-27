@@ -53,6 +53,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         $rootScope.anuncios = data.anuncios;
         angular.forEach(data.anuncios, function(anuncio, i) {
             $scope.anunciosMarkers.push({
+            	layer: 'realworld',
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
@@ -69,6 +70,22 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         	lat: -30.0257548,
             lng: -51.1833013,
             zoom: 12
+        },
+        layers: {
+            baselayers: {
+                osm: {
+                    name: 'OpenStreetMap',
+                    type: 'xyz',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                }
+            },
+            overlays: {
+                realworld: {
+                    name: "Real world data",
+                    type: "markercluster",
+                    visible: true
+                }
+            }
         }
     });
 	
