@@ -34,12 +34,18 @@ header {
       color: #0065ae;
       font-weight: bold;
       padding-top: 3px;
-      text-decoration: none; }
+      text-decoration: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none; }
       header #menu a span {
         float: left;
         margin-right: 10px;
         line-height: 55px;
-        height: 55px; }
+        height: 55px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none; }
     header #menu a.ativo {
       text-decoration: none;
       border-top: 3px solid #0065ae;
@@ -57,7 +63,10 @@ header {
   height: 61px;
   font-weight: bold;
   line-height: 61px;
-  color: #FFF; }
+  color: #FFF;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; }
   #barraTopo #buscaTopo {
     margin: 12px auto;
     width: 30%;
@@ -252,32 +261,46 @@ header {
   padding-left: 5px;
   float: left;
   height: 35px;
-  border-radius: 2px;
-  background: #d9d9d9;
+  border-radius: 3px;
   box-shadow: none;
-  border: none; }
+  border: 1px solid #d6d6d6;
+  color: #4c4a4a;
+  background: #f1f1f1; }
 
 .btnFiltro {
   float: left;
   margin-top: 30px;
-  background-color: #5acebd;
-  border: none;
-  color: #FFF;
-  font-size: 13px;
-  width: 50%;
+  background-color: transparent;
+  width: 120px;
   height: 40px;
-  line-height: 40px; }
+  line-height: 40px;
+  border: 1px solid #5acebd;
+  color: #5acebd;
+  font-size: 13px;
+  font-weight: normal;
+  border-radius: 3px; }
+  .btnFiltro:hover {
+    color: #FFF;
+    background-color: #5acebd;
+    text-shadow: 0px 1px 0px #34aa99; }
 
 .btnLimparFiltro {
   float: left;
   margin-top: 30px;
-  background-color: #e05050;
-  width: 50%;
+  background-color: transparent;
+  width: 120px;
   height: 40px;
   line-height: 40px;
-  border: none;
-  color: #FFF;
-  font-size: 13px; }
+  border: 1px solid #e05050;
+  color: #e05050;
+  font-size: 13px;
+  font-weight: normal;
+  margin-right: 10px;
+  border-radius: 3px; }
+  .btnLimparFiltro:hover {
+    color: #FFF;
+    background-color: #e05050;
+    text-shadow: 0px 1px 0px #c64343; }
 
 .selectFiltro {
   width: 100%;
