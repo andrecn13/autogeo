@@ -4,18 +4,20 @@ body {
     padding: 0;
     margin: 0;
     
-    label{
-    	font-weight:500;
-    	color: #8C8899;
-    }
-    .form-control{
-    	box-shadow: none;
-    	background: #F5F5F5;
-    }    
     .page-header{
-    	border-bottom: 1px solid #c9c9c9;
+    	border-bottom: 1px solid #d3d8db;
     	font-weight:500;
     	color: #595959;
+    	
+    	h3{
+    		color: #4c5557;
+    		font-weight: 200;
+    	}
+
+    	.help-block{
+    		color: #607d8b;
+    		font-weight: 200;
+    	}
     }    
 }
 html, body{
@@ -31,7 +33,7 @@ header{
     height: 60px;
     width: 100%;
     top: 0;
-    border-bottom: 1px solid $cor-principal;
+    border-bottom: 1px solid #007DC6;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -51,19 +53,21 @@ header{
     
     #menu{
 		float: left;
+	    margin-top: 5px;
 		
 		a{
 		
 			float: left;
 			display: block;
-			height: 59px;
-			line-height: 59px;
-			font-size: 1em;
-			font-weight: 300;
-			margin-left: 20px;
-			color: $cor-principal;
+			height: 45px;
+			line-height: 45px;
+			font-size: 0.8em;
+		    font-weight: 400;
+		    margin-left: 20px;
+		    color: #8b9293;
 			padding-top: 3px;
 			text-decoration: none;
+			text-transform: uppercase;
 			-webkit-user-select: none;
 		    -moz-user-select: none;
 		    -ms-user-select: none;
@@ -80,16 +84,23 @@ header{
 		}
 		a.ativo{
 			text-decoration: none;
-			border-top: 3px solid $cor-principal;
+			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
 			padding-top: 0;
-			font-weight:500;
+			height: 38px;
+    		line-height: 50px;
 		}
 		a:hover{
 			text-decoration: none;
-			border-top: 3px solid $cor-principal;
+			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
 			padding-top: 0;
+			height: 38px;
+    		line-height: 50px;
+			-webkit-transition: border-color 0.5s ease;
+			-moz-transition: border-color 0.5s ease;
+			-o-transition: border-color 0.5s ease;
+			transition: border-color 0.5s ease;
 		}
 		
 	}
@@ -393,7 +404,7 @@ header{
     height: -moz-calc(100% - 60px);
     height: calc(100% - 60px);
     overflow: hidden;
-    background: #FFF;
+    background: #F5F8FA;
 }
 #containerMapa{
 	position: relative;
@@ -407,23 +418,46 @@ header{
 .btnCadastro{
 	float: right;
 	margin-top: 30px;
-	background-color: transparent;
 	width: 120px;
 	height: 40px;
 	line-height: 40px;
-	border:1px solid $cor-principal;
-	color: $cor-principal;
+	border:1px solid #35b7ce;
+	color: #FFF;
 	font-size: 13px;
 	font-weight:normal;
 	border-radius:3px;
 	padding:0;
+	background-color: #35b7ce;
 	
 	&:hover{
-		color:#FFF;
-		background-color: $cor-principal;
+		background-color: #1aa4bc;
+		color: #FFF;
+		-webkit-transition: background-color 0.5s ease;
+		-moz-transition: background-color 0.5s ease;
+		-o-transition: background-color 0.5s ease;
+		transition: background-color 0.5s ease;
 	}
 }
 .formContainer{
 	background:transparent;
 	padding: 20px 0 20px 0;
+	
+	label{
+    	font-weight:500;
+    	color: #4c5557;
+    }
+    .form-control{
+    	box-shadow: none;
+    	background: #FFF;
+    	height: 40px;
+    	line-height: 40px;
+	    border: 1px solid #d3d8db;
+	    color: #444444;
+	    font-weight: 200;
+	    
+	    &:focus{
+   	 		border: 1px solid #35b7ce;
+   	 		box-shadow: none;
+	    }
+    }    
 }

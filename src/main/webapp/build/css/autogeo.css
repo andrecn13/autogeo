@@ -1,16 +1,16 @@
 body {
   padding: 0;
   margin: 0; }
-  body label {
-    font-weight: 500;
-    color: #8C8899; }
-  body .form-control {
-    box-shadow: none;
-    background: #F5F5F5; }
   body .page-header {
-    border-bottom: 1px solid #c9c9c9;
+    border-bottom: 1px solid #d3d8db;
     font-weight: 500;
     color: #595959; }
+    body .page-header h3 {
+      color: #4c5557;
+      font-weight: 200; }
+    body .page-header .help-block {
+      color: #607d8b;
+      font-weight: 200; }
 
 html, body {
   height: 100%;
@@ -25,7 +25,7 @@ header {
   height: 60px;
   width: 100%;
   top: 0;
-  border-bottom: 1px solid #0065ae;
+  border-bottom: 1px solid #007DC6;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none; }
@@ -37,18 +37,20 @@ header {
       display: block;
       margin-top: 10px; }
   header #menu {
-    float: left; }
+    float: left;
+    margin-top: 5px; }
     header #menu a {
       float: left;
       display: block;
-      height: 59px;
-      line-height: 59px;
-      font-size: 1em;
-      font-weight: 300;
+      height: 45px;
+      line-height: 45px;
+      font-size: 0.8em;
+      font-weight: 400;
       margin-left: 20px;
-      color: #0065ae;
+      color: #8b9293;
       padding-top: 3px;
       text-decoration: none;
+      text-transform: uppercase;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none; }
@@ -62,15 +64,22 @@ header {
         -ms-user-select: none; }
     header #menu a.ativo {
       text-decoration: none;
-      border-top: 3px solid #0065ae;
+      border-bottom: 3px solid #0065ae;
       color: #0065ae;
       padding-top: 0;
-      font-weight: 500; }
+      height: 38px;
+      line-height: 50px; }
     header #menu a:hover {
       text-decoration: none;
-      border-top: 3px solid #0065ae;
+      border-bottom: 3px solid #0065ae;
       color: #0065ae;
-      padding-top: 0; }
+      padding-top: 0;
+      height: 38px;
+      line-height: 50px;
+      -webkit-transition: border-color 0.5s ease;
+      -moz-transition: border-color 0.5s ease;
+      -o-transition: border-color 0.5s ease;
+      transition: border-color 0.5s ease; }
 
 #barraTopo {
   background: #0065ae;
@@ -344,7 +353,7 @@ header {
   height: -moz-calc(100% - 60px);
   height: calc(100% - 60px);
   overflow: hidden;
-  background: #FFF; }
+  background: #F5F8FA; }
 
 #containerMapa {
   position: relative;
@@ -358,22 +367,40 @@ header {
 .btnCadastro {
   float: right;
   margin-top: 30px;
-  background-color: transparent;
   width: 120px;
   height: 40px;
   line-height: 40px;
-  border: 1px solid #0065ae;
-  color: #0065ae;
+  border: 1px solid #35b7ce;
+  color: #FFF;
   font-size: 13px;
   font-weight: normal;
   border-radius: 3px;
-  padding: 0; }
+  padding: 0;
+  background-color: #35b7ce; }
   .btnCadastro:hover {
+    background-color: #1aa4bc;
     color: #FFF;
-    background-color: #0065ae; }
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease; }
 
 .formContainer {
   background: transparent;
   padding: 20px 0 20px 0; }
+  .formContainer label {
+    font-weight: 500;
+    color: #4c5557; }
+  .formContainer .form-control {
+    box-shadow: none;
+    background: #FFF;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #d3d8db;
+    color: #444444;
+    font-weight: 200; }
+    .formContainer .form-control:focus {
+      border: 1px solid #35b7ce;
+      box-shadow: none; }
 
 /*# sourceMappingURL=autogeo.css.map */

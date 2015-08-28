@@ -1,38 +1,41 @@
 <meta charset="UTF-8">
 
-<div class="container">
+<div class="row col-sm-6 col-sm-offset-3">
 	
-	<h3 class="page-header">Dados Pessoais</h3>
+	<div class="page-header">
+		<h3 class="text-center">Dados Pessoais</h3>
+		<span class="help-block text-center">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+	</div>
 	
 	<div class="formContainer">
 		<form class="form-horizontal">
 			<div class="form-group">
 				<label for="nome" class="col-sm-3 control-label">Nome</label>
-			    <div class="col-sm-6">
+			    <div class="col-sm-8">
 					<input type="text" class="form-control" id="nome" placeholder="Seu Nome">
 			    </div>
 			</div>
 			<div class="form-group">
 				<label for="sobrenome" class="col-sm-3 control-label">Sobre Nome</label>
-				<div class="col-sm-6">
-					<input type="email" class="form-control" id="sobrenome" placeholder="Seu Sobre Nome">
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="sobrenome" placeholder="Seu Sobre Nome">
 				</div>
 			</div>	
 			<div class="form-group">
 				<label for="cpf" class="col-sm-3 control-label">Cpf</label>
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					<input type="text" class="form-control" id="cpf" placeholder="Seu CPF">
 				</div>
 			</div>			
 			<div class="form-group">
 				<label for="telefone" class="col-sm-3 control-label">Telefone</label>
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					<input type="tel" class="form-control" id="telefone" placeholder="Seu Telefone">
 				</div>
 			</div>			
 			<div class="form-group">
 				<label for="celular" class="col-sm-3 control-label">Celular</label>
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					<input type="tel" class="form-control" id="celular" placeholder="Seu Celular">
 				</div>
 			</div>			
@@ -48,9 +51,27 @@
 						<input type="radio" name="whatsapp" value="0" > Não
 					</label>
 				</div>
-			</div>			
+			</div>	
+				
+			<div class="page-header">
+				<h3 class="text-center">Dados de Login</h3>
+				<span class="help-block text-center">Preencha os dados de seu login para acessar o sistema.</span>
+			</div>	
 			<div class="form-group">
-				<div class="col-sm-9">
+				<label for="email" class="col-sm-3 control-label">Email</label>
+				<div class="col-sm-8">
+					<input type="tel" class="form-control" id="email" placeholder="Seu Email">
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="senha" class="col-sm-3 control-label">Senha</label>
+				<div class="col-sm-8">
+					<input type="password" class="form-control" id="senha" placeholder="Sua Senha">
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<div class="col-sm-11">
 					<button type="submit" class="btn btnCadastro">Cadastrar</button>
 				</div>
 			</div>
