@@ -13,7 +13,12 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         {
             templateUrl: "views/favoritos.html",
             controller: "FavoritosCtrl"
-        })        
+        })   
+        .when('/cadastro',
+        {
+            templateUrl: "views/cadastro.html",
+            controller: "CadastroCtrl"
+        })  
         .otherwise( 
         {
             template: '<h3><strong>404</strong> Página não encontrada</h3>'
@@ -29,6 +34,18 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
 
 // });
 
+
+app.controller('CadastroCtrl', ['$scope', function($scope){
+    
+    $scope.title    =   "Cadastro";
+
+}]);
+
+app.controller('FavoritosCtrl', ['$scope', function($scope){
+    
+    $scope.title    =   "Meus Favoritos";
+
+}]);
 
 app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
 	
@@ -85,7 +102,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         $rootScope.anuncios = data.anuncios;
         angular.forEach(data.anuncios, function(anuncio, i) {
             $scope.anunciosMarkers.push({
-            	layer: 'realworld',
+            	layer: 'anuncios',
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
@@ -112,8 +129,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 }
             },
             overlays: {
-                realworld: {
-                    name: "Real world data",
+                anuncios: {
+                    name: "Anúncios",
                     type: "markercluster",
                     visible: true
                 }
@@ -173,11 +190,16 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     
 }]);
 
-app.controller('FavoritosCtrl', ['$scope', function($scope){
-    
-    $scope.title    =   "Meus Favoritos";
 
-}]);
+app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio) {
+	
+	$scope.anuncio = anuncio;
+
+	$scope.ok = function () {
+		$modalInstance.dismiss('cancel');
+	};
+
+});
 
 app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 
@@ -185,7 +207,7 @@ app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 		var modalInstance = $modal.open({
 			animation: true,
 			templateUrl: 'partials/modal.html',
-			controller: 'ModalInstanceCtrl',
+			controller: 'ModalCtrl',
 			size: 'lg',
 			resolve: {
 			    anuncio: function () {
@@ -196,16 +218,6 @@ app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 	}
 	
 }]);
-
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, anuncio) {
-	
-	$scope.anuncio = anuncio;
-
-	$scope.ok = function () {
-		$modalInstance.dismiss('cancel');
-	};
-
-});
 
 app.directive('enableMenu', function(){
     return{

@@ -15,6 +15,7 @@ header {
   height: 60px;
   width: 100%;
   top: 0;
+  border-bottom: 1px solid #0065ae;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none; }
@@ -53,7 +54,8 @@ header {
       text-decoration: none;
       border-top: 3px solid #0065ae;
       color: #0065ae;
-      padding-top: 0; }
+      padding-top: 0;
+      font-weight: 500; }
     header #menu a:hover {
       text-decoration: none;
       border-top: 3px solid #0065ae;
@@ -332,7 +334,7 @@ header {
   height: -moz-calc(100% - 60px);
   height: calc(100% - 60px);
   overflow: hidden;
-  background: #ffffff; }
+  background: #F7F7F7; }
 
 #containerMapa {
   position: relative;

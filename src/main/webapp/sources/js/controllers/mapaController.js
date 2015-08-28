@@ -53,7 +53,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         $rootScope.anuncios = data.anuncios;
         angular.forEach(data.anuncios, function(anuncio, i) {
             $scope.anunciosMarkers.push({
-            	layer: 'realworld',
+            	layer: 'anuncios',
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
@@ -80,8 +80,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 }
             },
             overlays: {
-                realworld: {
-                    name: "Real world data",
+                anuncios: {
+                    name: "Anúncios",
                     type: "markercluster",
                     visible: true
                 }
@@ -139,10 +139,4 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         
     };
     
-}]);
-
-app.controller('FavoritosCtrl', ['$scope', function($scope){
-    
-    $scope.title    =   "Meus Favoritos";
-
 }]);
