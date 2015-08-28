@@ -2,7 +2,21 @@
 
 body {
     padding: 0;
-    margin: 0;    
+    margin: 0;
+    
+    label{
+    	font-weight:500;
+    	color: #8C8899;
+    }
+    .form-control{
+    	box-shadow: none;
+    	background: #F5F5F5;
+    }    
+    .page-header{
+    	border-bottom: 1px solid #c9c9c9;
+    	font-weight:500;
+    	color: #595959;
+    }    
 }
 html, body{
     height: 100%;
@@ -379,7 +393,7 @@ header{
     height: -moz-calc(100% - 60px);
     height: calc(100% - 60px);
     overflow: hidden;
-    background: #F7F7F7;
+    background: #FFF;
 }
 #containerMapa{
 	position: relative;
@@ -389,4 +403,27 @@ header{
     height: calc(100% - 60px);
     overflow: hidden;
     background: #ffffff;
+}
+.btnCadastro{
+	float: right;
+	margin-top: 30px;
+	background-color: transparent;
+	width: 120px;
+	height: 40px;
+	line-height: 40px;
+	border:1px solid $cor-principal;
+	color: $cor-principal;
+	font-size: 13px;
+	font-weight:normal;
+	border-radius:3px;
+	padding:0;
+	
+	&:hover{
+		color:#FFF;
+		background-color: $cor-principal;
+	}
+}
+.formContainer{
+	background:transparent;
+	padding: 20px 0 20px 0;
 }
