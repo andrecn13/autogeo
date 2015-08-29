@@ -46,3 +46,16 @@ app.directive('activeLink', ['$location', function (location) {
     }
   };
 }]);
+
+app.directive('overflowDirective', ['$location', function(location){
+	return{
+		restrict: 'A',
+		link: function(scope, element, attrs){
+			if(location.path() != '/'){
+				$(element).css('overflow', 'auto');
+			}else{
+				$(element).css('overflow', 'hidden');
+			}
+		}
+	};
+}]);

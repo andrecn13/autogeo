@@ -14,10 +14,10 @@
     <body>
             
         <header>
-            <div id="logo" class="col-xs-12 col-sm-4 col-md-5 col-lg-3 pull-left">
+            <div id="logo" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 pull-left">
 				<img src="build/img/autogeo.png" alt="logo_autogeo" width="200" height="35">
             </div>
-            <div class="hidden-xs hidden-sm hidden-md col-lg-7 pull-left">
+            <div class="hidden-xs hidden-sm col-md-6 col-lg-7 pull-left">
                 <div id="menu">
                     <a href="#/" active-link="ativo">Mapa</a>
                     <a href="#/favoritos" active-link="ativo">Meus Favoritos</a>
@@ -28,7 +28,7 @@
             </div>            
         </header>
  
-        <div id="contentContainer" ng-view></div>
+        <div id="contentContainer" overflow-directive ng-view></div>
 		
 		<script src="./build/js/autogeo-deps.js"></script>
         <script src="./build/js/autogeo.min.js"></script>
