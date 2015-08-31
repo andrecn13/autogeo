@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "TBL_USUARIO")
 public class Usuario implements Serializable {
@@ -24,7 +26,7 @@ public class Usuario implements Serializable {
 	private String senha;
 	private String nome;
 	private String sobreNome;
-	private Long cpf;
+	private String cpf;
 	private Long telefone;
 	private Long celular;
 	private Boolean whatsapp;
@@ -81,11 +83,11 @@ public class Usuario implements Serializable {
 	}
 
 	@Column(name = "NUM_CPF")
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

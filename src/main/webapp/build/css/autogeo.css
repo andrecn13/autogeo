@@ -67,15 +67,15 @@ header {
       border-bottom: 3px solid #0065ae;
       color: #0065ae;
       padding-top: 0;
-      height: 38px;
-      line-height: 50px; }
+      height: 39px;
+      line-height: 52px; }
     header #menu a:hover {
       text-decoration: none;
       border-bottom: 3px solid #0065ae;
       color: #0065ae;
       padding-top: 0;
-      height: 38px;
-      line-height: 50px;
+      height: 39px;
+      line-height: 52px;
       -webkit-transition: border-color 0.5s ease;
       -moz-transition: border-color 0.5s ease;
       -o-transition: border-color 0.5s ease;
@@ -369,15 +369,17 @@ header {
   width: 120px;
   height: 40px;
   line-height: 40px;
-  border: 1px solid #35b7ce;
+  border: 1px solid #0065ae;
   color: #FFF;
   font-size: 13px;
   font-weight: normal;
   border-radius: 3px;
   padding: 0;
-  background-color: #35b7ce; }
+  background-color: #0065ae;
+  text-decoration: none; }
   .btnCadastro:hover {
-    background-color: #1aa4bc;
+    background-color: #0482d6;
+    border: 1px solid #0482d6;
     color: #FFF;
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
@@ -399,7 +401,7 @@ header {
     color: #444444;
     font-weight: 200; }
     .formContainer .form-control:focus {
-      border: 1px solid #35b7ce;
+      border: 1px solid #0065ae;
       box-shadow: none; }
 
 /*# sourceMappingURL=autogeo.css.map */

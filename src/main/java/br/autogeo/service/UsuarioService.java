@@ -6,17 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.autogeo.model.Contato;
-import br.autogeo.repository.ContatoRepository;
+import br.autogeo.model.Usuario;
+import br.autogeo.repository.UsuarioRepository;
 
 @Component
 @Transactional
-public class ContatoService {
+public class UsuarioService {
 	
 	@Autowired
-	private ContatoRepository repository;
+	private UsuarioRepository repository;
 	
-	public List<Contato> getAll(){
+	public Usuario salvarUsuario(Usuario user){
+		return repository.saveAndFlush(user);
+	}
+	
+	public List<Usuario> lista(){
 		return repository.findAll();
 	}
+
 }
