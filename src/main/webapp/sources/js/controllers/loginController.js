@@ -20,4 +20,5 @@ app.controller('LoginCtrl', ['$scope', '$location', '$window', 'LoginService', '
         }
     }
     
+    
 }]);

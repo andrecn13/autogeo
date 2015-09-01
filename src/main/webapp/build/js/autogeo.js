@@ -22,6 +22,12 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             controller: "CadastroCtrl",
             access: {requiredLogin: false}
         })  
+        .when('/anuncios',
+        {
+            templateUrl: "views/anuncios.html",
+            controller: "AnuncioCtrl",
+            access: {requiredLogin: true}
+        })  
         .when('/login',
         {
             templateUrl: "views/login.html",
@@ -46,6 +52,11 @@ app.run(function($rootScope, $location, AuthenticationService) {
     });
 });
 
+
+app.controller('AnuncioCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+    
+    $scope.title    =   "Meus Anuncios";
+}]);
 
 app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
     
@@ -92,6 +103,7 @@ app.controller('LoginCtrl', ['$scope', '$location', '$window', 'LoginService', '
             $location.path("/login");
         }
     }
+    
     
 }]);
 

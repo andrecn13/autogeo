@@ -22,6 +22,12 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             controller: "CadastroCtrl",
             access: {requiredLogin: false}
         })  
+        .when('/anuncios',
+        {
+            templateUrl: "views/anuncios.html",
+            controller: "AnuncioCtrl",
+            access: {requiredLogin: true}
+        })  
         .when('/login',
         {
             templateUrl: "views/login.html",

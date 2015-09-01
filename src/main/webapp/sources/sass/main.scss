@@ -38,6 +38,55 @@ header{
     -moz-user-select: none;
     -ms-user-select: none;
     
+    .logout{
+    	padding:0; 
+    
+    	span{
+		    line-height: 59px;
+		    background: #f43535;
+		    color: #FFF;
+		    width: 40px;
+		    text-align: center;
+		    font-size: 13pt;
+		    top: 0;
+		    cursor:pointer;
+		    
+		    &:hover{
+				background-color: #e22626;
+				-webkit-transition: background-color 0.5s ease;
+				-moz-transition: background-color 0.5s ease;
+				-o-transition: background-color 0.5s ease;
+				transition: background-color 0.5s ease;
+			}
+		}
+	}
+	
+	.menuDireito{
+		padding:0;
+	}
+	.config{
+    	padding:0; 
+    
+    	span{
+		    line-height: 59px;
+	       	background: #efefef;
+       	    color: #8e8e8e;
+		    width: 40px;
+		    text-align: center;
+		    font-size: 13pt;
+		    top: 0;
+		    cursor:pointer;
+		    
+		    &:hover{
+				background-color: #f7f4f4;
+				-webkit-transition: background-color 0.5s ease;
+				-moz-transition: background-color 0.5s ease;
+				-o-transition: background-color 0.5s ease;
+				transition: background-color 0.5s ease;
+			}
+		}
+	}
+    
     #logo{ 
     
    		float: left;
@@ -87,16 +136,16 @@ header{
 			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
 			padding-top: 0;
-			height: 39px;
-    		line-height: 52px;
+			height: 37px;
+    		line-height: 50px;
 		}
 		a:hover{
 			text-decoration: none;
 			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
 			padding-top: 0;
-			height: 39px;
-    		line-height: 52px;
+			height: 37px;
+    		line-height: 50px;
 			-webkit-transition: border-color 0.5s ease;
 			-moz-transition: border-color 0.5s ease;
 			-o-transition: border-color 0.5s ease;
@@ -104,7 +153,6 @@ header{
 		}
 		
 	}
-	
 }
 #barraTopo{
 	background: $cor-principal;
@@ -461,4 +509,31 @@ header{
    	 		box-shadow: none;
 	    }
     }    
+}
+#listaAnuncios{
+	display:block;
+	float:left;
+	padding:0;
+	margin-top: 25px;
+	
+	li{
+		list-style: none;
+	    padding: 5px;
+	    background: #FFF;
+	    height: 130px;
+	    margin: 10px 0 10px 0;
+	    box-shadow: 0px 1px 0px #d4d7d8;
+	    border-radius: 3px;
+	    border: 1px solid #eaedef;
+		
+		div{
+			padding:0;
+		
+			img{
+				padding:0;
+				border: 1px solid #eaedef;
+    			border-radius: 3px;
+			}
+		}
+	}
 }

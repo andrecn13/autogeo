@@ -14,18 +14,25 @@
     <body>
             
         <header>
-            <div id="logo" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 pull-left">
+            <div id="logo" class="col-xs-10 col-sm-3 col-md-3 col-lg-3 pull-left">
 				<img src="build/img/autogeo.png" alt="logo_autogeo" width="200" height="35">
             </div>
-            <div class="hidden-xs hidden-sm col-md-6 col-lg-7 pull-left">
+            <div class="hidden-xs col-sm-7 col-md-5 col-lg-7 pull-left">
                 <div id="menu">
                     <a href="#/" active-link="ativo">Mapa</a>
                     <a href="#/favoritos" active-link="ativo">Meus Favoritos</a>
-                    <a href="#">Meus Likes</a>
-                    <a href="#">Meus Anuncios</a>
+                    <a href="#/anuncios">Meus Anuncios</a>
                     <a href="#/cadastro" active-link="ativo"></span>Cadastre-se</a>
-                </div>
-            </div>            
+                </div> 
+            </div> 
+            <div class="col-sm-2 col-md-2 col-lg-1 pull-right menuDireito" ng-controller="LoginCtrl">
+	            <div class="logout pull-right" >
+	            	<span class="glyphicon glyphicon-off pull-right" ng-click="logout()" tooltip-placement="left" tooltip="Sair"></span>
+	            </div>          
+	            <div class="config pull-right">
+	            	<span class="glyphicon glyphicon-cog pull-right" tooltip-placement="left" tooltip="Configurações"></span>
+	            </div>           
+            </div>
         </header>
 
 		<div id="contentContainer" overflow-directive ng-view></div>
