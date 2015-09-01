@@ -1,4 +1,4 @@
-var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute", "ui.utils.masks", "ui.bootstrap"]);
+var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute", "ngResource", "ui.utils.masks", "ui.bootstrap"]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) 
 {
@@ -7,44 +7,92 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/', 
         {
             templateUrl: "views/mapa.html",
-            controller: "MapaCtrl"
+            controller: "MapaCtrl",
+            access: {requiredLogin: false}
         })    
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
-            controller: "FavoritosCtrl"
+            controller: "FavoritosCtrl",
+            access: {requiredLogin: true}
         })   
         .when('/cadastro',
         {
             templateUrl: "views/cadastro.html",
-            controller: "CadastroCtrl"
+            controller: "CadastroCtrl",
+            access: {requiredLogin: false}
+        })  
+        .when('/login',
+        {
+            templateUrl: "views/login.html",
+            controller: "LoginCtrl",
+            access: {requiredLogin: false}
         })  
         .otherwise( 
         {
             template: '<h3><strong>404</strong> Página não encontrada</h3>'
         });
+	
+	$httpProvider.interceptors.push('TokenInterceptor');
 
 }]);
  
-// app.run(function($http) { 
-// 	var user	=	'restclient';
-// 	var psw		=	'restclient';
+app.run(function($rootScope, $location, AuthenticationService) {
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    	$rootScope.alerts = [];
+        if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged()) {
+    		$location.path("/login");
+        }
+    });
+});
 
-// 	$http.defaults.headers.common.Authorization = 'Basic '+Base64.encode(user+':'+psw)
 
-// });
-
-
-app.controller('CadastroCtrl', ['$scope', function($scope){
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
     
     $scope.title    =   "Cadastro";
-
+    $scope.user		=	{"whatsapp": "true"};
+    
+    $scope.cadastrarUsuario = function(){
+    	CadastroFactory.create($scope.user, function(){
+    		$scope.user		=	{"whatsapp": "true"};
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$timeout(function(){AlertService.clear();}, 3000);
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    	});
+	}
+ 
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', function($scope){
     
     $scope.title    =   "Meus Favoritos";
 
+}]);
+
+app.controller('LoginCtrl', ['$scope', '$location', '$window', 'LoginService', 'AuthenticationService', 'AlertService', function($scope, $location, $window, LoginService, AuthenticationService, AlertService){
+    
+	$scope.user = {};
+	
+	$scope.login = function() {
+		if ($scope.user.email !== undefined && $scope.user.senha !== undefined) {
+			LoginService.login($scope.user, function(data) {
+				$window.sessionStorage.token = data.token;
+				$location.path("/");
+			},function(status, data) {
+				AlertService.add("danger", "Login Inválido.");
+			});
+		}
+    }
+
+    $scope.logout = function() {
+        if (AuthenticationService.isLogged()) {
+            delete $window.sessionStorage.token;
+            $location.path("/login");
+        }
+    }
+    
 }]);
 
 app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
@@ -351,6 +399,51 @@ app.filter('filter', [function() {
   };
 }]);
 
+app.factory('AlertService', [ '$rootScope', function($rootScope) {
+	
+	var alertService = {};
+	$rootScope.alerts = [];
+
+	alertService.add = function(type, msg) {
+		$rootScope.alerts.push({
+			'type' : type,
+			'msg' : msg
+		});
+	};
+	
+	alertService.clear = function() {
+		$rootScope.alerts = [];
+	};
+
+	return alertService;
+} ]);
+
+app.factory('AuthenticationService', ['$window', function($window) {
+    var auth = {
+        isLogged: function(){
+        	if($window.sessionStorage.token == undefined){
+        		return false;
+        	}else{
+        		return true;
+        	}
+        }
+    }
+ 
+    return auth;
+}]);
+
+app.factory('CadastroFactory', function($resource) {
+	return $resource('usuario/salvar', {}, {
+        create: { method: 'POST' }
+    })
+});
+
+app.factory('LoginService', function($resource) {
+	return $resource('usuario/login', {}, {
+        login: { method: 'POST' }
+    })
+});
+
 app.factory('MapaService', function($http, $q) {
     return {
         getAnuncios: function() {
@@ -374,3 +467,29 @@ app.factory('MapaService', function($http, $q) {
         }
     };
 });
+
+app.factory('TokenInterceptor', ['$q', '$window', 'AuthenticationService', function ($q, $window, AuthenticationService) {
+	 return {
+        request: function (config) {
+            config.headers = config.headers || {};
+            if ($window.sessionStorage.token) {
+                config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+            }
+            return config;
+        },
+	 
+        requestError: function(rejection) {
+            return $q.reject(rejection);
+        },
+ 
+        /* Set Authentication.isAuthenticated to true if 200 received */
+        response: function (response) {
+            return response || $q.when(response);
+        },
+ 
+        /* Revoke client authentication if 401 is received */
+        responseError: function(rejection) {
+            return $q.reject(rejection);
+        }
+    };
+}]);

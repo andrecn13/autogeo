@@ -1,0 +1,36 @@
+<meta charset="UTF-8">
+
+<div class="col-sm-6 col-sm-offset-3">
+	
+	<div style="margin-top: 25px;">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	</div>
+	
+	<form class="form-horizontal">
+		<div class="page-header">
+				<h3 class="text-center">Acesso ao sistema</h3>
+				<span class="help-block text-center">Preencha os dados de seu login para acessar o sistema.</span>
+			</div>	
+			<div class="form-group">
+				<label for="email" class="col-sm-3 control-label">Email</label>
+				<div class="col-sm-8">
+					<input type="email" class="form-control" id="email" placeholder="Seu Email" ng-model="user.email">
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="senha" class="col-sm-3 control-label">Senha</label>
+				<div class="col-sm-8">
+					<input type="password" class="form-control" id="senha" placeholder="Sua Senha" ng-model="user.senha">
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<div class="col-sm-11">
+					<button type="submit" class="btn btnCadastro" ng-click="login()">Acessar</button>
+				</div>
+				<div class="col-sm-11">
+					<button type="submit" class="btn btnCadastro" ng-click="logout()">Logout</button>
+				</div>
+			</div>
+	</form>
+</div>

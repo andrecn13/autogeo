@@ -2,6 +2,10 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 	
+	<div style="margin-top: 25px;">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	</div>
+	
 	<div class="page-header">
 		<h3 class="text-center">Dados Pessoais</h3>
 		<span class="help-block text-center">Preencha os campos do formulário abaixo com suas informações pessoais.</span>
@@ -12,43 +16,43 @@
 			<div class="form-group">
 				<label for="nome" class="col-sm-3 control-label">Nome</label>
 			    <div class="col-sm-8">
-					<input type="text" class="form-control" id="nome" placeholder="Seu Nome">
+					<input type="text" class="form-control" name="nome" id="nome" placeholder="Seu Nome" required ng-model="user.nome">
 			    </div>
 			</div>
 			<div class="form-group">
 				<label for="sobrenome" class="col-sm-3 control-label">Sobre Nome</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="sobrenome" placeholder="Seu Sobre Nome">
+					<input type="text" class="form-control" id="sobrenome" placeholder="Seu Sobre Nome" ng-model="user.sobreNome">
 				</div>
 			</div>	
 			<div class="form-group">
 				<label for="cpf" class="col-sm-3 control-label">Cpf</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="cpf" placeholder="Seu CPF">
+					<input type="text" class="form-control" id="cpf" placeholder="Seu CPF" ng-model="user.cpf">
 				</div>
 			</div>			
 			<div class="form-group">
 				<label for="telefone" class="col-sm-3 control-label">Telefone</label>
 				<div class="col-sm-8">
-					<input type="tel" class="form-control" id="telefone" placeholder="Seu Telefone">
+					<input type="tel" class="form-control" id="telefone" placeholder="Seu Telefone" ng-model="user.telefone">
 				</div>
 			</div>			
 			<div class="form-group">
 				<label for="celular" class="col-sm-3 control-label">Celular</label>
 				<div class="col-sm-8">
-					<input type="tel" class="form-control" id="celular" placeholder="Seu Celular">
+					<input type="tel" class="form-control" id="celular" placeholder="Seu Celular" ng-model="user.celular">
 				</div>
 			</div>			
 			<div class="form-group">
 				<label for="celular" class="col-sm-3 control-label">WhatsApp?</label>
 				<div class="radio col-sm-1">
 					<label> 
-						<input type="radio" name="whatsapp" value="1" checked> Sim
+						<input type="radio" name="whatsapp" ng-model="user.whatsapp" value="true"> Sim
 					</label>
 				</div>
 				<div class="radio col-sm-1">
 					<label>
-						<input type="radio" name="whatsapp" value="0" > Não
+						<input type="radio" name="whatsapp" value="false" ng-model="user.whatsapp"> Não
 					</label>
 				</div>
 			</div>	
@@ -60,19 +64,19 @@
 			<div class="form-group">
 				<label for="email" class="col-sm-3 control-label">Email</label>
 				<div class="col-sm-8">
-					<input type="tel" class="form-control" id="email" placeholder="Seu Email">
+					<input type="email" class="form-control" id="email" placeholder="Seu Email" ng-model="user.email">
 				</div>
 			</div>	
 			<div class="form-group">
 				<label for="senha" class="col-sm-3 control-label">Senha</label>
 				<div class="col-sm-8">
-					<input type="password" class="form-control" id="senha" placeholder="Sua Senha">
+					<input type="password" class="form-control" id="senha" placeholder="Sua Senha" ng-model="user.senha">
 				</div>
 			</div>	
 			
 			<div class="form-group">
 				<div class="col-sm-11">
-					<button type="submit" class="btn btnCadastro">Cadastrar</button>
+					<button type="submit" class="btn btnCadastro" ng-click="cadastrarUsuario()">Cadastrar</button>
 				</div>
 			</div>
 		</form>
