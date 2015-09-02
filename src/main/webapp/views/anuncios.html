@@ -1,13 +1,19 @@
 <meta charset="UTF-8">
 
 <div class="col-sm-8 col-sm-offset-2">
+	
 	<div class="page-header">
-		<h3 class="text-left">Meus Anúncios Favoritos</h3>
+		<h3 class="text-left">Meus Anúncios Cadastrados</h3>
 	</div>
 	
 	<div>
+		<div>
+			<button class="btn btnCadastro pull-left" style="margin:0">Novo anúncio
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
 		<ul id="listaAnuncios">
-			<li class="col-sm-12 pull-left" ng-repeat="anuncio in anuncios | limitTo: 3">
+			<li class="col-sm-12 pull-left" ng-repeat="anuncio in anuncios">
 				<div class="col-sm-3">
 					<img src="./build/img/carro.jpg" width="150" height="120" alt="carro"/>
 				</div>

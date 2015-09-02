@@ -23,5 +23,9 @@ public class UsuarioService {
 	public List<Usuario> lista(){
 		return repository.findAll();
 	}
+	
+	public Usuario login(Usuario user){
+		return repository.findByEmail(user.getEmail());
+	}
 
 }

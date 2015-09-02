@@ -14,8 +14,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "TBL_USUARIO")
 public class Usuario implements Serializable {

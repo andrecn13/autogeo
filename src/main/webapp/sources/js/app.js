@@ -1,4 +1,4 @@
-var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute", "ui.utils.masks", "ui.bootstrap"]);
+var app = angular.module('AutoGeoApp', ["leaflet-directive", "ngRoute", "ngResource", "ui.utils.masks", "ui.bootstrap"]);
 
 app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) 
 {
@@ -7,29 +7,47 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/', 
         {
             templateUrl: "views/mapa.html",
-            controller: "MapaCtrl"
+            controller: "MapaCtrl",
+            access: {requiredLogin: false}
         })    
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
-            controller: "FavoritosCtrl"
+            controller: "FavoritosCtrl",
+            access: {requiredLogin: true}
         })   
         .when('/cadastro',
         {
             templateUrl: "views/cadastro.html",
-            controller: "CadastroCtrl"
+            controller: "CadastroCtrl",
+            access: {requiredLogin: false}
+        })  
+        .when('/anuncios',
+        {
+            templateUrl: "views/anuncios.html",
+            controller: "AnuncioCtrl",
+            access: {requiredLogin: true}
+        })  
+        .when('/login',
+        {
+            templateUrl: "views/login.html",
+            controller: "LoginCtrl",
+            access: {requiredLogin: false}
         })  
         .otherwise( 
         {
             template: '<h3><strong>404</strong> Página não encontrada</h3>'
         });
+	
+	$httpProvider.interceptors.push('TokenInterceptor');
 
 }]);
  
-// app.run(function($http) { 
-// 	var user	=	'restclient';
-// 	var psw		=	'restclient';
-
-// 	$http.defaults.headers.common.Authorization = 'Basic '+Base64.encode(user+':'+psw)
-
-// });
+app.run(function($rootScope, $location, AuthenticationService) {
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    	$rootScope.alerts = [];
+        if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged()) {
+    		$location.path("/login");
+        }
+    });
+});
