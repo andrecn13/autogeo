@@ -59,8 +59,8 @@ header{
 		
 			float: left;
 			display: block;
-			height: 45px;
-			line-height: 45px;
+			height: 42px;
+			line-height: 42px;
 			font-size: 0.8em;
 		    font-weight: 400;
 		    margin-left: 20px;
@@ -83,20 +83,12 @@ header{
 			}
 		}
 		a.ativo{
-			text-decoration: none;
 			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
-			padding-top: 0;
-			height: 39px;
-    		line-height: 52px;
 		}
 		a:hover{
-			text-decoration: none;
 			border-bottom: 3px solid $cor-principal;
 			color: #0065ae;
-			padding-top: 0;
-			height: 39px;
-    		line-height: 52px;
 			-webkit-transition: border-color 0.5s ease;
 			-moz-transition: border-color 0.5s ease;
 			-o-transition: border-color 0.5s ease;
