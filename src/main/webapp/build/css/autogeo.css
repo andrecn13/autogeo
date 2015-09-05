@@ -84,8 +84,8 @@ header {
     header #menu a {
       float: left;
       display: block;
-      height: 45px;
-      line-height: 45px;
+      height: 42px;
+      line-height: 42px;
       font-size: 0.8em;
       font-weight: 400;
       margin-left: 20px;
@@ -105,19 +105,11 @@ header {
         -moz-user-select: none;
         -ms-user-select: none; }
     header #menu a.ativo {
-      text-decoration: none;
       border-bottom: 3px solid #0065ae;
-      color: #0065ae;
-      padding-top: 0;
-      height: 37px;
-      line-height: 50px; }
+      color: #0065ae; }
     header #menu a:hover {
-      text-decoration: none;
       border-bottom: 3px solid #0065ae;
       color: #0065ae;
-      padding-top: 0;
-      height: 37px;
-      line-height: 50px;
       -webkit-transition: border-color 0.5s ease;
       -moz-transition: border-color 0.5s ease;
       -o-transition: border-color 0.5s ease;
