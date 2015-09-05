@@ -21,7 +21,13 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/cadastro.html",
             controller: "CadastroCtrl",
             access: {requiredLogin: false}
-        })  
+        })
+        .when('/cadastro/anuncio',
+        {
+            templateUrl: "views/cadastroAnuncio.html",
+            controller: "AnuncioCtrl",
+            access: {requiredLogin: true}
+        })
         .when('/anuncios',
         {
             templateUrl: "views/anuncios.html",
@@ -50,4 +56,8 @@ app.run(function($rootScope, $location, AuthenticationService) {
     		$location.path("/login");
         }
     });
+    
+    $rootScope.go = function ( path ) {
+    	$location.path( path );
+	};
 });

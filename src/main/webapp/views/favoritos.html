@@ -1,39 +1,40 @@
 <meta charset="UTF-8">
 
 <div class="col-sm-8 col-sm-offset-2">
-	<div class="page-header">
-		<h3 class="text-left">Meus Anúncios Favoritos</h3>
+	<div class="page-header-autogeo">
+		<h3 class="text-left">Meus Favoritos</h3>
 	</div>
 	
 	<div>
 		<ul id="listaAnuncios">
-			<li class="col-sm-12 pull-left" ng-repeat="anuncio in anuncios | limitTo: 3">
-				<div class="col-sm-3">
-					<img src="./build/img/carro.jpg" width="150" height="120" alt="carro"/>
-				</div>
-				<div class="col-sm-9">
-					<table class="col-sm-8">
-						<thead>
-							<tr>
-								<th>PREÇO</th>
-								<th>MARCA</th>
-								<th>MODELO</th>
-								<th>COR</th>
-								<th>ANO</th>
-								<th>KM</th>
-							</tr>
-						</thead>
+			<li class="col-xs-6 col-sm-6 col-md-6 col-lg-4 pull-left" ng-repeat="anuncio in anuncios | limitTo: 4">
+				<div class="divAnuncio favoritos">
+					<div class="imgAnuncio">
+						<img src="./build/img/carro2.jpg" alt="Automóvel" title="Automóvel"/>
+					</div>
+					<table class="col-sm-11">
 						<tbody>
+							<tr class="preco">
+								<td><span class="icone filtroPreco ativo"></span>{{anuncio.properties.valor | currency:"R$" :2}}</td>
+							</tr>
 							<tr>
-								<td>{{anuncio.properties.valor}}</td>
-								<td>{{anuncio.properties.marca}}</td>
-								<td>{{anuncio.properties.modelo}}</td>
-								<td>{{anuncio.properties.cor}}</td>
-								<td>{{anuncio.properties.ano}}</td>
-								<td>{{anuncio.properties.km}}</td>
+								<td><span class="icone filtroMarca ativo"></span>{{anuncio.properties.marca}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroModelo ativo"></span>{{anuncio.properties.modelo}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroCalendar ativo"></span>{{anuncio.properties.ano}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroKm ativo"></span>{{anuncio.properties.km}}</td>
 							</tr>
 						</tbody>
 					</table>
+					<div class="col-xs-12 divBtnAnuncio">
+						<button class="btnCadastro pull-left">Visualizar no Mapa</button>
+						<button class="btnFavorito pull-left">Excluir dos Favoritos</button>
+					</div>
 				</div>
 			</li>
 		</ul>

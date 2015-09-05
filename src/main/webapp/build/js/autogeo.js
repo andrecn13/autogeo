@@ -21,7 +21,13 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/cadastro.html",
             controller: "CadastroCtrl",
             access: {requiredLogin: false}
-        })  
+        })
+        .when('/cadastro/anuncio',
+        {
+            templateUrl: "views/cadastroAnuncio.html",
+            controller: "AnuncioCtrl",
+            access: {requiredLogin: true}
+        })
         .when('/anuncios',
         {
             templateUrl: "views/anuncios.html",
@@ -50,12 +56,23 @@ app.run(function($rootScope, $location, AuthenticationService) {
     		$location.path("/login");
         }
     });
+    
+    $rootScope.go = function ( path ) {
+    	$location.path( path );
+	};
 });
 
 
-app.controller('AnuncioCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
     
     $scope.title    =   "Meus Anuncios";
+    $scope.anuncios = [];
+    
+    var promiseAnuncios = MapaService.getAnuncios();
+    promiseAnuncios.then(function(data) {
+        $scope.anuncios = data.anuncios;
+    });
+    
 }]);
 
 app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){

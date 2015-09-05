@@ -1,14 +1,20 @@
 body {
   padding: 0;
   margin: 0; }
-  body .page-header {
+  body .page-header-autogeo {
     border-bottom: 1px solid #d3d8db;
     font-weight: 500;
-    color: #595959; }
-    body .page-header h3 {
+    color: #595959;
+    width: 100%;
+    float: left;
+    margin: 25px 0; }
+    body .page-header-autogeo h3 {
       color: #4c5557;
-      font-weight: 200; }
-    body .page-header .help-block {
+      font-weight: 400;
+      padding: 0;
+      margin: 0;
+      line-height: 45px; }
+    body .page-header-autogeo .help-block {
       color: #607d8b;
       font-weight: 200; }
 
@@ -255,6 +261,12 @@ header {
 .filtroMarca.ativo {
   background: url("../img/icones/marca.png") no-repeat center #FFF; }
 
+.filtroModelo {
+  background: url("../img/icones/modelo_filtro.png") no-repeat center; }
+
+.filtroModelo.ativo {
+  background: url("../img/icones/modelo.png") no-repeat center #FFF; }
+
 .filtroKm {
   background: url("../img/icones/km_filtro.png") no-repeat center; }
 
@@ -329,11 +341,11 @@ header {
   background-color: transparent;
   width: 120px;
   height: 40px;
-  line-height: 40px;
+  line-height: 37px;
   border: 1px solid #35b7ce;
   color: #35b7ce;
   font-size: 13px;
-  font-weight: normal;
+  font-weight: 200;
   border-radius: 3px; }
   .btnFiltro:hover {
     color: #FFF;
@@ -345,11 +357,11 @@ header {
   background-color: transparent;
   width: 120px;
   height: 40px;
-  line-height: 40px;
+  line-height: 37px;
   border: 1px solid #e05050;
   color: #e05050;
   font-size: 13px;
-  font-weight: normal;
+  font-weight: 200;
   margin-right: 10px;
   border-radius: 3px; }
   .btnLimparFiltro:hover {
@@ -404,18 +416,41 @@ header {
   margin-top: 30px;
   width: 120px;
   height: 40px;
-  line-height: 40px;
-  border: 1px solid #0065ae;
-  color: #FFF;
+  line-height: 37px;
+  border: 1px solid #0482d6;
+  color: #0482d6;
   font-size: 13px;
-  font-weight: normal;
+  font-weight: 200;
   border-radius: 3px;
   padding: 0;
-  background-color: #0065ae;
+  background-color: transparent;
   text-decoration: none; }
   .btnCadastro:hover {
     background-color: #0482d6;
     border: 1px solid #0482d6;
+    color: #FFF;
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease; }
+
+.btnFavorito {
+  float: right;
+  margin-top: 30px;
+  width: 120px;
+  height: 40px;
+  line-height: 37px;
+  border: 1px solid #f43535;
+  color: #f43535;
+  font-size: 13px;
+  font-weight: 200;
+  border-radius: 3px;
+  padding: 0;
+  background-color: transparent;
+  text-decoration: none; }
+  .btnFavorito:hover {
+    background-color: #f43535;
+    border: 1px solid #f43535;
     color: #FFF;
     -webkit-transition: background-color 0.5s ease;
     -moz-transition: background-color 0.5s ease;
@@ -447,18 +482,76 @@ header {
   margin-top: 25px; }
   #listaAnuncios li {
     list-style: none;
-    padding: 5px;
-    background: #FFF;
-    height: 130px;
-    margin: 10px 0 10px 0;
-    box-shadow: 0px 1px 0px #d4d7d8;
-    border-radius: 3px;
-    border: 1px solid #eaedef; }
-    #listaAnuncios li div {
-      padding: 0; }
-      #listaAnuncios li div img {
+    background: transparent;
+    display: inline-block;
+    margin-bottom: 25px; }
+    #listaAnuncios li .divAnuncio.favoritos {
+      height: 420px; }
+    #listaAnuncios li .divAnuncio {
+      height: 380px;
+      background: #FFF;
+      box-shadow: 0px 1px 0px #d4d7d8;
+      border: 1px solid #eff1f2;
+      border-radius: 3px;
+      padding: 0px; }
+      #listaAnuncios li .divAnuncio .imgAnuncio {
+        line-height: 180px;
+        max-height: 180px;
+        min-width: 100%;
+        max-width: 100%;
+        float: left; }
+        #listaAnuncios li .divAnuncio .imgAnuncio img {
+          vertical-align: middle;
+          max-width: 100%;
+          max-height: 180px;
+          margin: 0 auto;
+          display: block; }
+      #listaAnuncios li .divAnuncio .divBtnAnuncio {
+        padding: 10px; }
+        #listaAnuncios li .divAnuncio .divBtnAnuncio .btnCadastro {
+          margin: 0px;
+          height: 33px;
+          line-height: 30px;
+          width: 100%; }
+        #listaAnuncios li .divAnuncio .divBtnAnuncio .btnFavorito {
+          margin: 5px 0px 0px 0px;
+          height: 33px;
+          line-height: 30px;
+          width: 100%; }
+      #listaAnuncios li .divAnuncio table {
         padding: 0;
-        border: 1px solid #eaedef;
-        border-radius: 3px; }
+        margin-left: 10px;
+        margin-top: 5px; }
+        #listaAnuncios li .divAnuncio table th {
+          font-weight: 400;
+          text-align: left;
+          text-transform: uppercase;
+          font-size: 0.9em;
+          color: #8b9293; }
+        #listaAnuncios li .divAnuncio table td {
+          font-size: 0.9em;
+          font-weight: 400;
+          text-align: left;
+          padding: 5px;
+          line-height: 24px; }
+          #listaAnuncios li .divAnuncio table td .icone {
+            display: block;
+            height: 24px;
+            width: 24px;
+            margin: 0 auto;
+            text-align: center;
+            float: left;
+            margin-right: 10px; }
+          #listaAnuncios li .divAnuncio table td .preco {
+            font-weight: 500; }
+      #listaAnuncios li .divAnuncio .btnView {
+        height: 139px;
+        background: #efefef;
+        color: #8e8e8e;
+        cursor: pointer;
+        width: 40px;
+        text-align: center;
+        line-height: 140px;
+        font-size: 14pt; }
 
 /*# sourceMappingURL=autogeo.css.map */
