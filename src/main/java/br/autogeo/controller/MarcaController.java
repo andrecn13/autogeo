@@ -13,7 +13,7 @@ import br.autogeo.model.Marca;
 import br.autogeo.service.MarcaService;
 
 @RestController
-@RequestMapping(value = "/marca")
+@RequestMapping(value = "/marca") 
 public class MarcaController {
 
 	@Autowired

@@ -53,7 +53,7 @@ header{
     
     	span{
 		    line-height: 59px;
-		    background: #f43535;
+		    background: #ff4747;
 		    color: #FFF;
 		    width: 40px;
 		    text-align: center;
@@ -646,4 +646,60 @@ header{
 			}
 		}
 	}
+}
+
+.leaflet-container{
+	
+	img.imgAnuncioPrev{
+		vertical-align: middle;
+		max-width: 100% !important;
+		max-height: 80px;
+		margin: 0 auto;
+		display: block;
+	}
+	
+	.containerAnuncioPrev{
+		float:left;
+	
+		.divImgAnuncioPrev{
+			float:left;
+			line-height: 80px;
+			max-height: 80px;
+		    min-width: 80px;
+		    max-width: 80px;
+		    margin-right: 10px;
+    		border-radius: 4px;
+		}
+		.tituloValor{
+			font-weight: bold;
+			font-size: 1.4em;
+		}
+		.descricao{
+	    	font-size: 0.9em;
+			font-weight: 200;
+			color: #8b9293;
+			text-transform: uppercase;
+		}
+		.btnCadastro{
+			width:100%;
+			margin: 5px 0 0 0;
+			font-size: 0.9em;
+			line-height: 25px;
+			height: 27px;
+		}
+	}
+}
+
+/*
+	LEAFLET
+*/
+.leaflet-popup-content{
+	/*width: 650px;*/
+	height: auto;
+	float: left;
+}
+.leaflet-popup-content-wrapper{
+	border-top: 3px solid #0482d6;
+  	border-radius: 3px;
+  	float: left;
 }

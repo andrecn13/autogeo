@@ -1,1 +1,9 @@
-<button type="button" class="btn btn-default" ng-click="openDetail()">Open me!</button>
+<meta charset="UTF-8">
+<div class="containerAnuncioPrev">
+	<div class="divImgAnuncioPrev">
+		<img class="imgAnuncioPrev" src="{{anuncio.properties.fotos[0].nome}}" alt="{{anuncio.properties.modelo}}" title="{{anuncio.properties.modelo}}"/>
+	</div>
+	<span class="tituloValor">{{anuncio.properties.valor | currency:"R$" :2}}</span>
+	<span class="descricao"> {{anuncio.properties.modelo}} | {{anuncio.properties.ano}}</span>
+	<button type="button" class="btnCadastro pull-left" ng-click="openDetail()">Visualizar Anúncio</button>
+</div>
