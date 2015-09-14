@@ -63,6 +63,38 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
+app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
+    
+    $scope.title    =   "Meus Anuncios";
+    $scope.anuncios = [];
+    
+    var promiseAnuncios = MapaService.getAnuncios();
+    promiseAnuncios.then(function(data) {
+        $scope.anuncios = data.anuncios;
+    });
+    
+    var mainMarker = {
+		lat: -30.0257548,
+        lng: -51.1833013,
+        focus: true,
+        message: "Mova o marker para posicionar a localizção do automóvel",
+        draggable: true
+    };
+    
+    angular.extend($scope, {
+        defaults: {},
+        center: {
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
+        },
+        markers: {
+            mainMarker: angular.copy(mainMarker)
+        }
+    });
+    
+}]);
+
 app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
     
     $scope.title    =   "Cadastro";
@@ -78,18 +110,6 @@ app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$t
     		AlertService.add("danger", "Erro ao salvar dados.");
     	});
 	}
- 
-}]);
-
-app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
-    
-    $scope.title    =   "Meus Anuncios";
-    $scope.anuncios = [];
-    
-    var promiseAnuncios = MapaService.getAnuncios();
-    promiseAnuncios.then(function(data) {
-        $scope.anuncios = data.anuncios;
-    });
     
 }]);
 

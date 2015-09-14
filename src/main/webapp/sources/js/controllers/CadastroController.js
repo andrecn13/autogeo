@@ -13,5 +13,5 @@ app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$t
     		AlertService.add("danger", "Erro ao salvar dados.");
     	});
 	}
- 
+    
 }]);

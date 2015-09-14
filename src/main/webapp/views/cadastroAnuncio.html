@@ -3,25 +3,112 @@
 <div class="col-sm-8 col-sm-offset-2">
 
 	<div class="page-header-autogeo">
-		<h3 class="text-left col-xs-8">Cadastro de Anúncio</h3>
+		<h3 class="text-left col-xs-12">Cadastro do Anúncio</h3>
+		<span class="help-block text-left pull-left">Preencha a informações do anúncio.</span>
 	</div>
 	
 	<div class="formContainer">
 		<form class="form-horizontal">
 			<div class="form-group">
+				<label for="marca" class="col-sm-3 control-label">Marca</label>
+			    <div class="col-sm-8">
+					<select id="marca" class="form-control" ng-model="anuncio.marca">
+						<option value="">Selecione a Marca</option>
+					</select>
+			    </div>
+			</div>
+			<div class="form-group">
 				<label for="modelo" class="col-sm-3 control-label">Modelo</label>
 			    <div class="col-sm-8">
-					<input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo" required >
+					<select id="modelo" class="form-control" ng-model="anuncio.modelo">
+						<option value="">Selecione o Modelo</option>
+					</select>
+			    </div>
+			</div>
+			<div class="form-group">
+				<label for="combustivel" class="col-sm-3 control-label">Combustível</label>
+			    <div class="col-sm-4">
+					<select id="combustivel" class="form-control" ng-model="anuncio.combustivel">
+						<option value="">Selecione o Combustível</option>
+					</select>
+			    </div>
+			    <label for="cor" class="col-sm-1 control-label">Cor</label>
+			    <div class="col-sm-3">
+					<select id="cor" class="form-control" ng-model="anuncio.cor">
+						<option value="">Selecione a Cor</option>
+					</select>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="ano" class="col-sm-3 control-label">Ano</label>
+			    <div class="col-sm-2">
+					<input type="text" class="form-control" id="ano" placeholder="Ano" ng-model="anuncio.ano">
+			    </div>
+			    <label for="placa" class="col-sm-1 control-label">Placa</label>
+			    <div class="col-sm-2">
+					<input type="text" class="form-control" id="placa" placeholder="Placa" ng-model="anuncio.placa">
+			    </div>
+			    <label for="km" class="col-sm-1 control-label">Km</label>
+			    <div class="col-sm-2">
+					<input type="text" class="form-control" id="km" placeholder="Km">
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="preco" class="col-sm-3 control-label">Preço</label>
+			    <div class="col-sm-8">
+					<input type="text" class="form-control" id="preco" placeholder="Preço">
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="acessorios" class="col-sm-3 control-label">Acessórios</label>
+			    <div class="col-sm-5">
+					<select id="acessorios" class="form-control" ng-model="anuncio.acessorios">
+						<option value="">Selecione um ou mais acessórios</option>
+					</select>
+			    </div>
+			    <div class="col-sm-3">
+					<button type="button" style="margin:0" class="btn btnCadastro pull-left" ng-click="addAcessorio()">
+						Adicionar
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label for="acessorios" class="col-sm-3 control-label">Acessórios Adicionados</label>
+			    <div class="col-sm-8">
+				    <pre>
+				    	<span class="badge pull-left" style="background:#0065AE; margin: 5px;padding:4px 10px 5px 10px;" >Ar-Condicionado</span>
+				    	<span class="badge pull-left" style="background:#0065AE; margin: 5px;padding:4px 10px 5px 10px;" >Direção Hidráulica</span>
+				    </pre>
+			    </div>
+			</div>
+			<div class="form-group">
+				<label for="obs" class="col-sm-3 control-label">Observações</label>
+			    <div class="col-sm-8">
+					<textarea class="form-control" rows="2" style="height:auto;"></textarea>
 			    </div>
 			</div>
 
+			<div class="page-header-autogeo">
+				<h3 class="text-left col-xs-12">Localização</h3>
+				<span class="help-block text-left pull-left">Para o anúncio aparecer no mapa você deve informar a localização do automóvel no mapa abaixo.</span>
+			</div>
+			
+			<div class="form-group">
+			    <label for="endereco" class="col-sm-3 control-label">Digite o Endereço</label>
+			    <div class="col-sm-8">
+					<input type="text" class="form-control" id="endereco" placeholder="Ex: rua xxx, av. yyyy">
+			    </div>
+			</div>
+			
+			<div class="form-group" style="padding:15px;">
+				<leaflet defaults="defaults" center="center" markers="markers" width="100%" height="300"></leaflet>
+			</div>
+			
 			<div class="form-group">
 				<div class="col-sm-11">
 					<button type="submit" class="btn btnCadastro" ng-click="cadastrarAnuncio()">Cadastrar</button>
 				</div>
-<!-- 				<div class="col-sm-5"> -->
-<!-- 					<button class="btn btn-danger" ng-click="go('/anuncios')">Cancelar</button> -->
-<!-- 				</div> -->
 			</div>
 		</form>
 	</div>
