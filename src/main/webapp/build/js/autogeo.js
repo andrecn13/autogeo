@@ -60,6 +60,13 @@ app.run(function($rootScope, $location, AuthenticationService) {
     $rootScope.go = function ( path ) {
     	$location.path( path );
 	};
+	
+	$rootScope.showElement = function () {
+    	return (AuthenticationService.isLogged()) ? true : false;
+	};
+	
+	$rootScope.userName = function(){ return AuthenticationService.getUser()}; 
+	
 });
 
 
@@ -475,6 +482,9 @@ app.factory('AuthenticationService', ['$window', function($window) {
         	}else{
         		return true;
         	}
+        },
+        getUser: function(){
+        	return ($window.sessionStorage.token != undefined) ? JSON.parse(atob($window.sessionStorage.token.split('.')[1])).nome : ''; 
         }
     }
  

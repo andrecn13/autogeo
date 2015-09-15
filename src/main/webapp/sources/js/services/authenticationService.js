@@ -6,6 +6,9 @@ app.factory('AuthenticationService', ['$window', function($window) {
         	}else{
         		return true;
         	}
+        },
+        getUser: function(){
+        	return ($window.sessionStorage.token != undefined) ? JSON.parse(atob($window.sessionStorage.token.split('.')[1])).nome : ''; 
         }
     }
  
