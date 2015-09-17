@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_categoria_marca")
+@Table(name = "TBL_CATEGORIA_MARCA")
 public class Categoria implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

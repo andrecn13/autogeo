@@ -17,7 +17,7 @@ import br.autogeo.util.MarcaDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
-@Table(name="tbl_marca")
+@Table(name="TBL_MARCA")
 @JsonDeserialize(using	=	MarcaDeserializer.class)
 public class Marca implements Serializable{
 	private static final long serialVersionUID = 1L;
