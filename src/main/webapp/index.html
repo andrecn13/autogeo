@@ -25,10 +25,11 @@
                     <a href="#/cadastro" active-link="ativo"></span>Cadastre-se</a>
                 </div> 
             </div> 
-            <div class="col-sm-2 col-md-2 col-lg-1 pull-right menuDireito" ng-controller="LoginCtrl">
-	            <div class="logout pull-right" >
+            <div class="col-sm-2 col-md-2 col-lg-2 pull-right menuDireito" ng-controller="LoginCtrl" ng-show="showElement()">
+	            <div class="logout pull-right">
 	            	<span class="glyphicon glyphicon-off pull-right" ng-click="logout()" tooltip-placement="left" tooltip="Sair"></span>
 	            </div>          
+            	<div class="userName pull-right">Olá, {{userName()}}</div>
 <!-- 	            <div class="config pull-right"> -->
 <!-- 	            	<span class="glyphicon glyphicon-cog pull-right" tooltip-placement="left" tooltip="Configurações"></span> -->
 <!-- 	            </div>            -->
