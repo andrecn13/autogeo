@@ -24,8 +24,8 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 	
-	public Usuario login(Usuario user){
-		return repository.findByEmail(user.getEmail());
+	public Usuario login(String email, String senha){
+		return repository.findByEmailAndSenha(email, senha);
 	}
 
 }

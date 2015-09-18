@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 import br.autogeo.model.Usuario;
 import br.autogeo.service.UsuarioService;
@@ -24,6 +25,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService service;
+	private static ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+	
 	
 	/**
 	 * Retorna todos usuarios
@@ -41,12 +44,17 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> salvar(@RequestBody Usuario user){
-		if(user != null){
-			user.setAtivo(true);
-			user.setDataCriacao(new Date());
+		
+		if (user == null || user.getEmail() == null || user.getSenha() == null) {
+			return new ResponseEntity<Usuario>(user, HttpStatus.BAD_REQUEST);
 		}
 		
+		user.setAtivo(true);
+		user.setDataCriacao(new Date());
+		user.setSenha(encoder.encodePassword(user.getSenha(), null));
+		
 		return new ResponseEntity<Usuario>(service.salvarUsuario(user), HttpStatus.CREATED); 
+		
 	}
 	
 	
@@ -57,11 +65,11 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestBody Usuario user) {
-		if (user == null || user.getEmail() == null) {
-			return new ResponseEntity<Usuario>(user, HttpStatus.NOT_ACCEPTABLE);
+		if (user == null || user.getEmail() == null || user.getSenha() == null) {
+			return new ResponseEntity<Usuario>(user, HttpStatus.BAD_REQUEST);
 		}
 		
-		Usuario usuario = service.login(user);
+		Usuario usuario = service.login(user.getEmail(), encoder.encodePassword(user.getSenha(), null));
 		if (usuario == null) {
 			return new ResponseEntity<String>("", HttpStatus.FORBIDDEN);
 		}
