@@ -19,8 +19,8 @@
         },
         "fotos": [
           {"nome": "build/img/car.jpg"},
-          {"nome": "build/img/car.jpg"},
-          {"nome": "build/img/car.jpg"}
+          {"nome": "build/img/carro.jpg"},
+          {"nome": "build/img/carro2.jpg"}
         ],
         "acessorios": [
           {"nome": "Ar-Condicionando"},

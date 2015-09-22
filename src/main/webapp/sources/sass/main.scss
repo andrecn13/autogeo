@@ -708,3 +708,19 @@ header{
   	border-radius: 3px;
   	float: left;
 }
+
+.carousel-control{
+	opacity: 1;
+	color: #0065AE;
+	text-shadow: none;
+	
+	&:hover{
+		color: #0065AE;
+	}
+}
+.carousel-control.left{
+	background-image: none;
+}
+.carousel-control.right{
+	background-image: none;
+}

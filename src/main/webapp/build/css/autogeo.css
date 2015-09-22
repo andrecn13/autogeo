@@ -597,4 +597,17 @@ header {
   border-radius: 3px;
   float: left; }
 
+.carousel-control {
+  opacity: 1;
+  color: #0065AE;
+  text-shadow: none; }
+  .carousel-control:hover {
+    color: #0065AE; }
+
+.carousel-control.left {
+  background-image: none; }
+
+.carousel-control.right {
+  background-image: none; }
+
 /*# sourceMappingURL=autogeo.css.map */

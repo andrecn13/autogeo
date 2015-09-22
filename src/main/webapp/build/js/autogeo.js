@@ -70,6 +70,24 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
+    
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{"whatsapp": "true"};
+    
+    $scope.cadastrarUsuario = function(){
+    	CadastroFactory.create($scope.user, function(){
+    		$scope.user		=	{"whatsapp": "true"};
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$timeout(function(){AlertService.clear();}, 3000);
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    	});
+	}
+    
+}]);
+
 app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
     
     $scope.title    =   "Meus Anuncios";
@@ -99,24 +117,6 @@ app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaSer
             mainMarker: angular.copy(mainMarker)
         }
     });
-    
-}]);
-
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
-    
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{"whatsapp": "true"};
-    
-    $scope.cadastrarUsuario = function(){
-    	CadastroFactory.create($scope.user, function(){
-    		$scope.user		=	{"whatsapp": "true"};
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$timeout(function(){AlertService.clear();}, 3000);
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    	});
-	}
     
 }]);
 
@@ -302,6 +302,8 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio) {
 	$scope.ok = function () {
 		$modalInstance.dismiss('cancel');
 	};
+	
+	
 
 });
 

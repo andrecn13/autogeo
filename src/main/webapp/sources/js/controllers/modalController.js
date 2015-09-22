@@ -5,5 +5,5 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio) {
 	$scope.ok = function () {
 		$modalInstance.dismiss('cancel');
 	};
-
+	
 });
