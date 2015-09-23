@@ -5722,7 +5722,7 @@ angular.module("template/modal/backdrop.html", []).run(["$templateCache", functi
     "<div class=\"modal-backdrop\"\n" +
     "     modal-animation-class=\"fade\"\n" +
     "     modal-in-class=\"in\"\n" +
-    "     ng-style=\"{'z-index': 1040 + (index && 1 || 0) + index*10}\"\n" +
+    "     ng-style=\"{'z-index': 4040 + (index && 1 || 0) + index*10}\"\n" +
     "></div>\n" +
     "");
 }]);
@@ -5732,7 +5732,7 @@ angular.module("template/modal/window.html", []).run(["$templateCache", function
     "<div modal-render=\"{{$isRendered}}\" tabindex=\"-1\" role=\"dialog\" class=\"modal\"\n" +
     "    modal-animation-class=\"fade\"\n" +
     "    modal-in-class=\"in\"\n" +
-    "	ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
+    "	ng-style=\"{'z-index': 4050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
     "    <div class=\"modal-dialog\" ng-class=\"size ? 'modal-' + size : ''\"><div class=\"modal-content\" modal-transclude></div></div>\n" +
     "</div>\n" +
     "");

@@ -1,8 +1,4 @@
 <meta charset="UTF-8">
-
-<div class="modal-header">
-	<h3 class="modal-title">Detalhes do Anúncio</h3>
-</div>
  
 <div class="modal-body">
 	<div>
@@ -13,9 +9,62 @@
 				</slide> 
 			</carousel>
 		</div>
+		<div style="margin-top:15px;">
+			<h4 class="pull-right" style="color:#0065AE;font-weight:400;">Preço: {{anuncio.properties.valor | currency:R$}}</h4>
+		</div>
+		<div style="margin:15px 0 15px 0;">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Marca</th>
+						<th>Modelo</th>
+						<th>Ano</th>
+						<th>KM</th>
+						<th>Cor</th>
+						<th>Portas</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{anuncio.properties.marca}}</td>
+						<td>{{anuncio.properties.modelo}}</td>
+						<td>{{anuncio.properties.ano}}</td>
+						<td>{{anuncio.properties.km}}</td> 
+						<td>{{anuncio.properties.cor}}</td>
+						<td>{{anuncio.properties.portas}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<tabset justified="true" style="margin: 25px 0 0 0;">
+			<tab heading="Acessórios">
+				<div style="margin-top:25px">
+					<span class="badge fundoAzul" style="padding:6px;margin:8px;font-weight:300;font-size:10pt;" ng-repeat="acessorio in anuncio.properties.acessorios">{{acessorio.nome}}</span>
+				</div>
+			</tab>
+			<tab heading="Contato">
+				<table class="table" style="margin-top:15px">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Telefone</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{anuncio.properties.contato.nomeCompleto}}</td>
+							<td>{{anuncio.properties.contato.telefone}}</td>
+							<td>{{anuncio.properties.contato.email}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</tab>
+		</tabset>
+		
+		<div>
+			<button class="btnFavorito" style="float: none;width: 100%; max-width: 100%;" type="button" ng-click="ok()">Fechar Anúncio</button>
+		</div>
 	</div>
 </div>
- 
- <div class="modal-footer">
-     <button class="btn btn-primary" type="button" ng-click="ok()">Fechar</button>
- </div>

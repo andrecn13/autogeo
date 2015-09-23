@@ -70,24 +70,6 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
-    
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{"whatsapp": "true"};
-    
-    $scope.cadastrarUsuario = function(){
-    	CadastroFactory.create($scope.user, function(){
-    		$scope.user		=	{"whatsapp": "true"};
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$timeout(function(){AlertService.clear();}, 3000);
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    	});
-	}
-    
-}]);
-
 app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
     
     $scope.title    =   "Meus Anuncios";
@@ -117,6 +99,24 @@ app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaSer
             mainMarker: angular.copy(mainMarker)
         }
     });
+    
+}]);
+
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
+    
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{"whatsapp": "true"};
+    
+    $scope.cadastrarUsuario = function(){
+    	CadastroFactory.create($scope.user, function(){
+    		$scope.user		=	{"whatsapp": "true"};
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$timeout(function(){AlertService.clear();}, 3000);
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    	});
+	}
     
 }]);
 
@@ -303,8 +303,6 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio) {
 		$modalInstance.dismiss('cancel');
 	};
 	
-	
-
 });
 
 app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
@@ -314,7 +312,7 @@ app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 			animation: true,
 			templateUrl: 'partials/modal.html',
 			controller: 'ModalCtrl',
-			size: 'lg',
+			size: 'md',
 			resolve: {
 			    anuncio: function () {
 			      return $scope.anuncio;
@@ -463,6 +461,7 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 	$rootScope.alerts = [];
 
 	alertService.add = function(type, msg) {
+		$rootScope.alerts = [];
 		$rootScope.alerts.push({
 			'type' : type,
 			'msg' : msg

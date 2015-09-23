@@ -4,6 +4,7 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 	$rootScope.alerts = [];
 
 	alertService.add = function(type, msg) {
+		$rootScope.alerts = [];
 		$rootScope.alerts.push({
 			'type' : type,
 			'msg' : msg
