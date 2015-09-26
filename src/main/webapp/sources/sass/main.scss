@@ -737,8 +737,8 @@ header{
 
 .table > thead > tr > th{
 	vertical-align: bottom;
-	border-right: 1px solid #DDD;
-	border-bottom: none;
+/* 	border-right: 1px solid #DDD; */
+	border: none;
 	font-size: 10pt;
 	font-weight: 300;
 	color:#8B9293;
@@ -752,8 +752,8 @@ header{
 	font-size: 10pt;
 	font-weight: 400;
 	color:#0A2448;
-	border-right: 1px solid #DDD;
-	border-top:none;
+/* 	border-right: 1px solid #DDD; */
+	border:none;
 }
 .nav-tabs.nav-justified > li > a{
 	background:#f1f1f1;
