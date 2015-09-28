@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <div class="containerAnuncioPrev">
 	<div class="divImgAnuncioPrev">
-		<img class="imgAnuncioPrev" src="{{anuncio.properties.fotos[0].nome}}" alt="{{anuncio.properties.modelo}}" title="{{anuncio.properties.modelo}}"/>
+		<img class="imgAnuncioPrev" src="{{(anuncio.properties.fotos == null) ? './build/img/carro2.jpg' : anuncio.properties.fotos[0].nome}}" alt="foto" title="{{anuncio.properties.modelo}}"/>
 	</div>
 	<span class="tituloValor">{{anuncio.properties.valor | currency:"R$" :2}}</span>
 	<span class="descricao"> {{anuncio.properties.modelo}} | {{anuncio.properties.ano}}</span>

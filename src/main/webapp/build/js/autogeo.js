@@ -70,14 +70,14 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
-app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
+app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, AnuncioService){
     
     $scope.title    =   "Meus Anuncios";
     $scope.anuncios = [];
     
-    var promiseAnuncios = MapaService.getAnuncios();
+    var promiseAnuncios = AnuncioService.getAnuncios();
     promiseAnuncios.then(function(data) {
-        $scope.anuncios = data.anuncios;
+        $scope.anuncios = data;
     });
     
 }]);
@@ -121,7 +121,7 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     $scope.cadastrarAnuncio = function(){
     	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
     	promisseSalvar.then(function(data) {
-    		AlertService.add("success", "Anúncio cadastrado realizado com sucesso.");
+    		AlertService.add("success", "Anúncio cadastrado com sucesso.");
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
         },function(data){
@@ -534,6 +534,20 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 
 app.factory('AnuncioService', function($http, $q) {
     return {
+    	getAnuncios: function() {
+            var d = $q.defer();
+            var url = 'api/anuncio/all';
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
         getData: function() {
             
             var d = $q.defer();
@@ -618,7 +632,8 @@ app.factory('MapaService', function($http, $q) {
         getAnuncios: function() {
             
             var d = $q.defer();
-            var url = 'data_sample/carros.json';
+//            var url = 'data_sample/carros.json';
+            var url = 'dados/anuncios';
             var saida = { anuncios: [] };
 
             $http.get(url)
@@ -630,7 +645,7 @@ app.factory('MapaService', function($http, $q) {
                 })
                 .error(function(msg, code) {
                     d.reject(msg);
-                });
+                }); 
 
             return d.promise;
         }

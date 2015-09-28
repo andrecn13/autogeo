@@ -566,7 +566,10 @@ header {
     border-radius: 4px; }
   .leaflet-container .containerAnuncioPrev .tituloValor {
     font-weight: bold;
-    font-size: 1.4em; }
+    font-size: 1.4em;
+    width: 110px;
+    float: right;
+    text-align: left; }
   .leaflet-container .containerAnuncioPrev .descricao {
     font-size: 0.9em;
     font-weight: 200;

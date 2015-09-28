@@ -1,11 +1,11 @@
-app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaService){
+app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, AnuncioService){
     
     $scope.title    =   "Meus Anuncios";
     $scope.anuncios = [];
     
-    var promiseAnuncios = MapaService.getAnuncios();
+    var promiseAnuncios = AnuncioService.getAnuncios();
     promiseAnuncios.then(function(data) {
-        $scope.anuncios = data.anuncios;
+        $scope.anuncios = data;
     });
     
 }]);
@@ -49,7 +49,7 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     $scope.cadastrarAnuncio = function(){
     	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
     	promisseSalvar.then(function(data) {
-    		AlertService.add("success", "Anúncio cadastrado realizado com sucesso.");
+    		AlertService.add("success", "Anúncio cadastrado com sucesso.");
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
         },function(data){

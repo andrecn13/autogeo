@@ -1,5 +1,8 @@
 package br.autogeo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.autogeo.model.Anuncio;
+import br.autogeo.model.Usuario;
 import br.autogeo.service.AcessorioService;
 import br.autogeo.service.AnuncioService;
 import br.autogeo.service.CombustivelService;
@@ -86,6 +90,17 @@ public class AnuncioController {
 	public ResponseEntity<Anuncio> getAnuncio(@PathVariable Long id){
 		
 		return new ResponseEntity<Anuncio>(service.getById(id), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<List<Anuncio>> getAnuncios(HttpServletRequest request){
+		
+		List<Anuncio> anuncios = new ArrayList<Anuncio>();
+		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
+		Usuario usuario = serviceUsuario.getByEmail(email);
+		anuncios = service.getAllByUser(usuario);
+		
+		return new ResponseEntity<List<Anuncio>>(anuncios, HttpStatus.OK);
 	}
 
 }

@@ -20,19 +20,19 @@
 					<table class="col-sm-11">
 						<tbody>
 							<tr class="preco">
-								<td><span class="icone filtroPreco ativo"></span>{{anuncio.properties.valor | currency:"R$" :2}}</td>
+								<td><span class="icone filtroPreco ativo"></span>{{anuncio.valor | currency:"R$" :2}}</td>
 							</tr>
 							<tr>
-								<td><span class="icone filtroMarca ativo"></span>{{anuncio.properties.marca}}</td>
+								<td><span class="icone filtroMarca ativo"></span>{{anuncio.modelo.marca.marca}}</td>
 							</tr>
 							<tr>
-								<td><span class="icone filtroModelo ativo"></span>{{anuncio.properties.modelo}}</td>
+								<td tooltip-placement="top" tooltip="{{anuncio.modelo.nome}}"><span class="icone filtroModelo ativo"></span>{{anuncio.modelo.nome | limitTo:23}} {{(anuncio.modelo.nome.length > 23) ? '...' : ''}}</td>
 							</tr>
 							<tr>
-								<td><span class="icone filtroCalendar ativo"></span>{{anuncio.properties.ano}}</td>
+								<td><span class="icone filtroCalendar ativo"></span>{{anuncio.ano}}</td>
 							</tr>
 							<tr>
-								<td><span class="icone filtroKm ativo"></span>{{anuncio.properties.km}}</td>
+								<td><span class="icone filtroKm ativo"></span>{{anuncio.km}}</td>
 							</tr>
 						</tbody>
 					</table>
