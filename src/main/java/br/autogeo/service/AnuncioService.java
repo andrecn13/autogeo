@@ -15,6 +15,10 @@ public class AnuncioService {
 	private AnuncioRepository repository;
 	
 	public Anuncio salvar(Anuncio anuncio){
-		return repository.saveAndFlush(anuncio);
+		return repository.save(anuncio);
+	}
+	
+	public Anuncio getById(Long id){
+		return repository.findOne(id);
 	}
 }

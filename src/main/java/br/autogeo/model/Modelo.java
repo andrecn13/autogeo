@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 @Table(name="TBL_MODELO")
-@JsonDeserialize(using	=	ModeloDeserializer.class)
+//@JsonDeserialize(using	=	ModeloDeserializer.class)
 public class Modelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

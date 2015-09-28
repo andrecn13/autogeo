@@ -23,5 +23,9 @@ public class MarcaService {
 	public Marca salvar(Marca marca){
 		return repository.saveAndFlush(marca);
 	}
+	
+	public Marca getById(Long id){
+		return repository.findOne(id);
+	}
 
 }

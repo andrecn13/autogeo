@@ -1,6 +1,9 @@
 <meta charset="UTF-8">
 
 <div class="col-sm-8 col-sm-offset-2">
+	<div style="margin-top: 25px;">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	</div>
 
 	<div class="page-header-autogeo">
 		<h3 class="text-left col-xs-12">Cadastro do Anúncio</h3>
@@ -12,7 +15,7 @@
 			<div class="form-group">
 				<label for="marca" class="col-sm-3 control-label">Marca</label>
 			    <div class="col-sm-8">
-					<select id="marca" class="form-control" ng-model="anuncio.marca">
+					<select id="marca" class="form-control" ng-change="getModelo(selectedMarca)" ng-options="option.marca for option in marcas" ng-model="selectedMarca" required>
 						<option value="">Selecione a Marca</option>
 					</select>
 			    </div>
@@ -20,7 +23,7 @@
 			<div class="form-group">
 				<label for="modelo" class="col-sm-3 control-label">Modelo</label>
 			    <div class="col-sm-8">
-					<select id="modelo" class="form-control" ng-model="anuncio.modelo">
+					<select id="modelo" class="form-control" ng-options="option.nome for option in modelos" ng-model="anuncio.modelo" required>
 						<option value="">Selecione o Modelo</option>
 					</select>
 			    </div>
@@ -28,13 +31,13 @@
 			<div class="form-group">
 				<label for="combustivel" class="col-sm-3 control-label">Combustível</label>
 			    <div class="col-sm-4">
-					<select id="combustivel" class="form-control" ng-model="anuncio.combustivel">
+					<select id="combustivel" class="form-control" ng-options="option.combustivel for option in combustiveis" ng-model="anuncio.combustivel" required>
 						<option value="">Selecione o Combustível</option>
 					</select>
 			    </div>
 			    <label for="cor" class="col-sm-1 control-label">Cor</label>
 			    <div class="col-sm-3">
-					<select id="cor" class="form-control" ng-model="anuncio.cor">
+					<select id="cor" class="form-control" ng-options="option.cor for option in cores" ng-model="anuncio.cor" required>
 						<option value="">Selecione a Cor</option>
 					</select>
 			    </div>
@@ -42,34 +45,40 @@
 			<div class="form-group">
 			    <label for="ano" class="col-sm-3 control-label">Ano</label>
 			    <div class="col-sm-2">
-					<input type="text" class="form-control" id="ano" placeholder="Ano" ng-model="anuncio.ano">
+					<input type="text" class="form-control" id="ano" placeholder="Ano" ng-model="anuncio.ano" required>
 			    </div>
 			    <label for="placa" class="col-sm-1 control-label">Placa</label>
 			    <div class="col-sm-2">
-					<input type="text" class="form-control" id="placa" placeholder="Placa" ng-model="anuncio.placa">
+					<input type="text" class="form-control" id="placa" placeholder="Placa" ng-model="anuncio.placa" required>
 			    </div>
 			    <label for="km" class="col-sm-1 control-label">Km</label>
 			    <div class="col-sm-2">
-					<input type="text" class="form-control" id="km" placeholder="Km">
+					<input type="text" class="form-control" id="km" placeholder="Km" ng-model="anuncio.km">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="preco" class="col-sm-3 control-label">Preço</label>
 			    <div class="col-sm-8">
-					<input type="text" class="form-control" id="preco" placeholder="Preço">
+					<input type="text" class="form-control" id="preco" placeholder="Preço" ng-model="anuncio.valor" required>
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="acessorios" class="col-sm-3 control-label">Acessórios</label>
-			    <div class="col-sm-5">
-					<select id="acessorios" class="form-control" ng-model="anuncio.acessorios">
-						<option value="">Selecione um ou mais acessórios</option>
+			    <div class="col-sm-4">
+					<select id="acessorios" class="form-control" ng-options="option.acessorio for option in acessorios" ng-model="selectedAcessorio">
+						<option value="">Adicione os acessórios desejados</option>
 					</select>
 			    </div>
-			    <div class="col-sm-3">
+			    <div class="col-sm-2">
 					<button type="button" style="margin:0" class="btn btnCadastro pull-left" ng-click="addAcessorio()">
 						Adicionar
 						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+			    </div>
+			    <div class="col-sm-2" style="padding:0">
+					<button type="button" style="margin:0" class="btn btnFavorito pull-left" ng-click="limparAcessorios()">
+						Limpar
+						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 			    </div>
 			</div>
@@ -77,15 +86,14 @@
 			    <label for="acessorios" class="col-sm-3 control-label">Acessórios Adicionados</label>
 			    <div class="col-sm-8">
 				    <pre>
-				    	<span class="badge pull-left" style="background:#0065AE; margin: 5px;padding:4px 10px 5px 10px;" >Ar-Condicionado</span>
-				    	<span class="badge pull-left" style="background:#0065AE; margin: 5px;padding:4px 10px 5px 10px;" >Direção Hidráulica</span>
+				    	<span class="badge pull-left" ng-repeat="ac in anuncio.acessorios" style="background:#0065AE; margin: 5px;padding:4px 10px 5px 10px;" >{{ac.acessorio}}</span>
 				    </pre>
 			    </div>
 			</div>
 			<div class="form-group">
 				<label for="obs" class="col-sm-3 control-label">Observações</label>
 			    <div class="col-sm-8">
-					<textarea class="form-control" rows="2" style="height:auto;"></textarea>
+					<textarea class="form-control" rows="2" style="height:auto;" ng-model="anuncio.observacao"></textarea>
 			    </div>
 			</div>
 
@@ -106,7 +114,7 @@
 			</div>
 			
 			<div class="form-group">
-				<div class="col-sm-11">
+				<div class="col-sm-12">
 					<button type="submit" class="btn btnCadastro" ng-click="cadastrarAnuncio()">Cadastrar</button>
 				</div>
 			</div>

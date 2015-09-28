@@ -25,7 +25,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/cadastro/anuncio',
         {
             templateUrl: "views/cadastroAnuncio.html",
-            controller: "AnuncioCtrl",
+            controller: "AnuncioCadastroCtrl",
             access: {requiredLogin: true}
         })
         .when('/anuncios',
@@ -80,6 +80,56 @@ app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaSer
         $scope.anuncios = data.anuncios;
     });
     
+}]);
+
+app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
+    
+	$scope.anuncio = {acessorios: [],localizacao: {}};
+	$scope.marcas = [];
+	$scope.acessorios = [];
+	$scope.cores = [];
+	$scope.combustiveis = [];
+	$scope.modelos = [];
+	
+    var promisseData = AnuncioService.getData();
+    promisseData.then(function(data) {
+    	$scope.marcas = data.marcas;
+    	$scope.acessorios = data.acessorios;
+    	$scope.cores = data.cores;
+    	$scope.combustiveis = data.combustiveis;
+    });
+    
+    $scope.addAcessorio = function(){
+    	$scope.anuncio.acessorios.push($scope.selectedAcessorio);
+    };
+
+    $scope.limparAcessorios = function(){
+    	$scope.anuncio.acessorios= [];
+    };
+    
+    $scope.getModelo = function(marca){
+    	if(marca != null){
+	        var promisseModelo = AnuncioService.getModelo(marca);
+	        promisseModelo.then(function(data) {
+	        	$scope.modelos = data;
+	        },function(data){
+	        	$scope.modelos = [];
+	        });
+        }
+    };
+    
+    $scope.cadastrarAnuncio = function(){
+    	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
+    	promisseSalvar.then(function(data) {
+    		AlertService.add("success", "Anúncio cadastrado realizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		$scope.anuncio = {acessorios: [],localizacao: {}};
+        },function(data){
+        	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
+        	$("#contentContainer").animate({ scrollTop: 0 }, 200);
+        });
+    };
+    
     var mainMarker = {
 		lat: -30.0257548,
         lng: -51.1833013,
@@ -98,6 +148,13 @@ app.controller('AnuncioCtrl', ['$scope', 'MapaService', function($scope, MapaSer
         markers: {
             mainMarker: angular.copy(mainMarker)
         }
+    });
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+    	var lat = args.model.lat;
+        var lng = args.model.lng;
+        
+        $scope.anuncio.localizacao = "POINT ("+lat+" "+lng+")";
     });
     
 }]);
@@ -474,6 +531,58 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 
 	return alertService;
 } ]);
+
+app.factory('AnuncioService', function($http, $q) {
+    return {
+        getData: function() {
+            
+            var d = $q.defer();
+            var url = 'api/anuncio';
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
+        getModelo: function(marca){
+        	var d = $q.defer();
+            var url = 'modelo/'+marca.id;
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
+        salvar: function(anuncio){
+        	var d = $q.defer();
+            var url = 'api/anuncio/salvar';
+
+            $http({
+                method: 'POST',
+                url: url,
+                data: angular.toJson(anuncio)
+            })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            });
+
+            return d.promise;
+        }
+    };
+});
 
 app.factory('AuthenticationService', ['$window', function($window) {
     var auth = {

@@ -1,5 +1,6 @@
 package br.autogeo.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,5 +59,15 @@ public class ModeloController {
 		}
 		
 		return new ResponseEntity<String>("Modelos Importados", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{idMarca}", method = RequestMethod.GET)
+	public ResponseEntity<List<Modelo>> getModelos(@PathVariable Long idMarca){
+		Marca marca = serviceMarca.getById(idMarca);
+		if(marca == null){
+			return new ResponseEntity<List<Modelo>>(new ArrayList<Modelo>(),HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<List<Modelo>>(service.getByMarca(marca),HttpStatus.OK);
 	}
 }

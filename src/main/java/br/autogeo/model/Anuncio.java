@@ -3,7 +3,6 @@ package br.autogeo.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -135,7 +134,7 @@ public class Anuncio {
 		this.dataExpiracao = dataExpiracao;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_COMBUSTIVEL")
 	public Combustivel getCombustivel() {
 		return combustivel;
@@ -145,7 +144,7 @@ public class Anuncio {
 		this.combustivel = combustivel;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_COR")
 	public Cor getCor() {
 		return cor;
@@ -156,7 +155,7 @@ public class Anuncio {
 	}
 
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_MODELO")
 	public Modelo getModelo() {
 		return modelo;
@@ -166,7 +165,7 @@ public class Anuncio {
 		this.modelo = modelo;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FK_USUARIO")
 	public Usuario getUsuario() {
 		return usuario;

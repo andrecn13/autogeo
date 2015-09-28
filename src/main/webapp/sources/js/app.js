@@ -25,7 +25,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         .when('/cadastro/anuncio',
         {
             templateUrl: "views/cadastroAnuncio.html",
-            controller: "AnuncioCtrl",
+            controller: "AnuncioCadastroCtrl",
             access: {requiredLogin: true}
         })
         .when('/anuncios',

@@ -76,8 +76,9 @@ public class UsuarioController {
 
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("nome", usuario.getNome());
-		jsonObject.put("token", Jwts.builder().setSubject(usuario.getNome())
+		jsonObject.put("token", Jwts.builder().setSubject(usuario.getEmail())
 						.claim("nome", usuario.getNome())
+						.claim("email", usuario.getEmail())
 						.setIssuedAt(new Date())
 						.signWith(SignatureAlgorithm.HS256, "chavesecreta")
 						.setHeaderParam("typ", "JWT").compact());

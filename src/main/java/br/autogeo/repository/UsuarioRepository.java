@@ -7,5 +7,6 @@ import br.autogeo.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	Usuario findByEmailAndSenha(String email, String senha);
+	Usuario findByEmail(String email);
 
 }
