@@ -8,37 +8,48 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         {
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: false}
         })    
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
             controller: "FavoritosCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
         })   
         .when('/cadastro',
         {
+            templateUrl: "views/tipoCadastro.html",
+            access: {requiredLogin: false, blockWhenLogged: true}
+        })
+        .when('/cadastro/:tipo',
+        {
             templateUrl: "views/cadastro.html",
             controller: "CadastroCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: true}
         })
-        .when('/cadastro/anuncio',
+        .when('/anuncio/novo',
         {
             templateUrl: "views/cadastroAnuncio.html",
             controller: "AnuncioCadastroCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
+        })
+         .when('/anuncio/editar/:id',
+        {
+            templateUrl: "views/editarAnuncio.html",
+            controller: "AnuncioEditarCtrl",
+            access: {requiredLogin: true, blockWhenLogged: false}
         })
         .when('/anuncios',
         {
             templateUrl: "views/anuncios.html",
             controller: "AnuncioCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
         })  
         .when('/login',
         {
             templateUrl: "views/login.html",
             controller: "LoginCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: false}
         })  
         .otherwise( 
         {
@@ -54,6 +65,9 @@ app.run(function($rootScope, $location, AuthenticationService) {
     	$rootScope.alerts = [];
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged()) {
     		$location.path("/login");
+        }
+        if (nextRoute.access.blockWhenLogged && AuthenticationService.isLogged()) {
+    		$location.path("/");
         }
     });
     

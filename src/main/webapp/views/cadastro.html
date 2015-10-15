@@ -12,50 +12,33 @@
 	</div>
 	
 	<div class="formContainer">
-		<form class="form-horizontal">
+		<form class="form-horizontal" id="formCadastro">
 			<div class="form-group">
-				<label for="nome" class="col-sm-3 control-label">Nome</label>
-			    <div class="col-sm-8">
+				<label for="nome" class="col-sm-2 control-label">Nome</label>
+			    <div class="col-sm-4">
 					<input type="text" class="form-control" name="nome" id="nome" placeholder="Seu Nome" required ng-model="user.nome">
 			    </div>
-			</div>
-			<div class="form-group">
-				<label for="sobrenome" class="col-sm-3 control-label">Sobre Nome</label>
-				<div class="col-sm-8">
+			    <label for="sobrenome" class="col-sm-2 control-label">Sobre Nome</label>
+				<div class="col-sm-4">
 					<input type="text" class="form-control" id="sobrenome" placeholder="Seu Sobre Nome" ng-model="user.sobreNome">
 				</div>
-			</div>	
+			</div>
 			<div class="form-group">
-				<label for="cpf" class="col-sm-3 control-label">Cpf</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="cpf" placeholder="Seu CPF" ng-model="user.cpf">
+				<label for="telefone" class="col-sm-2 control-label">Telefone</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="telefone" placeholder="Seu Telefone" ui-br-phone-number ng-model="user.telefone">
+				</div>
+				<label for="celular" class="col-sm-2 control-label">Celular</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="celular" placeholder="Seu Celular" ui-br-phone-number ng-model="user.celular">
 				</div>
 			</div>			
 			<div class="form-group">
-				<label for="telefone" class="col-sm-3 control-label">Telefone</label>
-				<div class="col-sm-8">
-					<input type="tel" class="form-control" id="telefone" placeholder="Seu Telefone" ng-model="user.telefone">
+				<label for="cpf" class="col-sm-2 control-label">Cpf</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="cpf" placeholder="Seu CPF" ui-br-cpf-mask ng-model="user.cpf" required>
 				</div>
 			</div>			
-			<div class="form-group">
-				<label for="celular" class="col-sm-3 control-label">Celular</label>
-				<div class="col-sm-8">
-					<input type="tel" class="form-control" id="celular" placeholder="Seu Celular" ng-model="user.celular">
-				</div>
-			</div>			
-			<div class="form-group">
-				<label for="celular" class="col-sm-3 control-label">WhatsApp?</label>
-				<div class="radio col-sm-1">
-					<label> 
-						<input type="radio" name="whatsapp" ng-model="user.whatsapp" value="true"> Sim
-					</label>
-				</div>
-				<div class="radio col-sm-1">
-					<label>
-						<input type="radio" name="whatsapp" value="false" ng-model="user.whatsapp"> Não
-					</label>
-				</div>
-			</div>	
 				
 			<div class="page-header-autogeo">
 				<h3 class="text-center">Dados de Login</h3>
@@ -72,6 +55,11 @@
 				<div class="col-sm-8">
 					<input type="password" class="form-control" id="senha" placeholder="Sua Senha" ng-model="user.senha">
 				</div>
+			</div>	
+			
+			<div class="page-header-autogeo" ng-show="tipo == 'revenda'">
+				<h3 class="text-center">Dados da Empresa</h3>
+				<span class="help-block text-center">Preencha os dados da sua empresa.</span>
 			</div>	
 			
 			<div class="form-group">

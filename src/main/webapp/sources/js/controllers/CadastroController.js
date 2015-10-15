@@ -1,5 +1,6 @@
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
-    
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', '$routeParams', function($scope, CadastroFactory, AlertService, $timeout, $window, $routeParams){
+    	
+	$scope.tipo		=	$routeParams.tipo;
     $scope.title    =   "Cadastro";
     $scope.user		=	{"whatsapp": "true"};
     

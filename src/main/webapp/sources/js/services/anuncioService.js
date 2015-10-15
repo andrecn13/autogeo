@@ -14,6 +14,20 @@ app.factory('AnuncioService', function($http, $q) {
 
             return d.promise;
         },
+        getAnuncio: function(id) {
+            var d = $q.defer();
+            var url = 'api/anuncio/'+id;
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
         getData: function() {
             
             var d = $q.defer();
@@ -46,7 +60,6 @@ app.factory('AnuncioService', function($http, $q) {
         salvar: function(anuncio){
         	var d = $q.defer();
             var url = 'api/anuncio/salvar';
-
             $http({
                 method: 'POST',
                 url: url,

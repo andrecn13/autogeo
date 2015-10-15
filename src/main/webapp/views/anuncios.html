@@ -5,12 +5,16 @@
 	<div class="page-header-autogeo">
 		<h3 class="text-left col-xs-8">Meus Anúncios</h3>
 		<span class="help-block text-left pull-left">Os anúncios que você publicou estão listados abaixo.</span>
-		<button class="btn btnCadastro pull-right" ng-click="go('/cadastro/anuncio')">Novo Anúncio
+		<button class="btn btnCadastro pull-right" ng-click="go('/anuncio/novo')" style="width:150px;">
 			<span class="glyphicon glyphicon-plus"></span>
+			Cadastrar Anúncio
 		</button>
 	</div>
-	
+	 
 	<div>
+		<div style="margin-top: 15px;clear:both;" ng-hide="anuncios.length > 0">
+			<alert type="warning">Você não pussui nenhum anúncio cadastrado ainda.<a href="#/anuncio/novo">Cadastrar Anúncio</a></alert>
+		</div>
 		<ul id="listaAnuncios">
 			<li class="col-xs-6 col-sm-6 col-md-6 col-lg-4 pull-left" ng-repeat="anuncio in anuncios">
 				<div class="divAnuncio">
@@ -37,7 +41,7 @@
 						</tbody>
 					</table>
 					<div class="col-xs-12 divBtnAnuncio">
-						<button class="btnCadastro pull-left">Visualizar Todo Anúncio</button>
+						<button class="btnFavorito pull-left" ng-click="go('/anuncio/editar/'+anuncio.id)">Editar Anúncio</button>
 					</div>
 				</div>
 			</li>

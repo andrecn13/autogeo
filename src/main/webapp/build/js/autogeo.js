@@ -8,37 +8,48 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         {
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: false}
         })    
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
             controller: "FavoritosCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
         })   
         .when('/cadastro',
         {
+            templateUrl: "views/tipoCadastro.html",
+            access: {requiredLogin: false, blockWhenLogged: true}
+        })
+        .when('/cadastro/:tipo',
+        {
             templateUrl: "views/cadastro.html",
             controller: "CadastroCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: true}
         })
-        .when('/cadastro/anuncio',
+        .when('/anuncio/novo',
         {
             templateUrl: "views/cadastroAnuncio.html",
             controller: "AnuncioCadastroCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
+        })
+         .when('/anuncio/editar/:id',
+        {
+            templateUrl: "views/editarAnuncio.html",
+            controller: "AnuncioEditarCtrl",
+            access: {requiredLogin: true, blockWhenLogged: false}
         })
         .when('/anuncios',
         {
             templateUrl: "views/anuncios.html",
             controller: "AnuncioCtrl",
-            access: {requiredLogin: true}
+            access: {requiredLogin: true, blockWhenLogged: false}
         })  
         .when('/login',
         {
             templateUrl: "views/login.html",
             controller: "LoginCtrl",
-            access: {requiredLogin: false}
+            access: {requiredLogin: false, blockWhenLogged: false}
         })  
         .otherwise( 
         {
@@ -55,6 +66,9 @@ app.run(function($rootScope, $location, AuthenticationService) {
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged()) {
     		$location.path("/login");
         }
+        if (nextRoute.access.blockWhenLogged && AuthenticationService.isLogged()) {
+    		$location.path("/");
+        }
     });
     
     $rootScope.go = function ( path ) {
@@ -70,6 +84,9 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
+/**
+ * Listagem de anuncios do usuário
+ */
 app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, AnuncioService){
     
     $scope.title    =   "Meus Anuncios";
@@ -82,6 +99,9 @@ app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, Anun
     
 }]);
 
+/**
+ * Cadastro anuncio
+ */
 app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
     
 	$scope.anuncio = {acessorios: [],localizacao: {}};
@@ -159,8 +179,96 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     
 }]);
 
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', function($scope, CadastroFactory, AlertService, $timeout, $window){
+/**
+ * Editar Anuncio
+ */
+app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', function($scope, AnuncioService, AlertService, $routeParams, $resource){
     
+    var anuncio =  $resource('api/anuncio/'+$routeParams.id).get(function(){
+    	$scope.anuncio = anuncio; 
+     	mapa(); 
+    });
+    
+    var dados = $resource('api/anuncio').get(function(){
+        $scope.dados = dados;
+        $scope.anuncio.combustivel = _.find(dados.combustiveis, function(o){ return o.combustivel == $scope.anuncio.combustivel.combustivel; });
+        $scope.anuncio.cor = _.find(dados.cores, function(o){ return o.cor == $scope.anuncio.cor.cor; });
+        $scope.selectedMarca = _.find(dados.marcas, function(o){ return o.marca == $scope.anuncio.modelo.marca.marca; });
+        $scope.getModelo($scope.selectedMarca);
+    }); 
+    
+    $scope.addAcessorio = function(){
+    	$scope.anuncio.acessorios.push($scope.selectedAcessorio);
+    }; 
+    
+    $scope.limparAcessorios = function(){
+    	$scope.anuncio.acessorios= [];
+    };
+    
+    $scope.getModelo = function(marca){
+    	if(marca != null){
+    		var promisseModelo = AnuncioService.getModelo(marca);
+    		promisseModelo.then(function(data) {
+    			$scope.modelos = data;
+    			if($scope.anuncio.modelo.nome != ''){
+    				$scope.anuncio.modelo = _.find(data, function(o){ return o.nome == $scope.anuncio.modelo.nome; });
+    			} 
+    		},function(data){
+    			$scope.modelos = [];
+    		});
+    	} 
+    };
+    
+    var mapa = function(){
+		var geom = angular.fromJson($scope.anuncio.localizacao);
+		var mainMarker = {
+			lat: geom.features[0].geometry.coordinates[1],
+		    lng: geom.features[0].geometry.coordinates[0],
+		    focus: true,
+		    message: "Mova o marker para posicionar a localizção do automóvel",
+		    draggable: true
+		};
+		
+		angular.extend($scope, {
+		    defaults: {},
+		    markers: {
+		        mainMarker: angular.copy(mainMarker)
+		    }
+		}); 
+		
+		$scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+			var lat = args.model.lat; 
+		    var lng = args.model.lng;
+		    
+		    $scope.anuncio.localizacao = "POINT ("+lat+" "+lng+")";
+		});
+		
+		$scope.anuncio.localizacao = "POINT ("+geom.features[0].geometry.coordinates[1]+" "+geom.features[0].geometry.coordinates[0]+")";
+    }
+    
+    $scope.center = { 
+    	lat: -30.0257548,
+        lng: -51.1833013,
+        zoom: 13 
+    } 
+    
+    $scope.atualizarAnuncio = function(){
+    	console.log($scope.anuncio);  
+    	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
+    	promisseSalvar.then(function(data) {  
+    		AlertService.add("success", "Anúncio atualizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+        },function(data){
+        	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
+        	$("#contentContainer").animate({ scrollTop: 0 }, 200);
+        });
+    };
+     
+}]);
+
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$timeout', '$window', '$routeParams', function($scope, CadastroFactory, AlertService, $timeout, $window, $routeParams){
+    	
+	$scope.tipo		=	$routeParams.tipo;
     $scope.title    =   "Cadastro";
     $scope.user		=	{"whatsapp": "true"};
     
@@ -548,6 +656,20 @@ app.factory('AnuncioService', function($http, $q) {
 
             return d.promise;
         },
+        getAnuncio: function(id) {
+            var d = $q.defer();
+            var url = 'api/anuncio/'+id;
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
         getData: function() {
             
             var d = $q.defer();
@@ -580,7 +702,6 @@ app.factory('AnuncioService', function($http, $q) {
         salvar: function(anuncio){
         	var d = $q.defer();
             var url = 'api/anuncio/salvar';
-
             $http({
                 method: 'POST',
                 url: url,
@@ -597,6 +718,7 @@ app.factory('AnuncioService', function($http, $q) {
         }
     };
 });
+
 
 app.factory('AuthenticationService', ['$window', function($window) {
     var auth = {

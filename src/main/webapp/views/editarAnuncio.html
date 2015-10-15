@@ -6,8 +6,8 @@
 	</div>
 
 	<div class="page-header-autogeo">
-		<h3 class="text-left col-xs-12">Cadastro do Anúncio</h3>
-		<span class="help-block text-left pull-left">Preencha as informações do anúncio.</span>
+		<h3 class="text-left col-xs-12">Editando Anúncio: #{{anuncio.id}}</h3>
+		<span class="help-block text-left pull-left">Atualize as informações do anúncio.</span>
 	</div>
 	
 	<div class="formContainer">
@@ -15,8 +15,7 @@
 			<div class="form-group">
 				<label for="marca" class="col-sm-3 control-label">Marca</label>
 			    <div class="col-sm-8">
-					<select id="marca" class="form-control" ng-change="getModelo(selectedMarca)" ng-options="option.marca for option in marcas" ng-model="selectedMarca" required>
-						<option value="">Selecione a Marca</option>
+					<select id="marca" class="form-control" ng-change="getModelo(selectedMarca)" ng-init="marcas[2]"  ng-options="option.marca for option in dados.marcas" ng-model="selectedMarca" required>
 					</select>
 			    </div>
 			</div>
@@ -31,13 +30,11 @@
 			<div class="form-group">
 				<label for="combustivel" class="col-sm-3 control-label">Combustível</label>
 			    <div class="col-sm-4">
-					<select id="combustivel" class="form-control" ng-options="option.combustivel for option in combustiveis" ng-model="anuncio.combustivel" required>
-						<option value="">Selecione o Combustível</option>
-					</select>
+					<select id="combustivel" class="form-control" ng-model="anuncio.combustivel" ng-options="option.combustivel for option in dados.combustiveis" required></select>
 			    </div>
 			    <label for="cor" class="col-sm-1 control-label">Cor</label>
 			    <div class="col-sm-3">
-					<select id="cor" class="form-control" ng-options="option.cor for option in cores" ng-model="anuncio.cor" required>
+					<select id="cor" class="form-control" ng-options="option.cor for option in dados.cores" ng-model="anuncio.cor" required>
 						<option value="">Selecione a Cor</option>
 					</select>
 			    </div>
@@ -65,7 +62,7 @@
 			<div class="form-group">
 			    <label for="acessorios" class="col-sm-3 control-label">Acessórios</label>
 			    <div class="col-sm-4">
-					<select id="acessorios" class="form-control" ng-options="option.acessorio for option in acessorios" ng-model="selectedAcessorio">
+					<select id="acessorios" class="form-control" ng-options="option.acessorio for option in dados.acessorios" ng-model="selectedAcessorio">
 						<option value="">Adicione os acessórios desejados</option>
 					</select>
 			    </div>
@@ -111,17 +108,17 @@
 			    	<button class="btnCadastro" style="margin:0">
 			    		<span class="glyphicon glyphicon-search"></span>
 			    		Buscar
-		    		</button>
+		    		</button> 
 			    </div>
 			</div>
 			
-			<div class="form-group" style="padding:15px;">
+			<div class="form-group" style="padding:15px;"> 
 				<leaflet defaults="defaults" center="center" markers="markers" width="100%" height="300"></leaflet>
 			</div>
 			
 			<div class="form-group">
 				<div class="col-sm-12">
-					<button type="submit" class="btn btnCadastro" ng-click="cadastrarAnuncio()">
+					<button type="submit" class="btn btnCadastro" ng-click="atualizarAnuncio()">
 						<span class="glyphicon glyphicon-plus"></span>
 						Cadastrar
 					</button>
