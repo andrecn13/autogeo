@@ -96,7 +96,7 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
 /**
  * Editar Anuncio
  */
-app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', function($scope, AnuncioService, AlertService, $routeParams, $resource){
+app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location){
     
     var anuncio =  $resource('api/anuncio/'+$routeParams.id).get(function(){
     	$scope.anuncio = anuncio; 
@@ -177,5 +177,18 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
         	$("#contentContainer").animate({ scrollTop: 0 }, 200);
         });
     };
+    
+    $scope.deletar = function(){
+    	if($scope.motivo != undefined){ 
+    		console.log($scope.motivo);
+    		var promisseDeletar = AnuncioService.deletar($routeParams.id, $scope.motivo);
+    		promisseDeletar.then(function(data) {  
+    			$location.path("/anuncios"); 
+            },function(data){ 
+            	AlertService.add("danger", "Erro ao deletar o anúncio, tente novamente!");
+            	$("#contentContainer").animate({ scrollTop: 0 }, 200);
+            });
+    	}
+    }
      
 }]);

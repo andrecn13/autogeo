@@ -45,6 +45,9 @@ public class Anuncio {
     private Usuario usuario;
     private List<Acessorio> acessorios;
     
+    private Motivo motivoExclusao;
+    private Date dataExclusao;
+    
     private com.vividsolutions.jts.geom.Point localizacao;
     
     public Anuncio() {}
@@ -187,6 +190,26 @@ public class Anuncio {
 
 	public void setAcessorios(List<Acessorio> acessorios) {
 		this.acessorios = acessorios;
+	}
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "FK_MOTIVO_EXCLUSAO")
+	public Motivo getMotivoExclusao() {
+		return motivoExclusao;
+	}
+
+	public void setMotivoExclusao(Motivo motivoExclusao) {
+		this.motivoExclusao = motivoExclusao;
+	}
+
+	@Column(name = "DT_EXCLUSAO")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
 	}
 
 	@JsonSerialize(using = PointToJsonSerializer.class)

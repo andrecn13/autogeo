@@ -26,7 +26,7 @@ public class AnuncioService {
 	}
 	
 	public List<Anuncio> getAllByUser(Usuario usuario){
-		return repository.findByUsuario(usuario);
+		return repository.findByUsuarioAndAtivo(usuario, true);
 	}
 	
 	public List<Anuncio> getAll(){

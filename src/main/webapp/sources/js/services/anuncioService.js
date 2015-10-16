@@ -73,6 +73,23 @@ app.factory('AnuncioService', function($http, $q) {
             });
 
             return d.promise;
+        },
+        deletar: function(id, motivo){
+        	var d = $q.defer();
+            var url = 'api/anuncio/deletar/'+id;
+            $http({
+                method: 'POST',
+                url: url,
+                data: angular.toJson(motivo)
+            })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            });
+
+            return d.promise;
         }
     };
 });

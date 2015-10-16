@@ -1,6 +1,7 @@
 package br.autogeo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.autogeo.model.Anuncio;
+import br.autogeo.model.Motivo;
 import br.autogeo.model.Usuario;
 import br.autogeo.service.AcessorioService;
 import br.autogeo.service.AnuncioService;
 import br.autogeo.service.CombustivelService;
 import br.autogeo.service.CorService;
 import br.autogeo.service.MarcaService;
+import br.autogeo.service.MotivoService;
 import br.autogeo.service.UsuarioService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,6 +54,9 @@ public class AnuncioController {
 	@Autowired
 	private UsuarioService serviceUsuario;
 	
+	@Autowired
+	private MotivoService serviceMotivo;
+	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ResponseEntity<Anuncio> salvar(@RequestBody Anuncio anuncio, HttpServletRequest request){
 		
@@ -60,6 +66,8 @@ public class AnuncioController {
 		
 		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
 		anuncio.setUsuario(serviceUsuario.getByEmail(email));
+		anuncio.setDataCriacao(new Date());
+		anuncio.setAtivo(true);
 		
 		return new ResponseEntity<Anuncio>(service.salvar(anuncio), HttpStatus.OK);
 	}
@@ -75,6 +83,7 @@ public class AnuncioController {
 		node.putPOJO("cores", serviceCor.getAll());
 		node.putPOJO("combustiveis", serviceCombustivel.getAll());
 		node.putPOJO("acessorios", serviceAcessorio.getAll());
+		node.putPOJO("motivos", serviceMotivo.getAll());
 		
 		try {
 			json = mapper.writeValueAsString(node);
@@ -101,6 +110,23 @@ public class AnuncioController {
 		anuncios = service.getAllByUser(usuario);
 		
 		return new ResponseEntity<List<Anuncio>>(anuncios, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/deletar/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteAnuncio(@PathVariable Long id, @RequestBody Motivo motivo){
+		
+		Anuncio anuncio = service.getById(id);
+		if(anuncio != null){
+			anuncio.setAtivo(false);
+			anuncio.setMotivoExclusao(motivo);
+			anuncio.setDataExclusao(new Date());
+			
+			service.salvar(anuncio);
+
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);		
 	}
 
 }

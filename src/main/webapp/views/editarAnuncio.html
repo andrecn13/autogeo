@@ -120,10 +120,34 @@
 				<div class="col-sm-12">
 					<button type="submit" class="btn btnCadastro" ng-click="atualizarAnuncio()">
 						<span class="glyphicon glyphicon-plus"></span>
-						Cadastrar
+						Atualizar
 					</button>
 				</div>
 			</div>
 		</form>
+
+		<div class="panel panel-danger" style="margin-top: 50px;">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span style="margin-right:10px;" class="glyphicon glyphicon-trash"></span>Deletar Anúncio</h3>
+			</div>
+			<div class="panel-body">
+				<h5 class="text-center" style="margin-bottom:35px;">Tem certeza que deseja <b>deletar</b> este anúncio?</h5>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="marca" class="col-sm-3 control-label">Motivo da exclusão</label>
+					    <div class="col-sm-8">
+							<select id="motivo" class="form-control" ng-options="option.motivo for option in dados.motivos" ng-model="motivo" required>
+								<option value="">Selecione o motivo</option>
+							</select>
+					    </div>
+					</div>
+					<button type="submit"  class="btn btnFavorito" style="margin:0" ng-click="deletar()">
+						<span class="glyphicon glyphicon-trash"></span>
+						sim, deletar
+					</button>
+				</form>
+			</div>
+		</div>
+		
 	</div>
 </div>

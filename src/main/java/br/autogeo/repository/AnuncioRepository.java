@@ -9,5 +9,5 @@ import br.autogeo.model.Usuario;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, Long>{
 
-	List<Anuncio> findByUsuario(Usuario usuario);
+	List<Anuncio> findByUsuarioAndAtivo(Usuario usuario, Boolean ativo);
 }
