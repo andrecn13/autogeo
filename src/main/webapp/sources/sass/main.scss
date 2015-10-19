@@ -560,7 +560,7 @@ header{
 		}
 		
 		.divAnuncio{
-		    height: 380px;
+		    height: 400px;
 		    background: #FFF;
 		    box-shadow: 0px 1px 0px #d4d7d8;
 		    border: 1px solid #e1e5e8;
@@ -673,7 +673,7 @@ header{
 		.tituloValor{
 			font-weight: bold;
 			font-size: 1.4em;
-			width: 110px;
+			width: 62%;
 		    float: right;
     		text-align: left;
 		}
@@ -734,7 +734,8 @@ header{
 	color: #FFF;
 }
 .modal-content{
-	border-top: 7px solid $cor-principal;
+	border-top: none;
+/* 	border-top: 7px solid $cor-principal; */
 	
 }
 
@@ -770,4 +771,11 @@ header{
 }
 #formCadastro input{
 	padding:0px 5px 0px 5px;
+}
+
+.starFavoritar{
+	font-size: 19px;
+    color: #f7d116;
+    margin: 7px;
+    cursor: pointer;
 }

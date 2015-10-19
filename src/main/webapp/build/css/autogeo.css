@@ -482,7 +482,7 @@ header {
     #listaAnuncios li .divAnuncio.favoritos {
       height: 420px; }
     #listaAnuncios li .divAnuncio {
-      height: 380px;
+      height: 400px;
       background: #FFF;
       box-shadow: 0px 1px 0px #d4d7d8;
       border: 1px solid #e1e5e8;
@@ -567,7 +567,7 @@ header {
   .leaflet-container .containerAnuncioPrev .tituloValor {
     font-weight: bold;
     font-size: 1.4em;
-    width: 110px;
+    width: 62%;
     float: right;
     text-align: left; }
   .leaflet-container .containerAnuncioPrev .descricao {
@@ -619,7 +619,8 @@ header {
   color: #FFF; }
 
 .modal-content {
-  border-top: 7px solid #0065ae; }
+  border-top: none;
+  /* 	border-top: 7px solid $cor-principal; */ }
 
 .table > thead > tr > th {
   vertical-align: bottom;
@@ -653,5 +654,11 @@ header {
 
 #formCadastro input {
   padding: 0px 5px 0px 5px; }
+
+.starFavoritar {
+  font-size: 19px;
+  color: #f7d116;
+  margin: 7px;
+  cursor: pointer; }
 
 /*# sourceMappingURL=autogeo.css.map */

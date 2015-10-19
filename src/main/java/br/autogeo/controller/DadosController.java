@@ -162,6 +162,7 @@ public class DadosController {
 			contato.put("email", anuncio.getUsuario().getEmail());
 			contato.put("telefone", anuncio.getUsuario().getTelefone());
 			
+			f.setProperty("id", anuncio.getId());
 			f.setProperty("ano", anuncio.getAno());
 			f.setProperty("combustivel", anuncio.getCombustivel().getCombustivel());
 			f.setProperty("cor", anuncio.getCor().getCor());

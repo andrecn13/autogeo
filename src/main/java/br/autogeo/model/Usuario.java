@@ -2,17 +2,23 @@ package br.autogeo.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TBL_USUARIO")
@@ -30,6 +36,8 @@ public class Usuario implements Serializable {
 	private Boolean whatsapp;
 	private Boolean ativo;
 	private Date dataCriacao;
+	
+	private List<Anuncio> favoritos;
 	
 	public Usuario() {}
 
@@ -135,6 +143,16 @@ public class Usuario implements Serializable {
 
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
+	}
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "usuariosFavoritados")
+	public List<Anuncio> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(List<Anuncio> favoritos) {
+		this.favoritos = favoritos;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 			templateUrl: 'partials/modal.html',
 			controller: 'ModalCtrl',
 			size: 'md',
-			resolve: {
+			resolve: { 
 			    anuncio: function () {
 			      return $scope.anuncio;
 			    }

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,11 +23,13 @@ import org.hibernate.annotations.Type;
 import br.autogeo.util.JsonToPointDeserializer;
 import br.autogeo.util.PointToJsonSerializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name="TBL_ANUNCIO")
+@NamedQuery(name = "findByUsuarioAndAtivo", query = "select a from Anuncio a where a.usuario = ?1 and ativo = ?2")
 public class Anuncio {
    
     private Long id;
@@ -47,6 +50,8 @@ public class Anuncio {
     
     private Motivo motivoExclusao;
     private Date dataExclusao;
+    
+    private List<Usuario> usuariosFavoritados;
     
     private com.vividsolutions.jts.geom.Point localizacao;
     
@@ -211,6 +216,21 @@ public class Anuncio {
 	public void setDataExclusao(Date dataExclusao) {
 		this.dataExclusao = dataExclusao;
 	}
+	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="TBL_FAV_ANUNCIO", 
+			joinColumns={
+				@JoinColumn(name="FK_ANUNCIO")}, 
+					inverseJoinColumns={
+						@JoinColumn(name="FK_USUARIO")})
+	public List<Usuario> getUsuariosFavoritados() {
+		return usuariosFavoritados;
+	}
+	
+	public void setUsuariosFavoritados(List<Usuario> usuariosFavoritados) {
+		this.usuariosFavoritados = usuariosFavoritados;
+	}
 
 	@JsonSerialize(using = PointToJsonSerializer.class)
 	@Type(type="org.hibernate.spatial.GeometryType")   
@@ -218,6 +238,7 @@ public class Anuncio {
 	public com.vividsolutions.jts.geom.Point getLocalizacao() {
 		return localizacao;
 	}
+
 
 	@JsonDeserialize(using	=	JsonToPointDeserializer.class)
 	public void setLocalizacao(com.vividsolutions.jts.geom.Point localizacao) {

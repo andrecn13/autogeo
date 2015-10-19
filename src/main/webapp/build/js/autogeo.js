@@ -9,7 +9,13 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl",
             access: {requiredLogin: false, blockWhenLogged: false}
-        })    
+        })   
+        .when('/visualizar/:id', 
+        {
+            templateUrl: "views/mapa.html",
+            controller: "MapaCtrl",
+            access: {requiredLogin: false, blockWhenLogged: false}
+        })   
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
@@ -80,6 +86,10 @@ app.run(function($rootScope, $location, AuthenticationService) {
 	};
 	
 	$rootScope.userName = function(){ return AuthenticationService.getUser()}; 
+	
+	$rootScope.closeAlert = function(index) {
+		$rootScope.alerts.splice(index, 1);
+	};
 	
 });
 
@@ -298,9 +308,30 @@ app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$t
     
 }]);
 
-app.controller('FavoritosCtrl', ['$scope', function($scope){
+app.controller('FavoritosCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
     
     $scope.title    =   "Meus Favoritos";
+    $scope.anuncios = [];
+    
+    var promiseAnuncios = AnuncioService.getFavoritos();
+    promiseAnuncios.then(function(data) {
+        $scope.anuncios = data;
+    });
+    
+    $scope.removerFavorito = function(id){
+		AnuncioService.favorito('remove', id).then(function(data){
+			AlertService.add("success", "Anúncio removido dos favoritos com sucesso.");
+			$("#contentContainer").animate({ scrollTop: 0 }, 200);
+
+		    var promiseAnuncios = AnuncioService.getFavoritos();
+		    promiseAnuncios.then(function(data) {
+		        $scope.anuncios = data;
+		    });
+		    
+		},function(data){
+			AlertService.add("danger", "Erro ao remover dos favoritos.");
+		});
+	};
 
 }]);
 
@@ -329,7 +360,7 @@ app.controller('LoginCtrl', ['$scope', '$location', '$window', 'LoginService', '
     
 }]);
 
-app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams) {
 	
     $scope.title    =   "Mapa";
     
@@ -379,19 +410,27 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         iconAnchor:[12, 0]  
     };  
     
-    var promiseAnuncios = MapaService.getAnuncios();
+    var promiseAnuncios = MapaService.getAnuncios(AuthenticationService.getUser());
     promiseAnuncios.then(function(data) {
         $rootScope.anuncios = data.anuncios;
         angular.forEach(data.anuncios, function(anuncio, i) {
-            $scope.anunciosMarkers.push({
+            var focus = false;
+
+            if($routeParams.id && $routeParams.id == anuncio.properties.id){
+            	focus = true;
+            } 
+            
+        	$scope.anunciosMarkers.push({
             	layer: 'anuncios',
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
-                popupOptions: {minWidth: 200, maxWidth: 200},
-                props: anuncio.properties
+                popupOptions: {minWidth: 240, maxWidth: 300},
+                props: anuncio.properties,
+                focus: focus
             });
         });
+        
         $scope.anunciosMarkers2 = $scope.anunciosMarkers;
     });
  
@@ -473,12 +512,28 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
 }]);
 
 
-app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio) {
+app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio, AnuncioService, AlertService) {
 	
 	$scope.anuncio = anuncio;
-
+	
 	$scope.ok = function () {
 		$modalInstance.dismiss('cancel');
+	};
+	
+	$scope.favoritar = function(option){
+		if(option == 'add' || option == 'remove'){
+			AnuncioService.favorito(option, $scope.anuncio.properties.id).then(function(data){
+				if(option == 'add'){
+					AlertService.add("success", "Adicionado as favoritos com sucesso.");
+					$scope.anuncio.properties.favorito = true;
+				}else{
+					AlertService.add("success", "Removido dos favoritos com sucesso.");
+					$scope.anuncio.properties.favorito = false;
+				}
+			},function(data){
+				AlertService.add("danger", "Erro ao adicionar aos favoritos.");
+			});
+		}
 	};
 	
 });
@@ -491,7 +546,7 @@ app.controller('PopUpCtrl', ['$scope', '$modal', function ($scope, $modal) {
 			templateUrl: 'partials/modal.html',
 			controller: 'ModalCtrl',
 			size: 'md',
-			resolve: {
+			resolve: { 
 			    anuncio: function () {
 			      return $scope.anuncio;
 			    }
@@ -649,7 +704,7 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 	alertService.clear = function() {
 		$rootScope.alerts = [];
 	};
-
+	
 	return alertService;
 } ]);
 
@@ -658,6 +713,20 @@ app.factory('AnuncioService', function($http, $q) {
     	getAnuncios: function() {
             var d = $q.defer();
             var url = 'api/anuncio/all';
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
+        getFavoritos: function() {
+            var d = $q.defer();
+            var url = 'api/anuncio/favoritos';
 
             $http.get(url)
                 .success(function(data){
@@ -745,6 +814,22 @@ app.factory('AnuncioService', function($http, $q) {
             });
 
             return d.promise;
+        },
+        favorito: function(acao, id){
+        	var d = $q.defer();
+            var url = 'api/anuncio/favorito/'+acao+'/'+id;
+            $http({
+                method: 'GET',
+                url: url
+            })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            });
+
+            return d.promise;
         }
     };
 });
@@ -781,12 +866,14 @@ app.factory('LoginService', function($resource) {
 
 app.factory('MapaService', function($http, $q) {
     return {
-        getAnuncios: function() {
-            
+        getAnuncios: function(user) {
             var d = $q.defer();
-//            var url = 'data_sample/carros.json';
             var url = 'dados/anuncios';
             var saida = { anuncios: [] };
+            
+            if(user != ''){
+            	url = "api/anuncio/lista"
+            }
 
             $http.get(url)
                 .success(function(anuncios){

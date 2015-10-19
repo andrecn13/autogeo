@@ -1,11 +1,13 @@
 app.factory('MapaService', function($http, $q) {
     return {
-        getAnuncios: function() {
-            
+        getAnuncios: function(user) {
             var d = $q.defer();
-//            var url = 'data_sample/carros.json';
             var url = 'dados/anuncios';
             var saida = { anuncios: [] };
+            
+            if(user != ''){
+            	url = "api/anuncio/lista"
+            }
 
             $http.get(url)
                 .success(function(anuncios){

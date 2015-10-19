@@ -14,6 +14,6 @@ app.factory('AlertService', [ '$rootScope', function($rootScope) {
 	alertService.clear = function() {
 		$rootScope.alerts = [];
 	};
-
+	
 	return alertService;
 } ]);

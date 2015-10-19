@@ -1,46 +1,53 @@
 <meta charset="UTF-8">
 
 <div class="col-sm-8 col-sm-offset-2">
+
+	<div style="margin-top: 5px;">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="1500" close="closeAlert($index)">{{alert.msg}}</alert> 
+	</div>
+
 	<div class="page-header-autogeo">
 		<h3 class="text-left">Meus Favoritos</h3>
-		<span class="help-block text-left pull-left">Os anúncios que você marcou como favirito estão listados abaixo.</span>
+		<span class="help-block text-left pull-left">Os anúncios que você marcou como favorito estão listados abaixo.</span>
 	</div>
 	
+	
 	<div>
-		<div style="margin-top: 15px;clear:both;">
+		<div style="margin-top: 15px;clear:both;" ng-hide="anuncios.length > 0">
 			<alert type="warning">Você não pussui nenhum anúncio marcado como favorito.</alert>
 		</div>
-<!-- 		<ul id="listaAnuncios"> -->
-<!-- 			<li class="col-xs-6 col-sm-6 col-md-6 col-lg-4 pull-left" ng-repeat="anuncio in anuncios | limitTo: 4"> -->
-<!-- 				<div class="divAnuncio favoritos"> -->
-<!-- 					<div class="imgAnuncio"> -->
-<!-- 						<img src="./build/img/carro2.jpg" alt="Automóvel" title="Automóvel"/> -->
-<!-- 					</div> -->
-<!-- 					<table class="col-sm-11"> -->
-<!-- 						<tbody> -->
-<!-- 							<tr class="preco"> -->
-<!-- 								<td><span class="icone filtroPreco ativo"></span>{{anuncio.properties.valor | currency:"R$" :2}}</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td><span class="icone filtroMarca ativo"></span>{{anuncio.properties.marca}}</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td><span class="icone filtroModelo ativo"></span>{{anuncio.properties.modelo}}</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td><span class="icone filtroCalendar ativo"></span>{{anuncio.properties.ano}}</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td><span class="icone filtroKm ativo"></span>{{anuncio.properties.km}}</td> -->
-<!-- 							</tr> -->
-<!-- 						</tbody> -->
-<!-- 					</table> -->
-<!-- 					<div class="col-xs-12 divBtnAnuncio"> -->
-<!-- 						<button class="btnCadastro pull-left">Visualizar no Mapa</button> -->
-<!-- 						<button class="btnFavorito pull-left">Excluir dos Favoritos</button> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</li> -->
-<!-- 		</ul> -->
+		<ul id="listaAnuncios">
+			<li class="col-xs-6 col-sm-6 col-md-6 col-lg-4 pull-left" ng-repeat="anuncio in anuncios">
+				<div class="divAnuncio" style="height:430px;">
+					<div class="imgAnuncio">
+						<img src="./build/img/carro2.jpg" alt="Automóvel" title="Automóvel"/>
+					</div>
+					<table class="col-sm-11">
+						<tbody>
+							<tr class="preco">
+								<td><span class="icone filtroPreco ativo"></span>{{anuncio.valor | currency:"R$" :2}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroMarca ativo"></span>{{anuncio.modelo.marca.marca}}</td>
+							</tr>
+							<tr>
+								<td tooltip-placement="top" tooltip="{{anuncio.modelo.nome}}"><span class="icone filtroModelo ativo"></span>{{anuncio.modelo.nome | limitTo:23}} {{(anuncio.modelo.nome.length > 23) ? '...' : ''}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroCalendar ativo"></span>{{anuncio.ano}}</td>
+							</tr>
+							<tr>
+								<td><span class="icone filtroKm ativo"></span>{{anuncio.km}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="col-xs-12 divBtnAnuncio">
+						<button class="btnCadastro pull-left" ng-click="go('/visualizar/'+anuncio.id)">Visualizar no Mapa</button>
+						<button class="btnFavorito pull-left" ng-click="removerFavorito(anuncio.id)">Excluir dos Favoritos</button>
+					</div>
+				</div>
+			</li>
+		</ul>
+					
 	</div>
 </div>

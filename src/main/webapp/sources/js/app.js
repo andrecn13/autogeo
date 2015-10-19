@@ -9,7 +9,13 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
             templateUrl: "views/mapa.html",
             controller: "MapaCtrl",
             access: {requiredLogin: false, blockWhenLogged: false}
-        })    
+        })   
+        .when('/visualizar/:id', 
+        {
+            templateUrl: "views/mapa.html",
+            controller: "MapaCtrl",
+            access: {requiredLogin: false, blockWhenLogged: false}
+        })   
         .when('/favoritos',
         {
             templateUrl: "views/favoritos.html",
@@ -80,5 +86,9 @@ app.run(function($rootScope, $location, AuthenticationService) {
 	};
 	
 	$rootScope.userName = function(){ return AuthenticationService.getUser()}; 
+	
+	$rootScope.closeAlert = function(index) {
+		$rootScope.alerts.splice(index, 1);
+	};
 	
 });

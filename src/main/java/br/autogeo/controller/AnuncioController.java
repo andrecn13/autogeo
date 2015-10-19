@@ -1,13 +1,18 @@
 package br.autogeo.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.geojson.Feature;
+import org.geojson.FeatureCollection;
+import org.geojson.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,7 +102,7 @@ public class AnuncioController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Anuncio> getAnuncio(@PathVariable Long id){
-		
+		 
 		return new ResponseEntity<Anuncio>(service.getById(id), HttpStatus.OK);
 	}
 	
@@ -110,6 +115,72 @@ public class AnuncioController {
 		anuncios = service.getAllByUser(usuario);
 		
 		return new ResponseEntity<List<Anuncio>>(anuncios, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/favoritos", method = RequestMethod.GET)
+	public ResponseEntity<List<Anuncio>> getFavoritos(HttpServletRequest request){
+		
+		List<Anuncio> anuncios = new ArrayList<Anuncio>();
+		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
+		Usuario usuario = serviceUsuario.getByEmail(email);
+		anuncios = usuario.getFavoritos();
+		
+		return new ResponseEntity<List<Anuncio>>(anuncios, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/lista", method = RequestMethod.GET)
+	public ResponseEntity<String> lista(HttpServletRequest request){
+		
+		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
+		Usuario usuario = serviceUsuario.getByEmail(email);
+
+		FeatureCollection featureCollection = new FeatureCollection();
+		String json;
+		
+		for(Anuncio anuncio : service.getAll()){
+			Feature f = new Feature();
+			ObjectNode contato = new ObjectMapper().createObjectNode();
+			
+			contato.put("nome", anuncio.getUsuario().getNome()+" "+anuncio.getUsuario().getSobreNome());
+			contato.put("email", anuncio.getUsuario().getEmail());
+			contato.put("telefone", anuncio.getUsuario().getTelefone());
+			
+			f.setProperty("id", anuncio.getId());
+			f.setProperty("ano", anuncio.getAno());
+			f.setProperty("combustivel", anuncio.getCombustivel().getCombustivel());
+			f.setProperty("cor", anuncio.getCor().getCor());
+			f.setProperty("km", anuncio.getKm());
+			f.setProperty("modelo", anuncio.getModelo().getNome());
+			f.setProperty("marca", anuncio.getModelo().getMarca().getMarca());
+			f.setProperty("observacao", anuncio.getObservacao());
+			f.setProperty("placa", anuncio.getPlaca());
+			f.setProperty("valor", anuncio.getValor());
+			f.setProperty("estado", (anuncio.getAno() >= new GregorianCalendar().get(Calendar.YEAR)) ? 1 : 2);
+			f.setProperty("contato", contato);
+			f.setProperty("acessorios", anuncio.getAcessorios());
+			f.setProperty("fotos", null);
+			f.setProperty("favorito", false);
+			f.setGeometry(new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
+			
+			if(anuncio.getUsuariosFavoritados().size() > 0){
+				for(Usuario u : anuncio.getUsuariosFavoritados()){
+					if(u.equals(usuario)){
+						f.setProperty("favorito", true);
+					}
+				}
+			}
+			
+			featureCollection.add(f);
+		}
+		
+		try {
+			json = new ObjectMapper().writeValueAsString(featureCollection);
+		} catch (JsonProcessingException e) {
+			json = "";
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/deletar/{id}", method = RequestMethod.POST)
@@ -128,5 +199,31 @@ public class AnuncioController {
 		
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);		
 	}
+	
+	@RequestMapping(value = "/favorito/{acao}/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> favorito(@PathVariable String acao, @PathVariable Long id, HttpServletRequest request){
+		
+		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
+		Usuario usuario = serviceUsuario.getByEmail(email);
+		Anuncio anuncio = service.getById(id);
+		
+		if(anuncio != null){
+			
+			if(acao.equalsIgnoreCase("add")){
+				anuncio.getUsuariosFavoritados().add(usuario);
+			}else if(acao.equalsIgnoreCase("remove")){
+				anuncio.getUsuariosFavoritados().remove(usuario);
+			}
+			
+			
+			service.salvar(anuncio);
+			
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);		
+	}
+	
+	
 
 }

@@ -1,4 +1,4 @@
-app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', function ($scope, $rootScope, $filter, $modal, MapaService) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams) {
 	
     $scope.title    =   "Mapa";
     
@@ -48,19 +48,27 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         iconAnchor:[12, 0]  
     };  
     
-    var promiseAnuncios = MapaService.getAnuncios();
+    var promiseAnuncios = MapaService.getAnuncios(AuthenticationService.getUser());
     promiseAnuncios.then(function(data) {
         $rootScope.anuncios = data.anuncios;
         angular.forEach(data.anuncios, function(anuncio, i) {
-            $scope.anunciosMarkers.push({
+            var focus = false;
+
+            if($routeParams.id && $routeParams.id == anuncio.properties.id){
+            	focus = true;
+            } 
+            
+        	$scope.anunciosMarkers.push({
             	layer: 'anuncios',
                 lat: anuncio.geometry.coordinates[1], 
                 lng: anuncio.geometry.coordinates[0], 
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
-                popupOptions: {minWidth: 200, maxWidth: 200},
-                props: anuncio.properties
+                popupOptions: {minWidth: 240, maxWidth: 300},
+                props: anuncio.properties,
+                focus: focus
             });
         });
+        
         $scope.anunciosMarkers2 = $scope.anunciosMarkers;
     });
  

@@ -14,6 +14,20 @@ app.factory('AnuncioService', function($http, $q) {
 
             return d.promise;
         },
+        getFavoritos: function() {
+            var d = $q.defer();
+            var url = 'api/anuncio/favoritos';
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                });
+
+            return d.promise;
+        },
         getAnuncio: function(id) {
             var d = $q.defer();
             var url = 'api/anuncio/'+id;
@@ -81,6 +95,22 @@ app.factory('AnuncioService', function($http, $q) {
                 method: 'POST',
                 url: url,
                 data: angular.toJson(motivo)
+            })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            });
+
+            return d.promise;
+        },
+        favorito: function(acao, id){
+        	var d = $q.defer();
+            var url = 'api/anuncio/favorito/'+acao+'/'+id;
+            $http({
+                method: 'GET',
+                url: url
             })
             .success(function(data){
                 d.resolve(data);
