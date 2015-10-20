@@ -5,6 +5,12 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     $scope.anunciosMarkers = [];
     $scope.anunciosMarkers2 = [];
     
+    $scope.center = {
+    	lat: -30.0257548,
+        lng: -51.1833013,
+        zoom: 12
+    };
+    
     $scope.enableMenu = false;
     $scope.marcas   = [{nome: "Selecione uma marca"},{nome: "Chevrolet"},{nome: "Ford"},{nome: "Fiat"},{nome: "Wolkswagen"},{nome: "Renault"},{nome: "Pegeout"},{nome: "Toyota"}]
     $scope.filtro = {
@@ -56,6 +62,11 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
 
             if($routeParams.id && $routeParams.id == anuncio.properties.id){
             	focus = true;
+            	$scope.center = {
+        	    	lat: anuncio.geometry.coordinates[1],
+        	        lng: anuncio.geometry.coordinates[0],
+        	        zoom: 18
+        	    }
             } 
             
         	$scope.anunciosMarkers.push({
@@ -74,11 +85,6 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
  
 	angular.extend($scope, {
         defaults: {},
-        center: {
-        	lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
         layers: {
             baselayers: {
                 osm: {

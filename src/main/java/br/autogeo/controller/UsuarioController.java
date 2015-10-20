@@ -53,6 +53,11 @@ public class UsuarioController {
 		user.setDataCriacao(new Date());
 		user.setSenha(encoder.encodePassword(user.getSenha(), null));
 		
+		if(user.getLoja() != null){
+			user.getLoja().setAtivo(true);
+			user.getLoja().setDataCriacao(new Date());
+			user.getLoja().setUsuario(user);
+		}
 		return new ResponseEntity<Usuario>(service.salvarUsuario(user), HttpStatus.CREATED); 
 		
 	}

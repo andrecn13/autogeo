@@ -2,7 +2,6 @@ package br.autogeo.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,28 +17,31 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import br.autogeo.util.JsonToPointDeserializer;
+import br.autogeo.util.PointToJsonSerializer;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
-@Table(name = "TBL_USUARIO")
-public class Usuario implements Serializable {
+@Table(name = "TBL_LOJA")
+public class Loja implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String email;
-	private String senha;
-	private String nome;
-	private String sobreNome;
-	private String cpf;
+	private String razaoSocial;
+	private String nomeFantasia;
+	private String cnpj;
 	private Long telefone;
-	private Long celular;
+	private String email;
 	private Boolean ativo;
 	private Date dataCriacao;
+	private com.vividsolutions.jts.geom.Point localizacao;
 	
-	private List<Anuncio> favoritos;
-	private Loja loja;
+	private Usuario usuario;
 	
-	public Usuario() {}
+	public Loja() {}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,49 +54,31 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NM_EMAIL")
-	public String getEmail() {
-		return email;
+	@Column(name = "NM_RAZAO_SOCIAL")
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
-	@Column(name = "NM_SENHA")
-	public String getSenha() {
-		return senha;
+	@Column(name = "NM_NOME_FANTASIA")
+	public String getNomeFantasia() {
+		return nomeFantasia;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setNomeFantasia(String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
 	}
 
-	@Column(name = "NM_NOME")
-	public String getNome() {
-		return nome;
+	@Column(name = "NUM_CNPJ")
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	@Column(name = "NM_SOBRENOME")
-	public String getSobreNome() {
-		return sobreNome;
-	}
-
-	public void setSobreNome(String sobreNome) {
-		this.sobreNome = sobreNome;
-	}
-
-	@Column(name = "NUM_CPF")
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 	@Column(name = "NUM_TELEFONE")
@@ -106,16 +90,15 @@ public class Usuario implements Serializable {
 		this.telefone = telefone;
 	}
 
-	@Column(name = "NUM_CELULAR")
-	public Long getCelular() {
-		return celular;
+	@Column(name = "NM_EMAIL")
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCelular(Long celular) {
-		this.celular = celular;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	@Type(type="true_false")  
 	@Column(name = "TF_ATIVO")
 	public Boolean getAtivo() {
 		return ativo;
@@ -124,9 +107,9 @@ public class Usuario implements Serializable {
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
-	
-	@Temporal(TemporalType.TIMESTAMP)
+
 	@Column(name = "DT_CRIACAO")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
@@ -134,31 +117,34 @@ public class Usuario implements Serializable {
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
+
+	@JsonSerialize(using = PointToJsonSerializer.class)
+	@Type(type="org.hibernate.spatial.GeometryType")   
+    @Column(name = "PT_LOCALIZACAO")
+	public com.vividsolutions.jts.geom.Point getLocalizacao() {
+		return localizacao;
+	}
+
+	@JsonDeserialize(using	=	JsonToPointDeserializer.class)
+	public void setLocalizacao(com.vividsolutions.jts.geom.Point localizacao) {
+		this.localizacao = localizacao;
+	}
+
 	@JsonIgnore
-	@ManyToMany(mappedBy = "usuariosFavoritados")
-	public List<Anuncio> getFavoritos() {
-		return favoritos;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "FK_USUARIO")
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setFavoritos(List<Anuncio> favoritos) {
-		this.favoritos = favoritos;
-	}
-	
-	@OneToOne(mappedBy = "usuario", cascade=CascadeType.ALL)
-	public Loja getLoja() {
-		return loja;
-	}
-
-	public void setLoja(Loja loja) {
-		this.loja = loja;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -171,12 +157,7 @@ public class Usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
+		Loja other = (Loja) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
