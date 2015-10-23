@@ -1,6 +1,6 @@
 app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams) {
 	
-    $scope.title    =   "Mapa";
+	$scope.title    =   "Mapa";
     
     $scope.anunciosMarkers = [];
     $scope.anunciosMarkers2 = [];
@@ -49,8 +49,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     };
     
     var icon = {  
-        iconUrl:'build/img/marker-icon.png',
-        iconSize:[25, 41],
+        iconUrl:'build/img/marker-loja.png',
+        iconSize:[41, 41], 
         iconAnchor:[12, 0]  
     };  
     
@@ -76,7 +76,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
                 popupOptions: {minWidth: 240, maxWidth: 300},
                 props: anuncio.properties,
-                focus: focus
+                focus: focus,
+                icon: icon,
             });
         });
         

@@ -94,12 +94,12 @@
 			    </div>
 			</div>
 
-			<div class="page-header-autogeo">
+			<div class="page-header-autogeo" ng-hide="isLoja">
 				<h3 class="text-left col-xs-12">Localização</h3>
 				<span class="help-block text-left pull-left">Para o anúncio aparecer no mapa você deve informar a localização do automóvel no mapa abaixo.</span>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" ng-hide="isLoja">
 			    <label for="endereco" class="col-sm-3 control-label">Digite o Endereço</label>
 			    <div class="col-sm-6">
 					<input type="text" class="form-control" id="endereco" placeholder="Ex: rua xxx, av. yyyy">
@@ -112,7 +112,7 @@
 			    </div>
 			</div>
 			
-			<div class="form-group" style="padding:15px;"> 
+			<div class="form-group" style="padding:15px;" ng-hide="isLoja"> 
 				<leaflet defaults="defaults" center="center" markers="markers" width="100%" height="300"></leaflet>
 			</div>
 			

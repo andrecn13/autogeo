@@ -65,7 +65,7 @@ public class AnuncioController {
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public ResponseEntity<Anuncio> salvar(@RequestBody Anuncio anuncio, HttpServletRequest request){
 		
-		if(anuncio == null || anuncio.getLocalizacao() == null){
+		if(anuncio == null){
 			return new ResponseEntity<Anuncio>(anuncio, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -123,7 +123,13 @@ public class AnuncioController {
 		List<Anuncio> anuncios = new ArrayList<Anuncio>();
 		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
 		Usuario usuario = serviceUsuario.getByEmail(email);
-		anuncios = usuario.getFavoritos();
+		
+		for(Anuncio a : usuario.getFavoritos()){
+			if(a.getAtivo() == true){
+				anuncios.add(a); 
+			}
+		}
+		
 		
 		return new ResponseEntity<List<Anuncio>>(anuncios, HttpStatus.OK);
 	}
@@ -137,7 +143,7 @@ public class AnuncioController {
 		FeatureCollection featureCollection = new FeatureCollection();
 		String json;
 		
-		for(Anuncio anuncio : service.getAll()){
+		for(Anuncio anuncio : service.getAllActive()){
 			Feature f = new Feature();
 			ObjectNode contato = new ObjectMapper().createObjectNode();
 			
@@ -147,11 +153,11 @@ public class AnuncioController {
 			
 			f.setProperty("id", anuncio.getId());
 			f.setProperty("ano", anuncio.getAno());
-			f.setProperty("combustivel", anuncio.getCombustivel().getCombustivel());
-			f.setProperty("cor", anuncio.getCor().getCor());
+			f.setProperty("combustivel", (anuncio.getCombustivel() != null) ? anuncio.getCombustivel().getCombustivel() : null);
+			f.setProperty("cor", (anuncio.getCor() != null) ? anuncio.getCor().getCor() : null);
 			f.setProperty("km", anuncio.getKm());
-			f.setProperty("modelo", anuncio.getModelo().getNome());
-			f.setProperty("marca", anuncio.getModelo().getMarca().getMarca());
+			f.setProperty("modelo", (anuncio.getModelo() != null) ? anuncio.getModelo().getNome() : null);
+			f.setProperty("marca", (anuncio.getModelo() != null) ? anuncio.getModelo().getMarca().getMarca() : null);
 			f.setProperty("observacao", anuncio.getObservacao());
 			f.setProperty("placa", anuncio.getPlaca());
 			f.setProperty("valor", anuncio.getValor());
@@ -160,7 +166,8 @@ public class AnuncioController {
 			f.setProperty("acessorios", anuncio.getAcessorios());
 			f.setProperty("fotos", null);
 			f.setProperty("favorito", false);
-			f.setGeometry(new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
+			f.setProperty("isloja", (anuncio.getUsuario().getLoja() != null) ? true : false);
+			f.setGeometry((anuncio.getUsuario().getLoja() != null) ? new Point(anuncio.getUsuario().getLoja().getLocalizacao().getY(), anuncio.getUsuario().getLoja().getLocalizacao().getX()) : new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
 			
 			if(anuncio.getUsuariosFavoritados().size() > 0){
 				for(Usuario u : anuncio.getUsuariosFavoritados()){

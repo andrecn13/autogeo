@@ -154,7 +154,7 @@ public class DadosController {
 		FeatureCollection featureCollection = new FeatureCollection();
 		String json;
 		
-		for(Anuncio anuncio : serviceAnuncio.getAll()){
+		for(Anuncio anuncio : serviceAnuncio.getAllActive()){
 			Feature f = new Feature();
 			ObjectNode contato = new ObjectMapper().createObjectNode();
 			
@@ -164,11 +164,11 @@ public class DadosController {
 			
 			f.setProperty("id", anuncio.getId());
 			f.setProperty("ano", anuncio.getAno());
-			f.setProperty("combustivel", anuncio.getCombustivel().getCombustivel());
-			f.setProperty("cor", anuncio.getCor().getCor());
+			f.setProperty("combustivel", (anuncio.getCombustivel() != null) ? anuncio.getCombustivel().getCombustivel() : null);
+			f.setProperty("cor", (anuncio.getCor() != null) ? anuncio.getCor().getCor() : null);
 			f.setProperty("km", anuncio.getKm());
-			f.setProperty("modelo", anuncio.getModelo().getNome());
-			f.setProperty("marca", anuncio.getModelo().getMarca().getMarca());
+			f.setProperty("modelo", (anuncio.getModelo() != null) ? anuncio.getModelo().getNome() : null);
+			f.setProperty("marca", (anuncio.getModelo() != null) ? anuncio.getModelo().getMarca().getMarca() : null);
 			f.setProperty("observacao", anuncio.getObservacao());
 			f.setProperty("placa", anuncio.getPlaca());
 			f.setProperty("valor", anuncio.getValor());
@@ -176,7 +176,8 @@ public class DadosController {
 			f.setProperty("contato", contato);
 			f.setProperty("acessorios", anuncio.getAcessorios());
 			f.setProperty("fotos", null);
-			f.setGeometry(new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
+			f.setProperty("isloja", (anuncio.getUsuario().getLoja() != null) ? true : false);
+			f.setGeometry((anuncio.getUsuario().getLoja() != null) ? new Point(anuncio.getUsuario().getLoja().getLocalizacao().getY(), anuncio.getUsuario().getLoja().getLocalizacao().getX()) : new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
 			
 			featureCollection.add(f);
 		}

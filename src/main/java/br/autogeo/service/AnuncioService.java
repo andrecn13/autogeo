@@ -32,4 +32,8 @@ public class AnuncioService {
 	public List<Anuncio> getAll(){
 		return repository.findAll();
 	}
+	
+	public List<Anuncio> getAllActive(){
+		return repository.findByAtivo(true);
+	}
 }

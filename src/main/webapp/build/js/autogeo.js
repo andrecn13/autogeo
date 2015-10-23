@@ -112,14 +112,17 @@ app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, Anun
 /**
  * Cadastro anuncio
  */
-app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
+app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', 'AuthenticationService', function($scope, AnuncioService, AlertService, AuthenticationService){
     
-	$scope.anuncio = {acessorios: [],localizacao: {}};
+	//verify is user logged is PARTICULAR or LOJA
+	$scope.isLoja = AuthenticationService.isLoja();
+	
+	$scope.anuncio = {acessorios: []};
 	$scope.marcas = [];
 	$scope.acessorios = [];
 	$scope.cores = [];
 	$scope.combustiveis = [];
-	$scope.modelos = [];
+	$scope.modelos = []; 
 	
     var promisseData = AnuncioService.getData();
     promisseData.then(function(data) {
@@ -192,11 +195,16 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
 /**
  * Editar Anuncio
  */
-app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location){
+app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', 'AuthenticationService', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location, AuthenticationService){
     
+	//verify is user logged is PARTICULAR or LOJA
+	$scope.isLoja = AuthenticationService.isLoja();
+	
     var anuncio =  $resource('api/anuncio/'+$routeParams.id).get(function(){
     	$scope.anuncio = anuncio; 
-     	mapa(); 
+    	if(!AuthenticationService.isLoja()){
+    		mapa(); 
+    	}
     });
     
     var dados = $resource('api/anuncio').get(function(){
@@ -263,7 +271,6 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
     } 
     
     $scope.atualizarAnuncio = function(){
-    	console.log($scope.anuncio);  
     	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
     	promisseSalvar.then(function(data) {  
     		AlertService.add("success", "Anúncio atualizado com sucesso.");
@@ -390,7 +397,7 @@ app.controller('LoginCtrl', ['$scope', '$location', '$window', 'LoginService', '
 
 app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams) {
 	
-    $scope.title    =   "Mapa";
+	$scope.title    =   "Mapa";
     
     $scope.anunciosMarkers = [];
     $scope.anunciosMarkers2 = [];
@@ -439,8 +446,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     };
     
     var icon = {  
-        iconUrl:'build/img/marker-icon.png',
-        iconSize:[25, 41],
+        iconUrl:'build/img/marker-loja.png',
+        iconSize:[41, 41], 
         iconAnchor:[12, 0]  
     };  
     
@@ -466,7 +473,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 message: "<popup anuncio='anuncios[" + i + "]'></popup>",
                 popupOptions: {minWidth: 240, maxWidth: 300},
                 props: anuncio.properties,
-                focus: focus
+                focus: focus,
+                icon: icon,
             });
         });
         
@@ -880,6 +888,9 @@ app.factory('AuthenticationService', ['$window', function($window) {
         },
         getUser: function(){
         	return ($window.sessionStorage.token != undefined) ? JSON.parse(atob($window.sessionStorage.token.split('.')[1])).nome : ''; 
+        },
+        isLoja: function(){
+        	return ($window.sessionStorage.token != undefined) ? JSON.parse(atob($window.sessionStorage.token.split('.')[1])).loja : ''; 
         }
     }
  
