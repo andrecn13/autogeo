@@ -38,11 +38,11 @@ public class ModeloController {
 		//create categoria -> carros
 		Categoria categoria = new Categoria();
 		categoria.setCategoria(nomeCategoria);
-		
+
 		//get marcas
 		ResponseEntity<Marca[]> resultMarcas = restTemplate.exchange("http://fipeapi.appspot.com/api/1/{categoria}/marcas.json", HttpMethod.GET, null, Marca[].class, nomeCategoria);
 		List<Marca> marcas = Arrays.asList(resultMarcas.getBody());
-		
+
 		for(Marca m : marcas){
 			m.setCategoria(categoria);
 			//persist marca
