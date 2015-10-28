@@ -94,6 +94,53 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', function($scope, CadastroFactory, AlertService, $routeParams){
+    	
+	$scope.tipo		=	$routeParams.tipo;
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{loja:null};
+    
+    $scope.cadastrarUsuario = function(){
+    	console.log(angular.toJson($scope.user));
+    	CadastroFactory.create($scope.user, function(){
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		$scope.user = {};
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    	});
+	}
+    
+    var mainMarker = {
+		lat: -30.0257548,
+        lng: -51.1833013,
+        focus: true,
+        message: "Clique e mova para posicionar o seu estabelecimento",
+        draggable: true
+    };
+    
+    angular.extend($scope, {
+        defaults: {},
+        center: {
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
+        },
+        markers: {
+            mainMarker: angular.copy(mainMarker)
+        }
+    });
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+    	var lat = args.model.lat;
+        var lng = args.model.lng;
+        
+        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
+    });
+    
+}]);
+
 /**
  * Listagem de anuncios do usuário
  */
@@ -123,6 +170,17 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
 	$scope.cores = [];
 	$scope.combustiveis = [];
 	$scope.modelos = []; 
+	$scope.files = [];
+	
+	//listen for the file selected event
+    $scope.$on("fileSelected", function (event, args) {
+        $scope.$apply(function () {            
+            //add the file object to the scope's files collection
+        	if($scope.files.length < 3){
+        		$scope.files.push(args.file);
+        	}
+        });
+    });
 	
     var promisseData = AnuncioService.getData();
     promisseData.then(function(data) {
@@ -152,11 +210,12 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     };
     
     $scope.cadastrarAnuncio = function(){
-    	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
+    	var promisseSalvar = AnuncioService.salvar($scope.anuncio, $scope.files);
     	promisseSalvar.then(function(data) {
     		AlertService.add("success", "Anúncio cadastrado com sucesso.");
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
+    		$scope.files = [];
         },function(data){
         	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
         	$("#contentContainer").animate({ scrollTop: 0 }, 200);
@@ -294,53 +353,6 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
     	}
     }
      
-}]);
-
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', function($scope, CadastroFactory, AlertService, $routeParams){
-    	
-	$scope.tipo		=	$routeParams.tipo;
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{loja:null};
-    
-    $scope.cadastrarUsuario = function(){
-    	console.log(angular.toJson($scope.user));
-    	CadastroFactory.create($scope.user, function(){
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		$scope.user = {};
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    	});
-	}
-    
-    var mainMarker = {
-		lat: -30.0257548,
-        lng: -51.1833013,
-        focus: true,
-        message: "Clique e mova para posicionar o seu estabelecimento",
-        draggable: true
-    };
-    
-    angular.extend($scope, {
-        defaults: {},
-        center: {
-        	lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
-        markers: {
-            mainMarker: angular.copy(mainMarker)
-        }
-    });
-    
-    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
-    	var lat = args.model.lat;
-        var lng = args.model.lng;
-        
-        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
-    });
-    
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
@@ -660,6 +672,38 @@ app.directive('overflowDirective', ['$location', function(location){
 	};
 }]);
 
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+app.directive('fileUpload', function () {
+    return {
+        scope: true,        //create a new scope
+        link: function (scope, el, attrs) {
+            el.bind('change', function (event) {
+                var files = event.target.files;
+                //iterate files since 'multiple' may be specified on the element
+                for (var i = 0;i<files.length;i++) {
+                    //emit event upward
+                    scope.$emit("fileSelected", { file: files[i] });
+                }                                       
+            });
+        }
+    };
+});
+
 app.filter('filter', [function() {
   return function(markers, obj) {
     var matches = [];
@@ -823,13 +867,24 @@ app.factory('AnuncioService', function($http, $q) {
 
             return d.promise;
         },
-        salvar: function(anuncio){
+        salvar: function(anuncio, files){
         	var d = $q.defer();
             var url = 'api/anuncio/salvar';
+                        
             $http({
                 method: 'POST',
                 url: url,
-                data: angular.toJson(anuncio)
+                headers: { 'Content-Type': angular.identity },
+                transformRequest: function (data) {
+                	
+                    var formData = new FormData(); 
+                    formData.append("anuncio", angular.toJson(data.model));
+                    for(var i in data.files) {
+                    	formData.append("file", data.files[i]);
+                    }
+                    return formData;
+                },
+                data: { model: anuncio, files: files }
             })
             .success(function(data){
                 d.resolve(data);

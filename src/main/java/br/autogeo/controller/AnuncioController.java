@@ -1,9 +1,12 @@
 package br.autogeo.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
@@ -20,9 +23,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.autogeo.model.Anuncio;
+import br.autogeo.model.Foto;
 import br.autogeo.model.Motivo;
 import br.autogeo.model.Usuario;
 import br.autogeo.service.AcessorioService;
@@ -63,18 +70,48 @@ public class AnuncioController {
 	private MotivoService serviceMotivo;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public ResponseEntity<Anuncio> salvar(@RequestBody Anuncio anuncio, HttpServletRequest request){
+	public ResponseEntity<Anuncio> salvar(@RequestParam("file") MultipartFile[] files, @RequestParam("anuncio") String anuncioRequest, HttpServletRequest request){
+		
+		Anuncio anuncio = null;
+		List<Foto> fotos = new ArrayList<Foto>();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			anuncio = mapper.readValue(anuncioRequest, Anuncio.class);
+		} catch (IOException e) {
+			return new ResponseEntity<Anuncio>(anuncio, HttpStatus.BAD_REQUEST);
+		}
 		
 		if(anuncio == null){
 			return new ResponseEntity<Anuncio>(anuncio, HttpStatus.BAD_REQUEST);
 		}
+		
 		
 		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
 		anuncio.setUsuario(serviceUsuario.getByEmail(email));
 		anuncio.setDataCriacao(new Date());
 		anuncio.setAtivo(true);
 		
-		return new ResponseEntity<Anuncio>(service.salvar(anuncio), HttpStatus.OK);
+		File file = new File("D:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId());
+		if(!file.exists()){
+			file.mkdir();
+		}
+		
+		for (int i=0; i<files.length;i++) {
+			Foto foto = new Foto();
+			foto.setContentType(files[i].getContentType());
+			foto.setNome(new Date().getTime()+"."+files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf('.') + 1));
+			
+			try {
+				files[i].transferTo(new File(file.getAbsolutePath()+File.separator+foto.getNome()));
+				fotos.add(foto);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		anuncio.setFotos(fotos);
+		
+		return new ResponseEntity<Anuncio>(service.salvar(anuncio),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)

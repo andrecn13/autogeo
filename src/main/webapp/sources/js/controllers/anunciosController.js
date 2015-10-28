@@ -27,6 +27,17 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
 	$scope.cores = [];
 	$scope.combustiveis = [];
 	$scope.modelos = []; 
+	$scope.files = [];
+	
+	//listen for the file selected event
+    $scope.$on("fileSelected", function (event, args) {
+        $scope.$apply(function () {            
+            //add the file object to the scope's files collection
+        	if($scope.files.length < 3){
+        		$scope.files.push(args.file);
+        	}
+        });
+    });
 	
     var promisseData = AnuncioService.getData();
     promisseData.then(function(data) {
@@ -56,11 +67,12 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     };
     
     $scope.cadastrarAnuncio = function(){
-    	var promisseSalvar = AnuncioService.salvar($scope.anuncio);
+    	var promisseSalvar = AnuncioService.salvar($scope.anuncio, $scope.files);
     	promisseSalvar.then(function(data) {
     		AlertService.add("success", "Anúncio cadastrado com sucesso.");
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
+    		$scope.files = [];
         },function(data){
         	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
         	$("#contentContainer").animate({ scrollTop: 0 }, 200);

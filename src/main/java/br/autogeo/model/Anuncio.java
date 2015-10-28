@@ -3,6 +3,7 @@ package br.autogeo.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,6 +48,7 @@ public class Anuncio {
     private Modelo modelo;
     private Usuario usuario;
     private List<Acessorio> acessorios;
+    private List<Foto> fotos;
     
     private Motivo motivoExclusao;
     private Date dataExclusao;
@@ -195,6 +197,20 @@ public class Anuncio {
 
 	public void setAcessorios(List<Acessorio> acessorios) {
 		this.acessorios = acessorios;
+	}
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="TBL_FOTO_has_TBL_ANUNCIO", 
+			joinColumns={
+				@JoinColumn(name="FK_ANUNCIO")}, 
+					inverseJoinColumns={
+						@JoinColumn(name="FK_FOTO")})
+	public List<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<Foto> fotos) {
+		this.fotos = fotos;
 	}
 
 	@OneToOne(fetch = FetchType.EAGER)

@@ -71,13 +71,24 @@ app.factory('AnuncioService', function($http, $q) {
 
             return d.promise;
         },
-        salvar: function(anuncio){
+        salvar: function(anuncio, files){
         	var d = $q.defer();
             var url = 'api/anuncio/salvar';
+                        
             $http({
                 method: 'POST',
                 url: url,
-                data: angular.toJson(anuncio)
+                headers: { 'Content-Type': angular.identity },
+                transformRequest: function (data) {
+                	
+                    var formData = new FormData(); 
+                    formData.append("anuncio", angular.toJson(data.model));
+                    for(var i in data.files) {
+                    	formData.append("file", data.files[i]);
+                    }
+                    return formData;
+                },
+                data: { model: anuncio, files: files }
             })
             .success(function(data){
                 d.resolve(data);
