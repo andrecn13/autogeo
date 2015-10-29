@@ -59,12 +59,18 @@ public class DadosController {
 		Combustivel com1 = new Combustivel();
 		com1.setCombustivel("Gasolina");
 		Combustivel com2 = new Combustivel();
-		com2.setCombustivel("Álcool");
+		com2.setCombustivel("Etanol");
 		Combustivel com3 = new Combustivel();
 		com3.setCombustivel("Diesel");
+		Combustivel com4 = new Combustivel();
+		com4.setCombustivel("GNV");
+		Combustivel com5 = new Combustivel();
+		com5.setCombustivel("Flex");
 		combustiveis.add(com1);
 		combustiveis.add(com2);
 		combustiveis.add(com3);
+		combustiveis.add(com4);
+		combustiveis.add(com5);
 		
 		/**
 		 * Cores
@@ -83,6 +89,8 @@ public class DadosController {
 		c6.setCor("Cinza");
 		Cor c7 = new Cor();
 		c7.setCor("Verde");
+		Cor c8 = new Cor();
+		c8.setCor("Dourado");
 		cores.add(c1);
 		cores.add(c2);
 		cores.add(c3);
@@ -90,6 +98,7 @@ public class DadosController {
 		cores.add(c5);
 		cores.add(c6);
 		cores.add(c7);
+		cores.add(c8);
 		
 		/**
 		 * Acessorios
@@ -114,6 +123,8 @@ public class DadosController {
 		a9.setAcessorio("Piloto Automático");
 		Acessorio a10 = new Acessorio();
 		a10.setAcessorio("Travas Elétricas");
+		Acessorio a11 = new Acessorio();
+		a11.setAcessorio("Outros");
 		acessorios.add(a1);
 		acessorios.add(a2);
 		acessorios.add(a3);
@@ -124,6 +135,7 @@ public class DadosController {
 		acessorios.add(a8);
 		acessorios.add(a9);
 		acessorios.add(a10);
+		acessorios.add(a11);
 		
 		/**
 		 * Motivos

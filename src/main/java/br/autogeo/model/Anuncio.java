@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -199,12 +200,7 @@ public class Anuncio {
 		this.acessorios = acessorios;
 	}
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="TBL_FOTO_has_TBL_ANUNCIO", 
-			joinColumns={
-				@JoinColumn(name="FK_ANUNCIO")}, 
-					inverseJoinColumns={
-						@JoinColumn(name="FK_FOTO")})
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="anuncio")
 	public List<Foto> getFotos() {
 		return fotos;
 	}

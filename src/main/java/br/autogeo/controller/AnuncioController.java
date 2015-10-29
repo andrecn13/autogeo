@@ -99,6 +99,7 @@ public class AnuncioController {
 			Foto foto = new Foto();
 			foto.setContentType(files[i].getContentType());
 			foto.setNome(new Date().getTime()+"."+files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf('.') + 1));
+			foto.setAnuncio(anuncio);
 			
 			try {
 				files[i].transferTo(new File(file.getAbsolutePath()+File.separator+foto.getNome()));

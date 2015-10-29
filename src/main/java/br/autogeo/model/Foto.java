@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "TBL_FOTO")
@@ -17,6 +21,8 @@ public class Foto implements Serializable{
 	private Long id;
 	private String nome;
 	private String contentType;
+	
+	private Anuncio anuncio;
 	
 	public Foto() {}
 
@@ -47,6 +53,17 @@ public class Foto implements Serializable{
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "FK_ANUNCIO")
+	public Anuncio getAnuncio() {
+		return anuncio;
+	}
+
+	public void setAnuncio(Anuncio anuncio) {
+		this.anuncio = anuncio;
 	}
 
 	@Override
