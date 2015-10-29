@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 import io.jsonwebtoken.Claims;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -183,28 +181,43 @@ public class AnuncioController {
 		for(Anuncio anuncio : service.getAllActive()){
 			Feature f = new Feature();
 			ObjectNode contato = new ObjectMapper().createObjectNode();
+			ObjectNode loja = new ObjectMapper().createObjectNode();
 			
+			//propriedades da loja
+			if(anuncio.getUsuario().getLoja() != null){
+				loja.put("cnpj", anuncio.getUsuario().getLoja().getCnpj());
+				loja.put("razao_social", anuncio.getUsuario().getLoja().getRazaoSocial());
+				loja.put("nome_fantasia", anuncio.getUsuario().getLoja().getNomeFantasia());
+				loja.put("telefone", anuncio.getUsuario().getLoja().getTelefone());
+				loja.put("email", anuncio.getUsuario().getLoja().getEmail());
+				
+				f.setProperty("loja", loja);
+			}
+			
+			//propriedades do contato
+			contato.put("id", anuncio.getUsuario().getId());
 			contato.put("nome", anuncio.getUsuario().getNome()+" "+anuncio.getUsuario().getSobreNome());
 			contato.put("email", anuncio.getUsuario().getEmail());
 			contato.put("telefone", anuncio.getUsuario().getTelefone());
 			
+			//todas propriedades do anuncio
+			f.setProperty("contato", contato);
 			f.setProperty("id", anuncio.getId());
-			f.setProperty("ano", anuncio.getAno());
+			f.setProperty("ano", (anuncio.getAno() != null) ? anuncio.getAno() : null);
 			f.setProperty("combustivel", (anuncio.getCombustivel() != null) ? anuncio.getCombustivel().getCombustivel() : null);
 			f.setProperty("cor", (anuncio.getCor() != null) ? anuncio.getCor().getCor() : null);
-			f.setProperty("km", anuncio.getKm());
+			f.setProperty("km", (anuncio.getKm() != null) ? anuncio.getKm() : null);
 			f.setProperty("modelo", (anuncio.getModelo() != null) ? anuncio.getModelo().getNome() : null);
 			f.setProperty("marca", (anuncio.getModelo() != null) ? anuncio.getModelo().getMarca().getMarca() : null);
-			f.setProperty("observacao", anuncio.getObservacao());
-			f.setProperty("placa", anuncio.getPlaca());
-			f.setProperty("valor", anuncio.getValor());
+			f.setProperty("observacao", (anuncio.getObservacao() != null) ? anuncio.getObservacao() : null);
+			f.setProperty("placa", (anuncio.getPlaca() != null) ? anuncio.getPlaca() : null);
+			f.setProperty("valor", (anuncio.getValor() != null) ? anuncio.getValor() : null);
 			f.setProperty("estado", (anuncio.getAno() >= new GregorianCalendar().get(Calendar.YEAR)) ? 1 : 2);
-			f.setProperty("contato", contato);
 			f.setProperty("acessorios", anuncio.getAcessorios());
-			f.setProperty("fotos", null);
-			f.setProperty("favorito", false);
+			f.setProperty("fotos", anuncio.getFotos());
 			f.setProperty("isloja", (anuncio.getUsuario().getLoja() != null) ? true : false);
 			f.setGeometry((anuncio.getUsuario().getLoja() != null) ? new Point(anuncio.getUsuario().getLoja().getLocalizacao().getY(), anuncio.getUsuario().getLoja().getLocalizacao().getX()) : new Point(anuncio.getLocalizacao().getY(), anuncio.getLocalizacao().getX()));
+			f.setProperty("favorito", false);
 			
 			if(anuncio.getUsuariosFavoritados().size() > 0){
 				for(Usuario u : anuncio.getUsuariosFavoritados()){

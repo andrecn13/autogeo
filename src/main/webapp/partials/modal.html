@@ -5,16 +5,11 @@
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2200" close="closeAlert($index)">{{alert.msg}}</alert> 
 	</div>
 	<div>
-		<div style="height: 200px">
-			<carousel interval="2000" no-wrap="false"> 
-				<slide active="slide.active"> 
-					<img ng-src="./build/img/car.jpg" style="margin: auto;max-width: 100%;max-height: 220px;">
-				</slide> 
-				<slide> 
-					<img ng-src="./build/img/carro2.jpg" style="margin: auto;max-width: 100%;max-height: 220px;">
-				</slide> 
-				<slide> 
-					<img ng-src="./build/img/carro.jpg" style="margin: auto;max-width: 100%;max-height: 220px;">
+		<div style="height: 220px; background:#f1f1f1">
+			<img ng-show="anuncio.properties.fotos.length == 0" ng-src="./build/img/no-foto.jpg" style="margin: auto;max-width: 100%;max-height: 220px;display:block;">
+			<carousel interval="2000" no-wrap="false" ng-show="anuncio.properties.fotos.length > 0"> 
+				<slide  ng-repeat="foto in anuncio.properties.fotos"> 
+					<img ng-src="./build/img/{{anuncio.properties.contato.id}}/{{foto.nome}}" style="margin: auto;max-width: 100%;max-height: 220px;">
 				</slide> 
 			</carousel>
 		</div>
