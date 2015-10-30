@@ -15,6 +15,7 @@
 		</div>
 		<div style="margin-top:25px;">
 			<h4 class="pull-right" style="color:#0065AE;font-weight:400;">{{anuncio.properties.valor | currency:R$}}</h4>
+			<h5>{{anuncio.properties.fipe.preco}}</h5>
 			<div ng-controller="LoginCtrl" ng-show="showElement()">
 				<span ng-show="anuncio.properties.favorito == false" ng-click="favoritar('add')" class="starFavoritar glyphicon glyphicon-star-empty pull-right" tooltip-placement="left" tooltip="Adicionar dos Favoritos"></span>
 				<span ng-show="anuncio.properties.favorito == true" ng-click="favoritar('remove')" class="starFavoritar glyphicon glyphicon-star pull-right" tooltip-placement="left" tooltip="Remover dos Favoritos"></span>

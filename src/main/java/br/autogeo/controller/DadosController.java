@@ -17,6 +17,7 @@ import org.geojson.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import br.autogeo.model.Acessorio;
 import br.autogeo.model.Anuncio;
 import br.autogeo.model.Combustivel;
 import br.autogeo.model.Cor;
 import br.autogeo.model.Foto;
+import br.autogeo.model.Modelo;
 import br.autogeo.model.Motivo;
 import br.autogeo.service.AcessorioService;
 import br.autogeo.service.AnuncioService;
@@ -259,6 +262,38 @@ public class DadosController {
 
 		response.setContentType(foto.getContentType());
 		response.getOutputStream().write(byteArray);
+	}
+	
+	@RequestMapping(value = "/fipe/preco/{idMarca}/{idModelo}/{ano}/{idCombustivel}", method = RequestMethod.GET)
+	public ResponseEntity<String> getPrecoFipe(@PathVariable Long idMarca, @PathVariable Long idModelo, @PathVariable Long ano, @PathVariable Long idCombustivel){
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<Object> res = restTemplate.exchange("http://fipeapi.appspot.com/api/1/carros/veiculo/{idMarca}/{idModelo}/{ano}-{idCombustivel}.json", HttpMethod.GET, null, Object.class, idMarca, idModelo, ano, idCombustivel);
+		String json;
+		
+		try {
+			json = new ObjectMapper().writeValueAsString(res.getBody());
+		} catch (JsonProcessingException e) {
+			return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<String>(json, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/fipe/preco/anuncio/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> getPrecoFipeAnuncio(@PathVariable Long id){
+		Anuncio anuncio = serviceAnuncio.getById(id);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<Object> res = restTemplate.exchange("http://fipeapi.appspot.com/api/1/carros/veiculo/{idMarca}/{idModelo}/{ano}-{idCombustivel}.json", HttpMethod.GET, null, Object.class, anuncio.getModelo().getMarca().getFipe_id(), anuncio.getModelo().getFipe_id(), anuncio.getAno(), anuncio.getCombustivel().getCodigo());
+		String json;
+		
+		try {
+			json = new ObjectMapper().writeValueAsString(res.getBody());
+		} catch (JsonProcessingException e) {
+			return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
 
 }

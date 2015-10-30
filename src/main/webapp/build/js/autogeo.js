@@ -55,7 +55,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         {
             templateUrl: "views/login.html",
             controller: "LoginCtrl",
-            access: {requiredLogin: false, blockWhenLogged: false}
+            access: {requiredLogin: false, blockWhenLogged: true} 
         })  
         .otherwise( 
         {
@@ -287,17 +287,22 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     			$scope.anuncio.combustivel != undefined &&
     				$scope.anuncio.ano != undefined){
 	    	AnuncioService.getPrecoFipe($scope.anuncio).then(function(data){
-	    		$scope.anuncio.valor = data.preco;    		
+	    		$scope.fipeObj = data;  
+	    		$scope.fipeErro = undefined; 
 	    	},function(data){
 	    		$scope.fipeErro = "Veículo não encontrado na FIPE.";
 	    	});
-    	}else{
+    	}else{ 
+    		$scope.fipeObj = undefined;
     		$scope.fipeErro = "Preencha as informações do veículo e consulte novamente.";
     	}
     }
     
     $scope.fechar = function(){
     	$scope.fipeErro = undefined;
+    }
+    $scope.fecharValor = function(){
+    	$scope.fipeObj = undefined;
     }
     
 }]);
@@ -637,6 +642,10 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
 app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio, AnuncioService, AlertService) {
 	
 	$scope.anuncio = anuncio;
+	
+	AnuncioService.getPrecoFipeAnuncio($scope.anuncio.properties.id).then(function(data){
+		$scope.anuncio.properties.fipe = data;
+	});
 	
 	$scope.ok = function () {
 		$modalInstance.dismiss('cancel');
@@ -998,12 +1007,24 @@ app.factory('AnuncioService', function($http, $q) {
         },
         getPrecoFipe: function(anuncio){
         	var d = $q.defer();
-            var url = 'http://fipeapi.appspot.com/api/1/carros/veiculo/'
+            var url = 'dados/fipe/preco/'
             	+anuncio.modelo.marca.fipe_id+'/'
             	+anuncio.modelo.fipe_id+'/'
-            	+anuncio.ano+'-'
-            	+anuncio.combustivel.codigo
-            	+'.json';
+            	+anuncio.ano+'/'
+            	+anuncio.combustivel.codigo; 
+            
+            $http.get(url).success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            }); 
+
+            return d.promise;
+        },
+        getPrecoFipeAnuncio: function(id){
+        	var d = $q.defer();
+            var url = 'dados/fipe/preco/anuncio/'+id; 
             
             $http.get(url).success(function(data){
                 d.resolve(data);

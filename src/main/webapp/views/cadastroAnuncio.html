@@ -72,6 +72,7 @@
 			<div class="form-group">
 				<div class="col-sm-3"></div>
 			    <div class="col-sm-8">
+			    	<alert type="success" close="fecharValor()" ng-show="fipeObj">Preço encontrado na tabela Fipe: <b>{{fipeObj.preco}}</b> - Referência: <b>{{fipeObj.referencia}}</b></alert>
 			    	<alert type="danger" close="fechar()" ng-show="fipeErro">{{fipeErro}}</alert>
 		    	</div>
 			</div>

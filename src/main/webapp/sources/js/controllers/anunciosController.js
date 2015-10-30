@@ -127,17 +127,22 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     			$scope.anuncio.combustivel != undefined &&
     				$scope.anuncio.ano != undefined){
 	    	AnuncioService.getPrecoFipe($scope.anuncio).then(function(data){
-	    		$scope.anuncio.valor = data.preco;    		
+	    		$scope.fipeObj = data;  
+	    		$scope.fipeErro = undefined; 
 	    	},function(data){
 	    		$scope.fipeErro = "Veículo não encontrado na FIPE.";
 	    	});
-    	}else{
+    	}else{ 
+    		$scope.fipeObj = undefined;
     		$scope.fipeErro = "Preencha as informações do veículo e consulte novamente.";
     	}
     }
     
     $scope.fechar = function(){
     	$scope.fipeErro = undefined;
+    }
+    $scope.fecharValor = function(){
+    	$scope.fipeObj = undefined;
     }
     
 }]);

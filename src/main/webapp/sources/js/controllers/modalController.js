@@ -2,6 +2,10 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, anuncio, AnuncioSe
 	
 	$scope.anuncio = anuncio;
 	
+	AnuncioService.getPrecoFipeAnuncio($scope.anuncio.properties.id).then(function(data){
+		$scope.anuncio.properties.fipe = data;
+	});
+	
 	$scope.ok = function () {
 		$modalInstance.dismiss('cancel');
 	};

@@ -55,7 +55,7 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
         {
             templateUrl: "views/login.html",
             controller: "LoginCtrl",
-            access: {requiredLogin: false, blockWhenLogged: false}
+            access: {requiredLogin: false, blockWhenLogged: true} 
         })  
         .otherwise( 
         {
