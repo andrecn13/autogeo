@@ -1,9 +1,9 @@
 <meta charset="UTF-8">
 <div class="containerAnuncioPrev">
 	<div class="divImgAnuncioPrev">
-		<img class="imgAnuncioPrev" src="{{(anuncio.properties.fotos == 0) ? './build/img/no-foto.jpg' : './build/img/'+anuncio.properties.contato.id+'/'+anuncio.properties.fotos[0].nome}}" alt="foto" title="{{anuncio.properties.modelo}}"/>
+		<img class="imgAnuncioPrev" src="{{(anuncio.properties.fotos == 0) ? './build/img/no-foto.jpg' : 'dados/foto/'+anuncio.properties.id+'/'+anuncio.properties.fotos[0].nome}}" alt="foto" title="{{anuncio.properties.modelo}}"/>
 	</div>
 	<span class="tituloValor">{{anuncio.properties.valor | currency:"R$" :2}}</span>
 	<span class="descricao"> {{anuncio.properties.modelo}} | {{anuncio.properties.ano}}</span>
 	<button type="button" class="btnCadastro pull-left" ng-click="openDetail()">Visualizar Anúncio</button>
-</div> 
+</div>  

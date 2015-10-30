@@ -90,7 +90,7 @@ public class AnuncioController {
 		anuncio.setDataCriacao(new Date());
 		anuncio.setAtivo(true);
 		
-		File file = new File("D:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId());
+		File file = new File("E:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId());
 		if(!file.exists()){
 			file.mkdir();
 		}
@@ -98,7 +98,7 @@ public class AnuncioController {
 		for (int i=0; i<files.length;i++) {
 			Foto foto = new Foto();
 			foto.setContentType(files[i].getContentType());
-			foto.setNome(new Date().getTime()+"."+files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf('.') + 1));
+			foto.setNome(Math.random()+"_"+new Date().getTime()+"."+files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf('.') + 1));
 			foto.setAnuncio(anuncio);
 			
 			try {

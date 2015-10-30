@@ -18,9 +18,10 @@
 		</div>
 		<ul id="listaAnuncios" class="col-xs-12 pull-left">
 			<li class="col-xs-6 col-sm-6 col-md-6 col-lg-4 pull-left" ng-repeat="anuncio in anuncios">
-				<div class="divAnuncio" style="height:430px;">
+				<div class="divAnuncio" style="height:445px;">
 					<div class="imgAnuncio">
-						<img src="./build/img/carro2.jpg" alt="Automóvel" title="Automóvel"/>
+						<img ng-show="anuncio.fotos.length == 0" src="./build/img/no-foto.jpg" alt="Automóvel" title="Automóvel"/>						
+						<img ng-show="anuncio.fotos.length > 0" ng-src="dados/foto/{{anuncio.id}}/{{anuncio.fotos[0].nome}}" alt="Automóvel" title="Automóvel"/>
 					</div>
 					<table class="col-sm-11">
 						<tbody>

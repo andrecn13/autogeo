@@ -556,11 +556,11 @@ header{
 		margin-bottom: 25px;
 		
 		.divAnuncio.favoritos{
-			height: 420px;
+			height: 440px;
 		}
 		
 		.divAnuncio{
-		    height: 400px;
+		    height: 420px;
 		    background: #FFF;
 		    box-shadow: 0px 1px 0px #d4d7d8;
 		    border: 1px solid #e1e5e8;
@@ -570,6 +570,7 @@ header{
 			.imgAnuncio{
 				line-height: 180px;
 				max-height: 180px;
+				min-height: 180px;
 			    min-width: 100%;
 			    max-width: 100%;
 			    float:left;

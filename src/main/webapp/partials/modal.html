@@ -9,7 +9,7 @@
 			<img ng-show="anuncio.properties.fotos.length == 0" ng-src="./build/img/no-foto.jpg" style="margin: auto;max-width: 100%;max-height: 220px;display:block;">
 			<carousel interval="2000" no-wrap="false" ng-show="anuncio.properties.fotos.length > 0"> 
 				<slide  ng-repeat="foto in anuncio.properties.fotos"> 
-					<img ng-src="./build/img/{{anuncio.properties.contato.id}}/{{foto.nome}}" style="margin: auto;max-width: 100%;max-height: 220px;">
+					<img ng-src="dados/foto/{{anuncio.properties.id}}/{{foto.nome}}" style="margin: auto;max-width: 100%;max-height: 220px;">
 				</slide> 
 			</carousel>
 		</div>

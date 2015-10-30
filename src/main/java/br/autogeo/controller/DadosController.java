@@ -1,29 +1,41 @@
 package br.autogeo.controller;
 
+import java.awt.PageAttributes.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.servlet.ServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 import org.geojson.Point;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.autogeo.model.Acessorio;
 import br.autogeo.model.Anuncio;
 import br.autogeo.model.Combustivel;
 import br.autogeo.model.Cor;
+import br.autogeo.model.Foto;
 import br.autogeo.model.Motivo;
 import br.autogeo.service.AcessorioService;
 import br.autogeo.service.AnuncioService;
 import br.autogeo.service.CombustivelService;
 import br.autogeo.service.CorService;
+import br.autogeo.service.FotoService;
 import br.autogeo.service.MotivoService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,6 +56,8 @@ public class DadosController {
 	private MotivoService ServiceMotivo;
 	@Autowired
 	private AnuncioService serviceAnuncio;
+	@Autowired
+	private FotoService serviceFoto;
 
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
 	public ResponseEntity<String> getDados(){
@@ -218,5 +232,24 @@ public class DadosController {
 		
 		return new ResponseEntity<String>(json, HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "/foto/{id}/{nome:.+}", method = RequestMethod.GET)
+	public @ResponseBody void getImage(@PathVariable Long id, @PathVariable String nome, ServletResponse response) throws IOException {
+		
+		Anuncio anuncio = serviceAnuncio.getById(id);
+		Foto foto = serviceFoto.getByAnuncioAndNome(anuncio, nome);
+		
+		File imageFile = new File("E:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId()+ File.separator + foto.getNome());
+		byte[] byteArray = null;
+		
+		try {
+			byteArray = IOUtils.toByteArray(new FileInputStream(imageFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		response.setContentType(foto.getContentType());
+		response.getOutputStream().write(byteArray);
+	}
+
 }
