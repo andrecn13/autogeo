@@ -131,6 +131,24 @@ app.factory('AnuncioService', function($http, $q) {
             });
 
             return d.promise;
+        },
+        getPrecoFipe: function(anuncio){
+        	var d = $q.defer();
+            var url = 'http://fipeapi.appspot.com/api/1/carros/veiculo/'
+            	+anuncio.modelo.marca.fipe_id+'/'
+            	+anuncio.modelo.fipe_id+'/'
+            	+anuncio.ano+'-'
+            	+anuncio.combustivel.codigo
+            	+'.json';
+            
+            $http.get(url).success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            }); 
+
+            return d.promise;
         }
     };
 });

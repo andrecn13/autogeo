@@ -94,6 +94,70 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
+    	
+	$scope.tipo		=	$routeParams.tipo;
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{loja:null};
+    
+    $scope.cadastrarUsuario = function(){
+    	console.log(angular.toJson($scope.user));
+    	CadastroFactory.create($scope.user, function(){
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		$scope.user = {};
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    	});
+	}
+    
+    var mainMarker = {
+		lat: -30.0257548,
+        lng: -51.1833013,
+        focus: true,
+        message: "Clique e mova para posicionar o seu estabelecimento",
+        draggable: true
+    };
+    
+    angular.extend($scope, {
+        defaults: {},
+        center: {
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
+        },
+        markers: {
+            mainMarker: angular.copy(mainMarker)
+        }
+    });
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+    	var lat = args.model.lat;
+        var lng = args.model.lng;
+        
+        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
+    });
+    
+    $scope.geocode = function() {
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
+    
+}]);
+
 /**
  * Listagem de anuncios do usuário
  */
@@ -218,6 +282,23 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
 			}
 		)
 	}
+    $scope.consultaFipe = function(){
+    	if($scope.anuncio.modelo != undefined &&
+    			$scope.anuncio.combustivel != undefined &&
+    				$scope.anuncio.ano != undefined){
+	    	AnuncioService.getPrecoFipe($scope.anuncio).then(function(data){
+	    		$scope.anuncio.valor = data.preco;    		
+	    	},function(data){
+	    		$scope.fipeErro = "Veículo não encontrado na FIPE.";
+	    	});
+    	}else{
+    		$scope.fipeErro = "Preencha as informações do veículo e consulte novamente.";
+    	}
+    }
+    
+    $scope.fechar = function(){
+    	$scope.fipeErro = undefined;
+    }
     
 }]);
 
@@ -340,70 +421,6 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
 		)
 	}
      
-}]);
-
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
-    	
-	$scope.tipo		=	$routeParams.tipo;
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{loja:null};
-    
-    $scope.cadastrarUsuario = function(){
-    	console.log(angular.toJson($scope.user));
-    	CadastroFactory.create($scope.user, function(){
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		$scope.user = {};
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    	});
-	}
-    
-    var mainMarker = {
-		lat: -30.0257548,
-        lng: -51.1833013,
-        focus: true,
-        message: "Clique e mova para posicionar o seu estabelecimento",
-        draggable: true
-    };
-    
-    angular.extend($scope, {
-        defaults: {},
-        center: {
-        	lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
-        markers: {
-            mainMarker: angular.copy(mainMarker)
-        }
-    });
-    
-    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
-    	var lat = args.model.lat;
-        var lng = args.model.lng;
-        
-        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
-    });
-    
-    $scope.geocode = function() {
-		MapaService.geocode($scope.endereco).then(
-			function(data) {
-				if(data.results[0].locations.length > 0){
-					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
-					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
-					$scope.center.lat = data.results[0].locations[0].latLng.lat;
-					$scope.center.lng = data.results[0].locations[0].latLng.lng;
-					
-					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
-				}
-			}, function(data) {
-				console.log(data);
-			}
-		)
-	}
-    
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
@@ -976,6 +993,24 @@ app.factory('AnuncioService', function($http, $q) {
             .error(function(msg, code) {
                 d.reject(msg);
             });
+
+            return d.promise;
+        },
+        getPrecoFipe: function(anuncio){
+        	var d = $q.defer();
+            var url = 'http://fipeapi.appspot.com/api/1/carros/veiculo/'
+            	+anuncio.modelo.marca.fipe_id+'/'
+            	+anuncio.modelo.fipe_id+'/'
+            	+anuncio.ano+'-'
+            	+anuncio.combustivel.codigo
+            	+'.json';
+            
+            $http.get(url).success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            }); 
 
             return d.promise;
         }

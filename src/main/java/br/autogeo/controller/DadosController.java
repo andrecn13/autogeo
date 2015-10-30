@@ -76,14 +76,19 @@ public class DadosController {
 		 */
 		Combustivel com1 = new Combustivel();
 		com1.setCombustivel("Gasolina");
+		com1.setCodigo(1L);
 		Combustivel com2 = new Combustivel();
 		com2.setCombustivel("Etanol");
+		com2.setCodigo(2L);
 		Combustivel com3 = new Combustivel();
 		com3.setCombustivel("Diesel");
+		com3.setCodigo(3L);
 		Combustivel com4 = new Combustivel();
 		com4.setCombustivel("GNV");
+		com4.setCodigo(1L);
 		Combustivel com5 = new Combustivel();
 		com5.setCombustivel("Flex");
+		com5.setCodigo(1L);
 		combustiveis.add(com1);
 		combustiveis.add(com2);
 		combustiveis.add(com3);

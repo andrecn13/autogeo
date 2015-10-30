@@ -16,6 +16,7 @@ public class Combustivel implements Serializable{
 
 	private Long id;
 	private String combustivel;
+	private Long codigo;
 	
 	public Combustivel() {}
 
@@ -37,6 +38,15 @@ public class Combustivel implements Serializable{
 
 	public void setCombustivel(String combustivel) {
 		this.combustivel = combustivel;
+	}
+	
+	@Column(name = "NUM_CODIGO")
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	@Override
