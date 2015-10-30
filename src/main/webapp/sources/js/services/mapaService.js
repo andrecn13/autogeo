@@ -21,6 +21,26 @@ app.factory('MapaService', function($http, $q) {
                 }); 
 
             return d.promise;
+        },
+        geocode: function(endereco){
+        	var d = $q.defer();
+            var url = 'http://open.mapquestapi.com/geocoding/v1/address';
+            
+            $http.get(url, {
+                params: { 
+                	key: "NneFYreg0kkMxkfuUI39iacW1CHr6ADs",
+                	location: endereco,
+                	outFormat: "json"
+            	}
+	        })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            }); 
+
+            return d.promise;
         }
     };
 });

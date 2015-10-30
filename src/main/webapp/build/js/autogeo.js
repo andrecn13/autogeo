@@ -94,53 +94,6 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', function($scope, CadastroFactory, AlertService, $routeParams){
-    	
-	$scope.tipo		=	$routeParams.tipo;
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{loja:null};
-    
-    $scope.cadastrarUsuario = function(){
-    	console.log(angular.toJson($scope.user));
-    	CadastroFactory.create($scope.user, function(){
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		$scope.user = {};
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    	});
-	}
-    
-    var mainMarker = {
-		lat: -30.0257548,
-        lng: -51.1833013,
-        focus: true,
-        message: "Clique e mova para posicionar o seu estabelecimento",
-        draggable: true
-    };
-    
-    angular.extend($scope, {
-        defaults: {},
-        center: {
-        	lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
-        markers: {
-            mainMarker: angular.copy(mainMarker)
-        }
-    });
-    
-    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
-    	var lat = args.model.lat;
-        var lng = args.model.lng;
-        
-        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
-    });
-    
-}]);
-
 /**
  * Listagem de anuncios do usuário
  */
@@ -159,7 +112,7 @@ app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, Anun
 /**
  * Cadastro anuncio
  */
-app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', 'AuthenticationService', function($scope, AnuncioService, AlertService, AuthenticationService){
+app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', 'AuthenticationService', 'MapaService', function($scope, AnuncioService, AlertService, AuthenticationService, MapaService){
     
 	//verify is user logged is PARTICULAR or LOJA
 	$scope.isLoja = AuthenticationService.isLoja();
@@ -249,12 +202,29 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
         $scope.anuncio.localizacao = "POINT ("+lat+" "+lng+")";
     });
     
+    $scope.geocode = function() { 
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.anuncio.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
+    
 }]);
 
 /**
  * Editar Anuncio
  */
-app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', 'AuthenticationService', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location, AuthenticationService){
+app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', 'AuthenticationService', 'MapaService', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location, AuthenticationService, MapaService){
     
 	//verify is user logged is PARTICULAR or LOJA
 	$scope.isLoja = AuthenticationService.isLoja();
@@ -352,7 +322,88 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
             });
     	}
     }
+    
+    $scope.geocode = function() { 
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.anuncio.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
      
+}]);
+
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
+    	
+	$scope.tipo		=	$routeParams.tipo;
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{loja:null};
+    
+    $scope.cadastrarUsuario = function(){
+    	console.log(angular.toJson($scope.user));
+    	CadastroFactory.create($scope.user, function(){
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		$scope.user = {};
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    	});
+	}
+    
+    var mainMarker = {
+		lat: -30.0257548,
+        lng: -51.1833013,
+        focus: true,
+        message: "Clique e mova para posicionar o seu estabelecimento",
+        draggable: true
+    };
+    
+    angular.extend($scope, {
+        defaults: {},
+        center: {
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
+        },
+        markers: {
+            mainMarker: angular.copy(mainMarker)
+        }
+    });
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+    	var lat = args.model.lat;
+        var lng = args.model.lng;
+        
+        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
+    });
+    
+    $scope.geocode = function() {
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
+    
 }]);
 
 app.controller('FavoritosCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
@@ -985,6 +1036,26 @@ app.factory('MapaService', function($http, $q) {
                 .error(function(msg, code) {
                     d.reject(msg);
                 }); 
+
+            return d.promise;
+        },
+        geocode: function(endereco){
+        	var d = $q.defer();
+            var url = 'http://open.mapquestapi.com/geocoding/v1/address';
+            
+            $http.get(url, {
+                params: { 
+                	key: "NneFYreg0kkMxkfuUI39iacW1CHr6ADs",
+                	location: endereco,
+                	outFormat: "json"
+            	}
+	        })
+            .success(function(data){
+                d.resolve(data);
+            })
+            .error(function(msg, code) {
+                d.reject(msg);
+            }); 
 
             return d.promise;
         }

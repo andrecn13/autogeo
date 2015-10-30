@@ -16,7 +16,7 @@ app.controller('AnuncioCtrl', ['$scope', 'AnuncioService', function($scope, Anun
 /**
  * Cadastro anuncio
  */
-app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', 'AuthenticationService', function($scope, AnuncioService, AlertService, AuthenticationService){
+app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService', 'AuthenticationService', 'MapaService', function($scope, AnuncioService, AlertService, AuthenticationService, MapaService){
     
 	//verify is user logged is PARTICULAR or LOJA
 	$scope.isLoja = AuthenticationService.isLoja();
@@ -106,12 +106,29 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
         $scope.anuncio.localizacao = "POINT ("+lat+" "+lng+")";
     });
     
+    $scope.geocode = function() { 
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.anuncio.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
+    
 }]);
 
 /**
  * Editar Anuncio
  */
-app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', 'AuthenticationService', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location, AuthenticationService){
+app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService', '$routeParams', '$resource', '$location', 'AuthenticationService', 'MapaService', function($scope, AnuncioService, AlertService, $routeParams, $resource, $location, AuthenticationService, MapaService){
     
 	//verify is user logged is PARTICULAR or LOJA
 	$scope.isLoja = AuthenticationService.isLoja();
@@ -209,5 +226,22 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
             });
     	}
     }
+    
+    $scope.geocode = function() { 
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.anuncio.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
      
 }]);

@@ -105,10 +105,10 @@
 			<div class="form-group" ng-hide="isLoja">
 			    <label for="endereco" class="col-sm-3 control-label">Digite o Endereço</label>
 			    <div class="col-sm-6">
-					<input type="text" class="form-control" id="endereco" placeholder="Ex: rua xxx, av. yyyy">
+					<input type="text" class="form-control" id="endereco" ng-model="endereco" placeholder="Ex: rua xxx, av. yyyy">
 			    </div>
 			    <div class="col-sm-2">
-			    	<button class="btnCadastro" style="margin:0">
+			    	<button type="button" class="btnCadastro" style="margin:0" ng-click="geocode()">
 			    		<span class="glyphicon glyphicon-search"></span>
 			    		Buscar
 		    		</button>

@@ -1,4 +1,4 @@
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', function($scope, CadastroFactory, AlertService, $routeParams){
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
     	
 	$scope.tipo		=	$routeParams.tipo;
     $scope.title    =   "Cadastro";
@@ -42,5 +42,22 @@ app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$r
         
         $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
     });
+    
+    $scope.geocode = function() {
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
     
 }]);
