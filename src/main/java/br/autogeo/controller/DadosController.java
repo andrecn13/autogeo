@@ -1,6 +1,5 @@
 package br.autogeo.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +15,8 @@ import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 import org.geojson.Point;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +44,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @RequestMapping(value = "/dados")
+@PropertySource("classpath:config.properties")
 public class DadosController {
 
+	@Value("${upload_path}")
+	private String path;
+	
 	@Autowired
 	private CorService serviceCor;
 	@Autowired
@@ -239,7 +243,7 @@ public class DadosController {
 		Anuncio anuncio = serviceAnuncio.getById(id);
 		Foto foto = serviceFoto.getByAnuncioAndNome(anuncio, nome);
 		
-		File imageFile = new File("E:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId()+ File.separator + foto.getNome());
+		File imageFile = new File(path + File.separator + anuncio.getUsuario().getId()+ File.separator + foto.getNome());
 		byte[] byteArray = null;
 		
 		try {

@@ -16,6 +16,8 @@ import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 import org.geojson.Point;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +46,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @RequestMapping(value = "/api/anuncio")
+@PropertySource("classpath:config.properties")
 public class AnuncioController {
+	
+	@Value("${upload_path}")
+	private String path;
 	
 	@Autowired
 	private AnuncioService service;
@@ -90,7 +96,7 @@ public class AnuncioController {
 		anuncio.setDataCriacao(new Date());
 		anuncio.setAtivo(true);
 		
-		File file = new File("E:\\AUTOGEO_FOTOS" + File.separator + anuncio.getUsuario().getId());
+		File file = new File(path + File.separator + anuncio.getUsuario().getId());
 		if(!file.exists()){
 			file.mkdir();
 		}
