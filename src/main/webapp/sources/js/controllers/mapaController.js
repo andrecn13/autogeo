@@ -12,7 +12,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     };
     
     $scope.enableMenu = false;
-    $scope.marcas   = [{nome: "Selecione uma marca"},{nome: "Chevrolet"},{nome: "Ford"},{nome: "Fiat"},{nome: "Wolkswagen"},{nome: "Renault"},{nome: "Pegeout"},{nome: "Toyota"}]
+    $scope.marcas   = []
     $scope.filtro = {
         preco: {
             minVal              :   "",
@@ -53,6 +53,10 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         iconSize:[41, 41], 
         iconAnchor:[12, 0]  
     };  
+    
+    MapaService.getMarcas().then(function(data){
+    	$scope.marcas = data;
+    });
     
     var promiseAnuncios = MapaService.getAnuncios(AuthenticationService.getUser());
     promiseAnuncios.then(function(data) {
@@ -132,7 +136,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 $scope.filtro.ano.ativo = false;
                 break;
             case "marca":
-                $scope.filtro.marca.marca = $scope.marcas[0];
+                $scope.filtro.marca.marca = {marca:""};
                 $scope.filtro.marca.ativo = false;
                 break;
             case "portas":

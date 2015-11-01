@@ -20,10 +20,10 @@ module.exports = function (grunt)
 					'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js',
 					'bower_components/angular-resource/angular-resource.min.js',
 					'bower_components/angular-route/angular-route.min.js',
-					'bower_components/underscore/underscore-min.js',
 					'bower_components/angular-input-masks/angular-input-masks.min.js',
 					'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-					'bower_components/angular-i18n/angular-locale_pt-br.js'
+					'bower_components/angular-i18n/angular-locale_pt-br.js',
+					'bower_components/underscore/underscore-min.js',
 				],
 				dest: 'src/main/webapp/build/js/<%= pkg.name %>-deps.js'
 			},

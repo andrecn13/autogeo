@@ -22,6 +22,20 @@ app.factory('MapaService', function($http, $q) {
 
             return d.promise;
         },
+        getMarcas: function() {
+            var d = $q.defer();
+            var url = 'marca';
+
+            $http.get(url)
+                .success(function(data){
+                    d.resolve(data);
+                })
+                .error(function(msg, code) {
+                    d.reject(msg);
+                }); 
+
+            return d.promise;
+        },
         geocode: function(endereco){
         	var d = $q.defer();
             var url = 'http://open.mapquestapi.com/geocoding/v1/address';

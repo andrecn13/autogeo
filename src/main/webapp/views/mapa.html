@@ -48,7 +48,7 @@
 		<span ng-click="currentTab = 2" class="iconeFiltroAba filtroKm" ng-class="{'ativo': currentTab == 2}" tooltip-placement="right" tooltip="Filtro por Km"></span>
 		<span ng-click="currentTab = 3" class="iconeFiltroAba filtroCalendar" ng-class="{'ativo': currentTab == 3}" tooltip-placement="right" tooltip="Filtro por ano do automóvel"></span>
 		<span ng-click="currentTab = 4" class="iconeFiltroAba filtroMarca" ng-class="{'ativo': currentTab == 4}" tooltip-placement="right" tooltip="Filtro por marca"></span>
-		<span ng-click="currentTab = 5" class="iconeFiltroAba filtroPorta" ng-class="{'ativo': currentTab == 5}" tooltip-placement="right" tooltip="Filtro por quant. de portas"></span>
+<!-- 		<span ng-click="currentTab = 5" class="iconeFiltroAba filtroPorta" ng-class="{'ativo': currentTab == 5}" tooltip-placement="right" tooltip="Filtro por quant. de portas"></span> -->
 		<span ng-click="currentTab = 6" class="iconeFiltroAba filtroEstado" ng-class="{'ativo': currentTab == 6}" tooltip-placement="right" tooltip="Filtro por estado do automóvel"></span>
 		<span ng-click="currentTab = 7" class="iconeFiltroAba filtroFoto" ng-class="{'ativo': currentTab == 7}" tooltip-placement="right" tooltip="Filtro por fotos"></span>
 	</div>
@@ -83,25 +83,27 @@
 		<div  class="filtroConteudo" ng-show="currentTab == 4">
 			<h1 class="tituloFiltro">MARCA DE AUTOMÓVEL</h1>
 			<div class="inputContainer">
-				<select class="selectFiltro" ng-init="filtro.marca.marca = marcas[0]" ng-model="filtro.marca.marca" ng-options="marca.nome for marca in marcas"></select>
+				<select class="selectFiltro" ng-model="filtro.marca.marca" ng-options="option.marca for option in marcas">
+					<option value="">Selecione a Marca</option>
+				</select>
 				<button class="btnLimparFiltro" ng-click="limparFiltro('marca')">Limpar</button>
 				<button class="btnFiltro" ng-click="filtrarAnuncio()">Filtrar</button>
 			</div>
-		</div>	
-		<div  class="filtroConteudo" ng-show="currentTab == 5">
-			<h1 class="tituloFiltro">QUANTIDADE DE PORTAS</h1>
-			<div class="inputContainer">
-				<div class="btn-toolbar" role="toolbar" aria-label="Toolbar" style="margin: 0 auto; width:165px;">
-			      	<div class="btn-group">
-				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="2" tooltip-placement="top" tooltip="2 portas">2</label>
-				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="4" tooltip-placement="top" tooltip="4 portas">4</label>
-				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="0">Tanto Faz</label>
-				    </div>
-			    </div>
-				<button class="btnLimparFiltro" ng-click="limparFiltro('portas')">Limpar</button>
-				<button class="btnFiltro" ng-click="filtrarAnuncio()">Filtrar</button>
-			</div>
-		</div>			
+		</div>	 
+<!-- 		<div  class="filtroConteudo" ng-show="currentTab == 5"> -->
+<!-- 			<h1 class="tituloFiltro">QUANTIDADE DE PORTAS</h1> -->
+<!-- 			<div class="inputContainer"> -->
+<!-- 				<div class="btn-toolbar" role="toolbar" aria-label="Toolbar" style="margin: 0 auto; width:165px;"> -->
+<!-- 			      	<div class="btn-group"> -->
+<!-- 				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="2" tooltip-placement="top" tooltip="2 portas">2</label> -->
+<!-- 				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="4" tooltip-placement="top" tooltip="4 portas">4</label> -->
+<!-- 				        <label class="btn btn-default" ng-model="filtro.portas.qtdPortas" btn-radio="0">Tanto Faz</label> -->
+<!-- 				    </div> -->
+<!-- 			    </div> -->
+<!-- 				<button class="btnLimparFiltro" ng-click="limparFiltro('portas')">Limpar</button> -->
+<!-- 				<button class="btnFiltro" ng-click="filtrarAnuncio()">Filtrar</button> -->
+<!-- 			</div> -->
+<!-- 		</div>			 -->
 		<div  class="filtroConteudo" ng-show="currentTab == 6">
 			<h1 class="tituloFiltro">ESTADO DO AUTOMÓVEL</h1>
 			<div class="inputContainer">
