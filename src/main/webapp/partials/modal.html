@@ -4,8 +4,17 @@
 	<div style="margin-top: 25px;">
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2200" close="closeAlert($index)">{{alert.msg}}</alert> 
 	</div>
+	<div style="float:left;background:#FFF;width:100%;">
+		<h4 class="pull-right" style="color:#0065AE;font-weight:400;">{{anuncio.properties.valor | currency:R$}}</h4>
+		<div class="pull-right" ng-controller="LoginCtrl" ng-show="showElement()">
+			<span ng-show="anuncio.properties.favorito == false" ng-click="favoritar('add')" class="starFavoritar glyphicon glyphicon-star-empty pull-right" tooltip-placement="left" tooltip="Adicionar dos Favoritos"></span>
+			<span ng-show="anuncio.properties.favorito == true" ng-click="favoritar('remove')" class="starFavoritar glyphicon glyphicon-star pull-right" tooltip-placement="left" tooltip="Remover dos Favoritos"></span>
+		</div>
+		<span tooltip-placement="right" tooltip="Valor Encontrado na Tebela FIPE" class="badge pull-left" style="padding:5px;margin:0;font-weight:300;font-size:9pt;">{{anuncio.properties.fipe.preco}}</span>
+<!-- 		<h5 class="pull-left">{{anuncio.properties.fipe.preco}}</h5> -->
+	</div>
 	<div>
-		<div style="height: 220px; background:#f1f1f1">
+		<div style="float:left;height: 220px; background:#f1f1f1;width:100%;">
 			<img ng-show="anuncio.properties.fotos.length == 0" ng-src="./build/img/no-foto.jpg" style="margin: auto;max-width: 100%;max-height: 220px;display:block;">
 			<carousel interval="2000" no-wrap="false" ng-show="anuncio.properties.fotos.length > 0"> 
 				<slide  ng-repeat="foto in anuncio.properties.fotos"> 
@@ -13,14 +22,7 @@
 				</slide> 
 			</carousel>
 		</div>
-		<div style="margin-top:25px;">
-			<h4 class="pull-right" style="color:#0065AE;font-weight:400;">{{anuncio.properties.valor | currency:R$}}</h4>
-			<h5>{{anuncio.properties.fipe.preco}}</h5>
-			<div ng-controller="LoginCtrl" ng-show="showElement()">
-				<span ng-show="anuncio.properties.favorito == false" ng-click="favoritar('add')" class="starFavoritar glyphicon glyphicon-star-empty pull-right" tooltip-placement="left" tooltip="Adicionar dos Favoritos"></span>
-				<span ng-show="anuncio.properties.favorito == true" ng-click="favoritar('remove')" class="starFavoritar glyphicon glyphicon-star pull-right" tooltip-placement="left" tooltip="Remover dos Favoritos"></span>
-			</div>
-		</div>
+		
 		<div style="margin:15px 0 15px 0;">
 			<table class="table">
 				<thead>

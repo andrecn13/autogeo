@@ -32,7 +32,6 @@ import br.autogeo.model.Anuncio;
 import br.autogeo.model.Combustivel;
 import br.autogeo.model.Cor;
 import br.autogeo.model.Foto;
-import br.autogeo.model.Modelo;
 import br.autogeo.model.Motivo;
 import br.autogeo.service.AcessorioService;
 import br.autogeo.service.AnuncioService;
