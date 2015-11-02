@@ -191,7 +191,7 @@ header {
   /*background-color: #00528E;*/
   display: none;
   width: 326px;
-  height: 350px;
+  height: 300px;
   float: left;
   background: #FFF;
   position: absolute;
@@ -696,5 +696,16 @@ header {
 
 .revenda {
   background: url("../img/revenda.png") no-repeat center; }
+
+.textContato {
+  line-height: 40px;
+  font-weight: 400;
+  font-size: 10pt; }
+
+.titleContato {
+  line-height: 40px;
+  font-weight: 500;
+  font-size: 10pt;
+  padding: 0; }
 
 /*# sourceMappingURL=autogeo.css.map */

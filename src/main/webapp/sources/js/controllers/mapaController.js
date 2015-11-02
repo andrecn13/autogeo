@@ -136,7 +136,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 $scope.filtro.ano.ativo = false;
                 break;
             case "marca":
-                $scope.filtro.marca.marca = {marca:""};
+                $scope.filtro.marca.marca = {};
                 $scope.filtro.marca.ativo = false;
                 break;
             case "portas":

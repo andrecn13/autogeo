@@ -618,7 +618,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 $scope.filtro.ano.ativo = false;
                 break;
             case "marca":
-                $scope.filtro.marca.marca = {marca:""};
+                $scope.filtro.marca.marca = {};
                 $scope.filtro.marca.ativo = false;
                 break;
             case "portas":
@@ -817,13 +817,9 @@ app.filter('filter', [function() {
             if(obj.modelo != "" && marker.match == true){
                 (marker.props["modelo"].toUpperCase().indexOf(obj.modelo.toUpperCase()) > -1) ? marker.match=true : marker.match=false;
             }
-            if(obj.marca.marca.marca != "" && marker.match == true){
+            if(obj.marca.marca.hasOwnProperty('marca') && marker.match == true){
                 (marker.props["marca"].toUpperCase().indexOf(obj.marca.marca.marca.toUpperCase()) > -1) ? marker.match=true : marker.match=false;
-                obj.marca.ativo = true; console.log(obj.marca.marca.marca);
-            }
-            if(obj.qtdPortas == 0 && marker.match == true){
-                marker.match=true;
-                obj.portas.ativo = false;
+                obj.marca.ativo = true;
             }
             if(obj.estado.estadoAutomovel == 0 && marker.match == true){
                 marker.match=true;

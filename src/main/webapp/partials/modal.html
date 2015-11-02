@@ -55,22 +55,35 @@
 				</div>
 			</tab>
 			<tab heading="Contato">
-				<table class="table" style="margin-top:15px">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Telefone</th>
-							<th>Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{{anuncio.properties.contato.nome}}</td>
-							<td>{{anuncio.properties.contato.telefone}}</td>
-							<td>{{anuncio.properties.contato.email}}</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="col-xs-12" ng-hide="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">Anunciante: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.contato.nome}}</span>
+				</div>
+				<div class="col-xs-12" ng-hide="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">Telefone: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.contato.telefone}}</span>
+				</div>
+				<div class="col-xs-12" ng-hide="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">Email: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.contato.email}}</span>
+				</div>
+				
+				<div class="col-xs-12" ng-show="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">Loja: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.loja.nome_fantasia}}</span>
+				</div>
+				<div class="col-xs-12" ng-show="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">cnpj: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.loja.cnpj}}</span>
+				</div>
+				<div class="col-xs-12" ng-show="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">Telefone: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.loja.telfone}}</span>
+				</div>
+				<div class="col-xs-12" ng-show="anuncio.properties.loja">
+					<span class="col-xs-2 text-right titleContato">email: </span>
+					<span class="col-xs-8 text-left textContato">{{anuncio.properties.loja.email}}</span>
+				</div>
 			</tab>
 		</tabset>
 		
