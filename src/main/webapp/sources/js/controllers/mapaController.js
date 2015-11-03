@@ -1,4 +1,4 @@
-app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams) {
+app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaService', 'AuthenticationService', '$routeParams', '$http', function ($scope, $rootScope, $filter, $modal, MapaService, AuthenticationService, $routeParams, $http) {
 	
 	$scope.title    =   "Mapa";
     
@@ -87,6 +87,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         
         $scope.anunciosMarkers2 = $scope.anunciosMarkers;
     });
+    
  
 	angular.extend($scope, {
         defaults: {},
@@ -104,9 +105,22 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                     type: "markercluster",
                     visible: true
                 }
+//            ,
+//                bairros: {
+//                    name: 'Bairros (POA)',
+//                    type: 'wms',
+//                    visible: false,
+//                    url: 'http://localhost:8080/geoserver/autogeo/wms',
+//                    layerParams: {
+//                        layers: 'autogeo:bairropoa4326',
+//                        format: 'image/png',
+//                        transparent: true
+//                    }
+//                }
             }
         }
     });
+	
 	
 	//Filtro por modelo - busca rapida
     $scope.$watch('filtro.modelo', function (newVal, oldVal) {
