@@ -13,7 +13,7 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 
 public class JsonToPointDeserializer extends JsonDeserializer<Point> {
 	
-	private final static GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4170); 
+	private final static GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326); 
 	
 	@Override
 	public Point deserialize(JsonParser jp, DeserializationContext ctxt)

@@ -88,6 +88,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         $scope.anunciosMarkers2 = $scope.anunciosMarkers;
     });
     
+    $scope.legend = {};
  
 	angular.extend($scope, {
         defaults: {},
@@ -104,24 +105,33 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                     name: "Anúncios",
                     type: "markercluster",
                     visible: true
-                }
-//            ,
-//                bairros: {
-//                    name: 'Bairros (POA)',
-//                    type: 'wms',
-//                    visible: false,
-//                    url: 'http://localhost:8080/geoserver/autogeo/wms',
-//                    layerParams: {
-//                        layers: 'autogeo:bairropoa4326',
-//                        format: 'image/png',
-//                        transparent: true
-//                    }
-//                }
+                },
+                bairros: {
+                    name: 'Bairros (POA)',
+                    type: 'wms',
+                    visible: false,
+                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    layerParams: {
+                        layers: 'autogoe:bairros',
+                        format: 'image/png',
+                        transparent: true
+                    } 
+                },
+                potencial_bairros: {
+                    name: 'Potencial de Venda por Bairros (POA)',
+                    type: 'wms',
+                    visible: false,
+                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    layerParams: {
+                        layers: 'autogoe:view',
+                        format: 'image/png',
+                        transparent: true
+                    } 
+                }                
             }
         }
     });
-	
-	
+    
 	//Filtro por modelo - busca rapida
     $scope.$watch('filtro.modelo', function (newVal, oldVal) {
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2,  $scope.filtro);
@@ -171,5 +181,20 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         $scope.anunciosMarkers = $filter('filter')($scope.anunciosMarkers2, $scope.filtro); 
         
     };
+    
+    $scope.ativarEstatistica = function(){
+    	$('.legend').show(); 
+    	$scope.layers.overlays.potencial_bairros.visible = true;
+    	$scope.legend = {
+			 position: 'bottomleft',
+			 colors: [ '#ff3e38', '#7ec13c' ],
+			 labels: [ 'Acima de 2 anúncios por bairro', 'Até 2 anúncios por bairro' ]
+    	}
+    }
+    $scope.desativarEstatistica = function(){
+    	$scope.layers.overlays.potencial_bairros.visible = false;
+    	$scope.legend = {}
+    	$('.legend').hide(); 
+    }
     
 }]);

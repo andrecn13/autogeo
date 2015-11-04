@@ -1,11 +1,20 @@
 <meta charset="UTF-8">
 
 <div id="barraTopo" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-    <div class="col-xs-5 col-sm-7 col-md-7 col-lg-7" id="filtroTopo">
-       	<span>Ative um ou mais filtros</span>
-       	<span class="glyphicon glyphicon-menu-down" id="setaFiltro" enable-menu></span>
+<!--     <div class="col-xs-3" id="filtroTopo"> -->
+<!--        	<span>Filtros</span> -->
        	
-       	<div class="btnClearFilter" tooltip-placement="bottom" tooltip="Remover filtro por preço" ng-show="filtro.preco.ativo" ng-click="limparFiltro('preco')">
+<!--    	</div> -->
+   	
+   	<div class="col-xs-3">
+<!--    		<span id="iconeBusca" class="glyphicon glyphicon-search"></span> -->
+		<span id="tituloBusca" class="pull-left">Busca</span>
+		<input type="text" class="form-control pull-left" id="buscaTopo" placeHolder="Onix, Fiesta, etc..." ng-model="filtro.modelo">
+		<span class="glyphicon glyphicon-menu-down pull-left" id="setaFiltro" enable-menu></span>
+   	</div>
+        	
+   	<div class="col-xs-4">
+		<div class="btnClearFilter" tooltip-placement="bottom" tooltip="Remover filtro por preço" ng-show="filtro.preco.ativo" ng-click="limparFiltro('preco')">
 			<span class="closeFilter"></span>
 			<span class="iconeFiltroTopo filtroPreco"></span>
 		</div>
@@ -33,12 +42,18 @@
 			<span class="closeFilter"></span>
 			<span class="iconeFiltroTopo filtroFoto"></span>
 		</div>
-   	</div>
-        	
-   	<div class="col-xs-7 col-sm-5 col-md-5 col-lg-5">
-		<span id="iconeBusca" class="glyphicon glyphicon-search"></span>
-		<input type="text" class="form-control" id="buscaTopo" placeHolder="Onix, Fiesta, etc..." ng-model="filtro.modelo">
-		<span id="tituloBusca">Busca rápida</span>
+	</div>
+	
+	<div class="col-xs-3 pull-right">
+		<button ng-show="!layers.overlays.potencial_bairros.visible"  class="pull-right btnMapa" ng-click="ativarEstatistica()" style="margin-top:16px;">
+			<span class="glyphicon glyphicon-globe"></span>
+			Ativar
+		</button>
+		<button ng-show="layers.overlays.potencial_bairros.visible" class="pull-right btnMapa" ng-click="desativarEstatistica()" style="margin-top:16px;">
+			<span class="glyphicon glyphicon-globe"></span>
+			Desativar
+		</button>
+		<span id="tituloBusca" class="pull-right">Estatísticas</span>
 	</div>
 </div>
 
@@ -140,5 +155,5 @@
 </div>
 
 <div id="containerMapa">
-	<leaflet defaults="defaults" markers="anunciosMarkers" layers="layers" center="center" width="100%" height="100%"></leaflet>
+	<leaflet legend="legend" defaults="defaults" markers="anunciosMarkers" layers="layers" center="center" width="100%" height="100%"></leaflet>
 </div>
