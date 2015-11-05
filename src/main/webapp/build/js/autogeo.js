@@ -94,70 +94,6 @@ app.run(function($rootScope, $location, AuthenticationService) {
 });
 
 
-app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
-    	
-	$scope.tipo		=	$routeParams.tipo;
-    $scope.title    =   "Cadastro";
-    $scope.user		=	{loja:null};
-    
-    $scope.cadastrarUsuario = function(){
-    	console.log(angular.toJson($scope.user));
-    	CadastroFactory.create($scope.user, function(){
-    		AlertService.add("success", "Cadastro realizado com sucesso.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    		$scope.user = {};
-    	},function(){
-    		AlertService.add("danger", "Erro ao salvar dados.");
-    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
-    	});
-	}
-    
-    var mainMarker = {
-		lat: -30.0257548,
-        lng: -51.1833013,
-        focus: true,
-        message: "Clique e mova para posicionar o seu estabelecimento",
-        draggable: true
-    };
-    
-    angular.extend($scope, {
-        defaults: {},
-        center: {
-        	lat: -30.0257548,
-            lng: -51.1833013,
-            zoom: 12
-        },
-        markers: {
-            mainMarker: angular.copy(mainMarker)
-        }
-    });
-    
-    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
-    	var lat = args.model.lat;
-        var lng = args.model.lng;
-        
-        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
-    });
-    
-    $scope.geocode = function() {
-		MapaService.geocode($scope.endereco).then(
-			function(data) {
-				if(data.results[0].locations.length > 0){
-					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
-					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
-					$scope.center.lat = data.results[0].locations[0].latLng.lat;
-					$scope.center.lng = data.results[0].locations[0].latLng.lng;
-					
-					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
-				}
-			}, function(data) {
-				console.log(data);
-			}
-		)
-	}
-    
-}]);
-
 /**
  * Listagem de anuncios do usuário
  */
@@ -428,6 +364,70 @@ app.controller('AnuncioEditarCtrl', ['$scope', 'AnuncioService', 'AlertService',
      
 }]);
 
+app.controller('CadastroCtrl', ['$scope', 'CadastroFactory', 'AlertService', '$routeParams', 'MapaService', function($scope, CadastroFactory, AlertService, $routeParams, MapaService){
+    	
+	$scope.tipo		=	$routeParams.tipo;
+    $scope.title    =   "Cadastro";
+    $scope.user		=	{loja:null};
+    
+    $scope.cadastrarUsuario = function(){
+    	console.log(angular.toJson($scope.user));
+    	CadastroFactory.create($scope.user, function(){
+    		AlertService.add("success", "Cadastro realizado com sucesso.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    		$scope.user = {};
+    	},function(){
+    		AlertService.add("danger", "Erro ao salvar dados.");
+    		$("#contentContainer").animate({ scrollTop: 0 }, 200);
+    	});
+	}
+    
+    var mainMarker = {
+		lat: -30.0257548,
+        lng: -51.1833013,
+        focus: true,
+        message: "Clique e mova para posicionar o seu estabelecimento",
+        draggable: true
+    };
+    
+    angular.extend($scope, {
+        defaults: {},
+        center: {
+        	lat: -30.0257548,
+            lng: -51.1833013,
+            zoom: 12
+        },
+        markers: {
+            mainMarker: angular.copy(mainMarker)
+        }
+    });
+    
+    $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+    	var lat = args.model.lat;
+        var lng = args.model.lng;
+        
+        $scope.user.loja.localizacao = "POINT ("+lat+" "+lng+")";
+    });
+    
+    $scope.geocode = function() {
+		MapaService.geocode($scope.endereco).then(
+			function(data) {
+				if(data.results[0].locations.length > 0){
+					$scope.markers.mainMarker.lat =  data.results[0].locations[0].latLng.lat;
+					$scope.markers.mainMarker.lng =  data.results[0].locations[0].latLng.lng;
+					$scope.center.lat = data.results[0].locations[0].latLng.lat;
+					$scope.center.lng = data.results[0].locations[0].latLng.lng;
+					
+					$scope.user.loja.localizacao = "POINT ("+data.results[0].locations[0].latLng.lat+" "+data.results[0].locations[0].latLng.lng+")";
+				}
+			}, function(data) {
+				console.log(data);
+			}
+		)
+	}
+    
+}]);
+
 app.controller('FavoritosCtrl', ['$scope', 'AnuncioService', 'AlertService', function($scope, AnuncioService, AlertService){
     
     $scope.title    =   "Meus Favoritos";
@@ -579,37 +579,55 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 osm: {
                     name: 'OpenStreetMap',
                     type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        "showOnSelector": false
+                     }
                 }
             },
             overlays: {
                 anuncios: {
                     name: "Anúncios",
                     type: "markercluster",
-                    visible: true
-                },
-                bairros: {
-                    name: 'Bairros (POA)',
-                    type: 'wms',
-                    visible: false,
-                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    visible: true,
                     layerParams: {
-                        layers: 'autogoe:bairros',
-                        format: 'image/png',
-                        transparent: true
-                    } 
+                        showOnSelector: false
+                    }
                 },
                 potencial_bairros: {
                     name: 'Potencial de Venda por Bairros (POA)',
                     type: 'wms',
                     visible: false,
-                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
                     layerParams: {
                         layers: 'autogoe:view',
                         format: 'image/png',
-                        transparent: true
-                    } 
-                }                
+                        transparent: true,
+                        showOnSelector: false
+                    },
+                    legend: {
+               			 position: 'bottomleft',
+               			 colors: [ '#E50800', '#F14410', '#FD8121' ],
+               			 labels: [ 'Mais de 5 anúncios ativos', 'Até 5 anúncios ativos', 'Até 2 anúncios ativos' ]
+                   	}
+                },
+                potencial_preco_bairros: {
+                    name: 'Automóveis acima de R$ 85.000,00 por Bairros (POA)',
+                    type: 'wms',
+                    visible: false,
+                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+                    layerParams: {
+                        layers: 'autogoe:view_preco',
+                        format: 'image/png',
+                        transparent: true,
+                        showOnSelector: false
+                    },
+                    legend: {
+               			 position: 'bottomleft',
+               			 colors: [ '#3C9603', '#7CC032', '#BCEA61' ],
+               			 labels: [ 'Mais de 5 anúncios > R$ 85.000,00', 'Até 5 anúncios > R$ 85.000,00', 'Até 2 anúncios > R$ 85.000,00' ]
+                   	}
+                }
             }
         }
     });
@@ -664,20 +682,25 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         
     };
     
-    $scope.ativarEstatistica = function(){
+    $scope.ativarEstatistica = function(mapName){
     	$('.legend').show(); 
-    	$scope.layers.overlays.potencial_bairros.visible = true;
-    	$scope.legend = {
-			 position: 'bottomleft',
-			 colors: [ '#ff3e38', '#7ec13c' ],
-			 labels: [ 'Acima de 2 anúncios por bairro', 'Até 2 anúncios por bairro' ]
-    	}
+    	$scope.desativarEstatistica();
+    	$scope.layers.overlays[mapName].visible = true;
+    	$scope.legend = $scope.layers.overlays[mapName].legend;
     }
+    
     $scope.desativarEstatistica = function(){
-    	$scope.layers.overlays.potencial_bairros.visible = false;
-    	$scope.legend = {}
-    	$('.legend').hide(); 
+    	for(var layer in $scope.layers.overlays){
+    		if(layer != 'anuncios'){
+    			$scope.layers.overlays[layer].visible = false;
+    		}
+    	}
+    	$scope.legend = {};
+    	$('.legend').hide();
     }
+    
+    //force to hide layer control
+    $('.leaflet-control').hide()
     
 }]);
 

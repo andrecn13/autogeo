@@ -97,37 +97,55 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                 osm: {
                     name: 'OpenStreetMap',
                     type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        "showOnSelector": false
+                     }
                 }
             },
             overlays: {
                 anuncios: {
                     name: "Anúncios",
                     type: "markercluster",
-                    visible: true
-                },
-                bairros: {
-                    name: 'Bairros (POA)',
-                    type: 'wms',
-                    visible: false,
-                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    visible: true,
                     layerParams: {
-                        layers: 'autogoe:bairros',
-                        format: 'image/png',
-                        transparent: true
-                    } 
+                        showOnSelector: false
+                    }
                 },
                 potencial_bairros: {
                     name: 'Potencial de Venda por Bairros (POA)',
                     type: 'wms',
                     visible: false,
-                    url: 'http://localhost:8080/geoserver/autogoe/wms',
+                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
                     layerParams: {
                         layers: 'autogoe:view',
                         format: 'image/png',
-                        transparent: true
-                    } 
-                }                
+                        transparent: true,
+                        showOnSelector: false
+                    },
+                    legend: {
+               			 position: 'bottomleft',
+               			 colors: [ '#E50800', '#F14410', '#FD8121' ],
+               			 labels: [ 'Mais de 5 anúncios ativos', 'Até 5 anúncios ativos', 'Até 2 anúncios ativos' ]
+                   	}
+                },
+                potencial_preco_bairros: {
+                    name: 'Automóveis acima de R$ 85.000,00 por Bairros (POA)',
+                    type: 'wms',
+                    visible: false,
+                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+                    layerParams: {
+                        layers: 'autogoe:view_preco',
+                        format: 'image/png',
+                        transparent: true,
+                        showOnSelector: false
+                    },
+                    legend: {
+               			 position: 'bottomleft',
+               			 colors: [ '#3C9603', '#7CC032', '#BCEA61' ],
+               			 labels: [ 'Mais de 5 anúncios > R$ 85.000,00', 'Até 5 anúncios > R$ 85.000,00', 'Até 2 anúncios > R$ 85.000,00' ]
+                   	}
+                }
             }
         }
     });
@@ -182,19 +200,24 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
         
     };
     
-    $scope.ativarEstatistica = function(){
+    $scope.ativarEstatistica = function(mapName){
     	$('.legend').show(); 
-    	$scope.layers.overlays.potencial_bairros.visible = true;
-    	$scope.legend = {
-			 position: 'bottomleft',
-			 colors: [ '#ff3e38', '#7ec13c' ],
-			 labels: [ 'Acima de 2 anúncios por bairro', 'Até 2 anúncios por bairro' ]
-    	}
+    	$scope.desativarEstatistica();
+    	$scope.layers.overlays[mapName].visible = true;
+    	$scope.legend = $scope.layers.overlays[mapName].legend;
     }
+    
     $scope.desativarEstatistica = function(){
-    	$scope.layers.overlays.potencial_bairros.visible = false;
-    	$scope.legend = {}
-    	$('.legend').hide(); 
+    	for(var layer in $scope.layers.overlays){
+    		if(layer != 'anuncios'){
+    			$scope.layers.overlays[layer].visible = false;
+    		}
+    	}
+    	$scope.legend = {};
+    	$('.legend').hide();
     }
+    
+    //force to hide layer control
+    $('.leaflet-control').hide()
     
 }]);

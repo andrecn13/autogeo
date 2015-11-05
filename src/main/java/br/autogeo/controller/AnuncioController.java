@@ -90,11 +90,15 @@ public class AnuncioController {
 			return new ResponseEntity<Anuncio>(anuncio, HttpStatus.BAD_REQUEST);
 		}
 		
-		
 		String email = ((Claims)request.getAttribute("claims")).get("email").toString();
-		anuncio.setUsuario(serviceUsuario.getByEmail(email));
+		Usuario usuario = serviceUsuario.getByEmail(email);
+		anuncio.setUsuario(usuario);
 		anuncio.setDataCriacao(new Date());
 		anuncio.setAtivo(true);
+		
+		if(anuncio.getUsuario().getLoja() != null){
+			anuncio.setLocalizacao(anuncio.getUsuario().getLoja().getLocalizacao());
+		}
 		
 		File file = new File(path + File.separator + anuncio.getUsuario().getId());
 		if(!file.exists()){
