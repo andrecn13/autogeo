@@ -169,6 +169,9 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
     		$scope.files = [];
+    		$scope.selectedMarca = {};
+    		$scope.fipeObj = undefined;
+    		$scope.fipeErro = undefined;
         },function(data){
         	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
         	$("#contentContainer").animate({ scrollTop: 0 }, 200);
@@ -490,7 +493,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     $scope.center = {
     	lat: -30.0257548,
         lng: -51.1833013,
-        zoom: 12
+        zoom: 13
     };
     
     $scope.enableMenu = false;
@@ -607,7 +610,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                         showOnSelector: false
                     },
                     legend: {
-               			 position: 'bottomleft',
+               			 position: 'bottomright',
                			 colors: [ '#E50800', '#F14410', '#FD8121' ],
                			 labels: [ 'Mais de 5 anúncios ativos', 'Até 5 anúncios ativos', 'Até 2 anúncios ativos' ]
                    	}
@@ -625,7 +628,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                         showOnSelector: false
                     },
                     legend: {
-               			 position: 'bottomleft',
+               			 position: 'bottomright',
                			 colors: [ '#3C9603', '#7CC032', '#BCEA61' ],
                			 labels: [ 'Mais de 5 anúncios > R$ 85.000,00', 'Até 5 anúncios > R$ 85.000,00', 'Até 2 anúncios > R$ 85.000,00' ]
                    	}

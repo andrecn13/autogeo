@@ -746,4 +746,11 @@ header {
 .legend .outline {
   margin: 5px; }
 
+#fotosEdicao li {
+  list-style: none;
+  display: inline;
+  margin: 5px; }
+  #fotosEdicao li img {
+    border: 1px solid #0065ae; }
+
 /*# sourceMappingURL=autogeo.css.map */

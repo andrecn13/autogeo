@@ -73,6 +73,9 @@ app.controller('AnuncioCadastroCtrl', ['$scope', 'AnuncioService', 'AlertService
     		$("#contentContainer").animate({ scrollTop: 0 }, 200);
     		$scope.anuncio = {acessorios: [],localizacao: {}};
     		$scope.files = [];
+    		$scope.selectedMarca = {};
+    		$scope.fipeObj = undefined;
+    		$scope.fipeErro = undefined;
         },function(data){
         	AlertService.add("danger", "Erro ao realizar cadastro, verifique os dados.");
         	$("#contentContainer").animate({ scrollTop: 0 }, 200);

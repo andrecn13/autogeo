@@ -870,3 +870,16 @@ header{
 .legend .outline{
 	margin:5px;
 }
+
+#fotosEdicao{
+	
+	li{
+		list-style:none;
+		display:inline;
+		margin:5px;
+		
+		img{
+			border: 1px solid $cor-principal;
+		}
+	}
+}

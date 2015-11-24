@@ -2,7 +2,7 @@
 
 <div class="col-sm-8 col-sm-offset-2">
 	<div style="margin-top: 25px;">
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="3000" close="closeAlert($index)">{{alert.msg}}</alert>
 	</div>
 
 	<div class="page-header-autogeo">
