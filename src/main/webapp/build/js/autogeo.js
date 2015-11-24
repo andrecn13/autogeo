@@ -598,7 +598,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                     name: 'Potencial de Venda por Bairros (POA)',
                     type: 'wms',
                     visible: false,
-                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+//                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+                    url: 'http://localhost:8080/geoserver/autogeo/wms',
                     layerParams: {
                         layers: 'autogoe:view',
                         format: 'image/png',
@@ -615,7 +616,8 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
                     name: 'Automóveis acima de R$ 85.000,00 por Bairros (POA)',
                     type: 'wms',
                     visible: false,
-                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+//                    url: 'http://ec2-54-94-128-189.sa-east-1.compute.amazonaws.com:8080/geoserver/autogoe/wms',
+                    url: 'http://localhost:8080/geoserver/autogeo/wms',
                     layerParams: {
                         layers: 'autogoe:view_preco',
                         format: 'image/png',
