@@ -61,19 +61,17 @@
 			</div>
 			<div class="form-group">
 			    <label for="acessorios" class="col-sm-3 control-label">Acessórios</label>
-			    <div class="col-sm-4">
+			    <div class="col-sm-8">
 					<select id="acessorios" class="form-control" ng-options="option.acessorio for option in dados.acessorios" ng-model="selectedAcessorio">
 						<option value="">Adicione os acessórios desejados</option>
 					</select>
 			    </div>
-			    <div class="col-sm-2">
-					<button type="button" style="margin:0" class="btn btnCadastro pull-left" ng-click="addAcessorio()">
+			    <div class="col-sm-12 pull-left" style="margin-top:10px;">
+					<button type="button" style="margin:0 50px 0 10px;" class="btn btnCadastro pull-right" ng-click="addAcessorio()">
 						<span class="glyphicon glyphicon-plus"></span>
 						Adicionar
 					</button>
-			    </div>
-			    <div class="col-sm-2" style="padding:0">
-					<button type="button" style="margin:0" class="btn btnFavorito pull-left" ng-click="limparAcessorios()">
+					<button type="button" style="margin:0" class="btn btnFavorito pull-right" ng-click="limparAcessorios()">
 						<span class="glyphicon glyphicon-trash"></span>
 						Limpar
 					</button>
