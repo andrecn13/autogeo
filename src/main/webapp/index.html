@@ -14,10 +14,10 @@
     <body>
             
         <header>
-            <div id="logo" class="col-xs-10 col-sm-3 col-md-3 col-lg-3 pull-left">
+            <div id="logo" class="col-xs-5 col-sm-3 col-md-3 col-lg-3 pull-left">
 				<img src="build/img/autogeo.png" alt="logo_autogeo" width="200" height="35">
             </div>
-            <div class="hidden-xs col-sm-7 col-md-5 col-lg-7 pull-left">
+            <div class="hidden-xs col-sm-7 col-md-6 col-lg-7 pull-left">
                 <div id="menu">
                     <a href="#/" active-link="ativo">Mapa</a>
                     <a href="#/favoritos" active-link="ativo">Meus Favoritos</a>
@@ -26,6 +26,23 @@
                     <a href="#/login" active-link="ativo" ng-show="!showElement()"></span>Login</a>
                 </div> 
             </div> 
+            <div class="hidden-sm hidden-md hidden-lg pull-left" >
+            	<button class="btn btnAzul" style="margin-top:8px;" enable-menu-responsivo>
+            		<span class="glyphicon glyphicon-menu-hamburger"></span>
+            		Menu
+           		</button>
+            </div>
+            
+            <div id="containerMenuRes">
+            	<div id="menuRes">
+                    <a href="#/" active-link="ativo">Mapa</a>
+                    <a href="#/favoritos" active-link="ativo">Meus Favoritos</a>
+                    <a href="#/anuncios" active-link="ativo">Meus Anuncios</a>
+                    <a href="#/cadastro" active-link="ativo" ng-show="!showElement()"></span>Cadastre-se</a>
+                    <a href="#/login" active-link="ativo" ng-show="!showElement()"></span>Login</a>
+                </div> 
+            </div>
+            
             <div class="col-sm-2 col-md-2 col-lg-2 pull-right menuDireito" ng-controller="LoginCtrl" ng-show="showElement()">
 	            <div class="logout pull-right">
 	            	<span class="glyphicon glyphicon-off pull-right" ng-click="logout()" tooltip-placement="left" tooltip="Sair"></span>

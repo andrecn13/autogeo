@@ -1,13 +1,13 @@
 <meta charset="UTF-8">
 
 <div id="barraTopo" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-left">
-   	<div class="col-xs-3">
-		<span id="tituloBusca" class="pull-left">Busca</span>
+   	<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+		<span id="tituloBusca" class="hidden-xs pull-left">Busca</span>
 		<input type="text" class="form-control pull-left" id="buscaTopo" placeHolder="Onix, Fiesta, etc..." ng-model="filtro.modelo">
 		<span class="glyphicon glyphicon-menu-down pull-left" tooltip-placement="right" tooltip="Filtros Avançados" id="setaFiltro" enable-menu></span>
-   	</div>
-        	
-   	<div class="col-xs-5">
+   	</div>        	
+   	
+   	<div class="hidden-xs hidden-sm col-md-3 col-lg-3">
 		<div class="btnClearFilter" tooltip-placement="bottom" tooltip="Remover filtro por preço" ng-show="filtro.preco.ativo" ng-click="limparFiltro('preco')">
 			<span class="closeFilter"></span>
 			<span class="iconeFiltroTopo filtroPreco"></span>
@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	
-	<div class="col-xs-4 pull-right">
+	<div class="col-xs-6 col-sm-4 col-md-5 col-lg-5 pull-right">
 		<button ng-show="!layers.overlays.potencial_preco_bairros.visible"  class="pull-right btnMapa" ng-click="ativarEstatistica('potencial_preco_bairros')" tooltip-placement="bottom" tooltip="Clique para ativar o mapa sobre a quantidade de automóveis acima de R$ 85.000,00 em cada bairro. Com este mapa é possível identificar zonas para venda de automóveis de maior valor." style="margin-top:16px;">
 			<span class="glyphicon glyphicon-usd"></span>
 			Preço
@@ -55,7 +55,7 @@
 			<span class="glyphicon glyphicon-globe"></span>
 			Densidade
 		</button>
-		<span id="tituloBusca" class="pull-right">Mapas Estatísticos</span>
+		<span id="tituloBusca" class="hidden-xs hidden-sm pull-right">Mapas Estatísticos</span>
 	</div>
 </div>
 

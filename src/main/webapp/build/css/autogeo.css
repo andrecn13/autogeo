@@ -753,4 +753,55 @@ header {
   #fotosEdicao li img {
     border: 1px solid #0065ae; }
 
+#containerMenuRes {
+  background-color: #FFF;
+  display: none;
+  width: 150px;
+  height: 230px;
+  float: left;
+  background: #FFF;
+  position: absolute;
+  z-index: 2000;
+  top: 0px;
+  right: 0px;
+  box-shadow: 2px 6px 9px #6D6D6D; }
+
+#menuRes {
+  float: left;
+  margin-top: 5px; }
+  #menuRes a {
+    float: left;
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    font-size: 0.8em;
+    font-weight: 400;
+    margin-left: 20px;
+    color: #8b9293;
+    padding-top: 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    clear: both; }
+    #menuRes a span {
+      float: left;
+      margin-right: 10px;
+      line-height: 55px;
+      height: 55px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none; }
+  #menuRes a.ativo {
+    border-bottom: 3px solid #0065ae;
+    color: #0065ae; }
+  #menuRes a:hover {
+    border-bottom: 3px solid #0065ae;
+    color: #0065ae;
+    -webkit-transition: border-color 0.5s ease;
+    -moz-transition: border-color 0.5s ease;
+    -o-transition: border-color 0.5s ease;
+    transition: border-color 0.5s ease; }
+
 /*# sourceMappingURL=autogeo.css.map */

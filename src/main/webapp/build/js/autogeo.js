@@ -777,6 +777,18 @@ app.directive('enableMenu', function(){
     }
 });
 
+app.directive('enableMenuResponsivo', function(){
+    return{
+        restric : "A",
+        link    : function(scope, elem, attrs){
+            elem.on('click', function(){
+                $( "#containerMenuRes" ).slideToggle( "medium" );
+            });
+        } 
+    }
+});
+
+
 app.directive('popup', [ function() {
     return {
         restrict: 'E',
