@@ -47,13 +47,13 @@
 			<span class="glyphicon glyphicon-usd"></span>
 			Preço
 		</button>
-		<button ng-show="!layers.overlays.potencial_bairros.visible"  class="pull-right btnMapa" ng-click="ativarEstatistica('potencial_bairros')"  tooltip-placement="bottom" tooltip="Clique para ativar o mapa sobre a quantidade de anúncios ativos em cada bairro. Com este mapa é possível identifcar zonas favoráveis para venda de autmóveis" style="margin-top:16px;">
+		<button ng-show="!layers.overlays.potencial_bairros.visible"  class="pull-right btnMapa" ng-click="ativarEstatistica('potencial_bairros')"  tooltip-placement="bottom" tooltip="Clique para ativar o mapa de densidade de anúncios ativos em relação aos bairros. Com este mapa é possível identifcar zonas favoráveis para venda de autmóveis" style="margin-top:16px;">
 			<span class="glyphicon glyphicon-globe"></span>
-			Potencial
+			Densidade
 		</button>
 		<button ng-show="layers.overlays.potencial_bairros.visible" class="pull-right btnMapa ativo" ng-click="desativarEstatistica()"  tooltip-placement="bottom" tooltip="Desativar Mapa" style="margin-top:16px;">
 			<span class="glyphicon glyphicon-globe"></span>
-			Potencial
+			Densidade
 		</button>
 		<span id="tituloBusca" class="pull-right">Mapas Estatísticos</span>
 	</div>

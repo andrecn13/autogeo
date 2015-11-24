@@ -49,7 +49,7 @@ app.controller('MapaCtrl', ['$scope', '$rootScope', '$filter', '$modal', 'MapaSe
     };
     
     var icon = {  
-        iconUrl:'build/img/marker-loja.png',
+        iconUrl:'build/img/marker.png',
         iconSize:[41, 41], 
         iconAnchor:[12, 0]  
     };  

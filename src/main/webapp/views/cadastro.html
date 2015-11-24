@@ -113,7 +113,14 @@
 			
 			<div class="form-group">
 				<div class="col-sm-11">
-					<button type="submit" class="btn btnCadastro" ng-click="cadastrarUsuario()">Cadastrar</button>
+					<button type="submit" class="btn btnCadastro" ng-click="cadastrarUsuario()">
+						<span class="glyphicon glyphicon-plus"></span>
+						Cadastrar
+					</button>
+					<button style="margin-right:10px;" type="submit" class="btn btnFavorito" ng-click="go('/')">
+						<span class="glyphicon glyphicon-remove"></span>
+						Cancelar
+					</button>
 				</div>
 			</div>
 		</form>
